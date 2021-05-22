@@ -10,11 +10,16 @@ const config = require('./config'),
 activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activites, discord.js supports more (but I don't care)
 error = c.keyword('red').bold,
 kill = c.white('\nKilling process...'),
-warn = c.keyword('yellow').bold
+warn = c.keyword('yellow').bold,
+server = Array,
+commands = Array
 bot.token = config.bot.token;
 bot.prefix = config.bot.prefix;
 bot.status = config.bot.status;
 bot.activity = config.bot.activity.toUpperCase();
+server.type = config.server.type.toLowerCase();
+server.ip = config.server.iptoLowerCase();
+server.port = config.server.port
 
 //Config check
 if(bot.token === '') { //Checks if you have entered bot token to config
@@ -32,6 +37,21 @@ if(bot.token === '') { //Checks if you have entered bot token to config
 } else if (!new Set(activites).has(bot.activity)) { //Checks if you have entered supported activity
     console.log(warn(`"${bot.activity}" activity is not supported. Bot status was disabled.`));
     bot.status = false;
+} else if (!server.type || server.type !== 'java' || server.type !== 'bedrock') {
+    if(!server.type) {
+        console.log(warn(`You did not specify server's edition, setting it to java.`));
+        server.type = 'java';
+    } else {
+        console.log(error('Unknown server edition') + kill);
+        return process.exit(1);
+    }
+} else if (!server.port) {
+    console.log(warn(`You did not specify server port, setting it to default.`));
+    if(server.type === 'bedrock') {
+        server.port = '19132'
+    } else {
+        server.port = '25565'
+    }
 }
 
 //Event handler
