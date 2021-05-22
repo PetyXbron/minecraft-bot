@@ -4,7 +4,7 @@
 ### Get info about your minecraft server with this discord bot!
 
 This code could not be created without **Minecraft server util package**
-* Google Translate package
+* minecraft-server-util package
   * [Github Repository](https://github.com/PassTheMayo/minecraft-server-util)
   * [npmjs package](https://www.npmjs.com/package/minecraft-server-util)
   * [Author Github Profile](https://github.com/PassTheMayo)
