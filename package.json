@@ -1,6 +1,6 @@
 {
   "name": "minecraft-bot",
-  "version": "0.5.3",
+  "version": "0.5.5",
   "description": "Discord minecraft bot, with which you can check your minecraft server status (online players, version, online status etc.)",
   "main": "index.js",
   "scripts": {
@@ -11,10 +11,13 @@
     "url": "git+https://github.com/PetyXbron/minecraft-bot.git"
   },
   "keywords": [
+    "petyxbron",
     "discord",
-    "bot",
+    "discord bot",
+    "chat bot",
+    "minecraft server",
     "minecraft",
-    "server"
+    "bot"
   ],
   "author": "PetyXbron",
   "license": "MIT",

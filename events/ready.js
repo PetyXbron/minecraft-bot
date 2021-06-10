@@ -1,6 +1,5 @@
 const chalk = require('chalk'),
 util = require('minecraft-server-util'),
-Discord = require('discord.js'),
 gr = chalk.keyword('green').bold,
 bl = chalk.keyword('blue'),
 warn = chalk.keyword('yellow').bold

@@ -1,5 +1,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)
 
+## [DOCUMENTATION](https://petyxbron.gitbook.io/minecraft-bot/installation/install)
+
 # Discord minecraft server bot
 ### Get info about your minecraft server with this discord bot!
 
