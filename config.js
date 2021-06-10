@@ -11,7 +11,7 @@ module.exports = {
     server: {
         type: '', //"java" or "bedrock"
         ip: '', //IP of your server - do not include port - e.g. "mc.hypixel.net"
-        port: '' //PORT of your server - empty = default port (BE 19132, JA 25565)
+        port: '' //PORT of your server - empty => default port (BE 19132, JA 25565)
     },
 
     //Commands aliases
