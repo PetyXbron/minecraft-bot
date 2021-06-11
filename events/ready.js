@@ -4,8 +4,8 @@ gr = chalk.keyword('green').bold,
 bl = chalk.keyword('blue'),
 warn = chalk.keyword('yellow').bold
 
-
-module.exports = async (bot, server) => {
+module.exports = async (bot) => {
+    const {server} = bot
     if(bot.status) {
         try {
             bot.user.setActivity(bot.status, {type: bot.activity}) //Sets bot activity
@@ -15,7 +15,7 @@ module.exports = async (bot, server) => {
         }
     }
 
-    if(server.type === 'java') {
+    if(bot.server && server.type === 'java') {
         util.status(server.ip, { port: server.port })
             .then((response) => {
                 console.log(`✅ Successfully located server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')

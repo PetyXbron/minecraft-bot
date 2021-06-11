@@ -23,6 +23,10 @@ module.exports = {
         help: [
             'commands',
             'menu'
+        ],
+        test: [
+            'try',
+            'testing'
         ]
     }
 };
