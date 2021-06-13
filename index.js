@@ -20,6 +20,7 @@ bot.token = config.bot.token;
 bot.prefix = config.bot.prefix;
 bot.status = config.bot.status;
 bot.warns = warns;
+bot.readyScan = config.settings.readyScan;
 bot.server = Boolean;
 bot.activity = config.bot.activity.toUpperCase();
 server.type = config.server.type.toLowerCase();
@@ -55,7 +56,7 @@ if (!new Set(activites).has(bot.activity)) { //Checks if you have entered suppor
 };
 
 if(!server.ip) {
-    console.log(error("You did not specify server's ip!") + c.white('\nMinecraft server disabled.'));
+    if(warns) console.log(error("You did not specify server's ip!") + c.white('\nMinecraft server disabled.'));
     bot.server = false;
 } else {
     bot.server = true;
@@ -100,13 +101,15 @@ fs.readdir("./commands/", (err, files) => {
     let jsfile = files.filter(f => f.split(".").pop() === "js");
     jsfile.forEach((f, i) => {
         let pull = require(`./commands/${f}`);
-        if(!pull.config.name) {
-            if(warns) console.log(warn(`Missing command name of file '${f}'!`) + '\nCommand disabled.')
-        } else {
-            bot.commands.set(pull.config.name, pull);  
-            pull.config.aliases.forEach(alias => {
-                bot.aliases.set(alias, pull.config.name)
-            });
+        if(pull.config.enable) {
+            if(!pull.config.name) {
+                if(warns) console.log(warn(`Missing command name of file '${f}'!`) + '\nCommand disabled.')
+            } else {
+                bot.commands.set(pull.config.name, pull);  
+                pull.config.aliases.forEach(alias => {
+                    bot.aliases.set(alias, pull.config.name)
+                });
+            }
         }
     });
 });
