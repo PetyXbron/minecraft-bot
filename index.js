@@ -11,17 +11,15 @@ activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activ
 error = c.keyword('red').bold,
 kill = c.white('\nKilling process...'),
 warn = c.keyword('yellow').bold,
-server = Array,
-commands = [
-    test = [
+warns = config.settings.warns,
+server = Array
 
-    ]
-]
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 bot.token = config.bot.token;
 bot.prefix = config.bot.prefix;
 bot.status = config.bot.status;
+bot.warns = warns;
 bot.server = Boolean;
 bot.activity = config.bot.activity.toUpperCase();
 server.type = config.server.type.toLowerCase();
@@ -38,20 +36,20 @@ if(bot.token === '') { //Checks if you have entered bot token to config
 };
 
 if (bot.status === '') { //Checks if you have entered custom status for bot to config
-    console.log(warn('Bot status in config was empty! Bot status was disabled.'));
+    if(warns) console.log(warn('Bot status in config was empty! Bot status was disabled.'));
     bot.status = false;
 } 
 
 if (!bot.activity) { //Checks if you have entered status activity type to config
     if(bot.status) {
-        console.log(warn('Bot activity type in config was empty! Activity type is now "playing"'));
+        if (warns) console.log(warn('Bot activity type in config was empty! Activity type is now "playing"'));
         bot.activity = 'PLAYING';
     };
 };
 
 if (!new Set(activites).has(bot.activity)) { //Checks if you have entered supported activity
     if(bot.status) {
-        console.log(warn(`"${bot.activity}" activity is not supported. Bot status was disabled.`));
+        if(warns) console.log(warn(`"${bot.activity}" activity is not supported. Bot status was disabled.`));
         bot.status = false;
     };
 };
@@ -62,10 +60,11 @@ if(!server.ip) {
 } else {
     bot.server = true;
 }
-if (server.type !== 'java' || server.type !== 'bedrock') {
+
+if (server.type !== 'java' && server.type !== 'bedrock') {
     if(bot.server) {
         if(!server.type) {
-            console.log(warn(`You did not specify server's edition, setting it to java.`));
+            if(warns) console.log(warn(`You did not specify server's edition, setting it to java.`));
             server.type = 'java';
         } else {
             console.log(error('Unknown server edition') + kill);
@@ -76,7 +75,7 @@ if (server.type !== 'java' || server.type !== 'bedrock') {
 
 if (!server.port) {
     if(bot.server) {
-        console.log(warn(`You did not specify server port, setting it to default.`));
+        if(warns) console.log(warn(`You did not specify server port, setting it to default.`));
         if(server.type === 'bedrock') {
             server.port = 19132
         } else {
@@ -102,7 +101,7 @@ fs.readdir("./commands/", (err, files) => {
     jsfile.forEach((f, i) => {
         let pull = require(`./commands/${f}`);
         if(!pull.config.name) {
-            console.log(warn(`Missing command name of file '${f}'!`) + '\nCommand disabled.')
+            if(warns) console.log(warn(`Missing command name of file '${f}'!`) + '\nCommand disabled.')
         } else {
             bot.commands.set(pull.config.name, pull);  
             pull.config.aliases.forEach(alias => {

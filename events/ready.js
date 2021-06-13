@@ -15,18 +15,30 @@ module.exports = async (bot) => {
         }
     }
 
-    if(bot.server && server.type === 'java') {
+    if(server && server.type === 'java') {
         util.status(server.ip, { port: server.port })
             .then((response) => {
-                console.log(`✅ Successfully located server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')
+                console.log(`✅ Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')
                 + bl('IP:	 ') +  `${server.ip}:${response.port ? response.port : server.port}\n`
                 + bl('VERSION: ') + `${response.version ? response.version : 'unknown'}\n`
-                + bl('PLAYERS: ') + gr(`${response.onlinePlayers ? response.players : '0'}`) + '/' + gr(`${response.maxPlayers ? response.maxPlayers : '0'}`)
+                + bl('PLAYERS: ') + gr(`${response.onlinePlayers ? response.onlinePlayers : '0'}`) + '/' + gr(`${response.maxPlayers ? response.maxPlayers : '0'}`)
                 )
             })
             .catch((error) => {
                 console.log(warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error)
             });
+    } else if(server && server.type === 'bedrock') {
+        util.statusBedrock(server.ip, { port: server.port })
+        .then((response) => {
+            console.log(`✅ Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')
+            + bl('IP:	 ') +  `${server.ip}:${response.port ? response.port : server.port}\n`
+            + bl('VERSION: ') + `${response.version ? response.version : 'unknown'}\n`
+            + bl('PLAYERS: ') + gr(`${response.onlinePlayers ? response.onlinePlayers : '0'}`) + '/' + gr(`${response.maxPlayers ? response.maxPlayers : '0'}`)
+            )
+        })
+        .catch((error) => {
+            console.log(warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error)
+        });
     }
 
     console.log("✅ " + gr(bot.user.username) + " is now working")

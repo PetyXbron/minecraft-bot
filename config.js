@@ -14,6 +14,11 @@ module.exports = {
         port: '' //PORT of your server - empty => default port (BE 19132, JA 25565)
     },
 
+    //Basic code settings
+    settings: {
+        warns: true //Show warns? - true or false (boolean)
+    },
+
     //Commands aliases
     commands: {
         info: [
