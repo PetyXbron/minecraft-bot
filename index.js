@@ -102,12 +102,13 @@ fs.readdir("./commands/", (err, files) => {
     jsfile.forEach((f, i) => {
         let pull = require(`./commands/${f}`);
         if(!pull.config.name) {
-            console.log(error(`op`))
+            console.log(warn(`Missing command name of file '${f}'!`) + '\nCommand disabled.')
+        } else {
+            bot.commands.set(pull.config.name, pull);  
+            pull.config.aliases.forEach(alias => {
+                bot.aliases.set(alias, pull.config.name)
+            });
         }
-        bot.commands.set(pull.config.name, pull);  
-        pull.config.aliases.forEach(alias => {
-            bot.aliases.set(alias, pull.config.name)
-        });
     });
 });
 

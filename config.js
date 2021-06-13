@@ -26,7 +26,8 @@ module.exports = {
         ],
         test: [
             'try',
-            'testing'
+            'testing',
+            'tester'
         ]
     }
 };
