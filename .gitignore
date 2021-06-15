@@ -2,3 +2,4 @@
 node_modules/
 dev-config.js
 dev-index.js
+.vscode/settings.json

@@ -26,6 +26,7 @@ bot.activity = config.bot.activity.toUpperCase();
 server.type = config.server.type.toLowerCase();
 server.ip = config.server.ip.toLowerCase();
 server.port = parseInt(config.server.port)
+server.name = config.server.name
 
 //Config check
 if(bot.token === '') { //Checks if you have entered bot token to config
