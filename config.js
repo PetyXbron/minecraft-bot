@@ -21,7 +21,28 @@ module.exports = {
     settings: {
         warns: true, //Show warns? - true or false (boolean)
         readyScan: true, //On bot's start, send to console server's basic info? - true or false (boolean)
-        split: false //Advanced - Extract only the version like "1.17" or "1.12" etc.
+        split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc.
+        status: false //Enable auto-changing status message - true or false (boolean)
+    },
+
+    //Auto changing status message
+    statusCH: {
+        time: '30s', //How long should the status always be updated? - like "3min", "20s" or "1min" etc.
+        guild: {
+            name: '', //Discord server name
+            id: '', //Discord server ID, where's your channel
+        },
+        channel: {
+            id: '', //Discord channel ID
+        }
+    },
+    
+    //Embeds settings
+    embeds: {
+        colors: {
+            normal: '',  //Main/succesful color of embeds - choose HEX color here: https://htmlcolorcodes.com
+            error: '', //Error/unsuccesful color of embeds - choose HEX color here: https://htmlcolorcodes.com
+        }
     },
 
     //Commands aliases
@@ -39,10 +60,12 @@ module.exports = {
             'testing'
         ],
         ip: [
-            
+            'ip-address',
+            'address',
+            'connect'
         ],
         list: [
-
+            'players'
         ],
         vote: [
 

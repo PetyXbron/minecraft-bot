@@ -9,10 +9,13 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message, args) => {
-    const { server } = bot
+    const { server, config } = bot
 
-    const ipEmbed = new Discord.MessageEmbed()
-        .setDescription(`**${server.name} IP:** ${server.ip}:${server.port}`)
-        .setColor('#77fc03')
-    message.channel.send(ipEmbed);
+    if(server.work) {
+        const ipEmbed = new Discord.MessageEmbed()
+            .setDescription(`**${config.server.name ? config.server.name : message.guild.name} IP:**
+                            \`${server.ip}\`:\`${server.port}\``)
+            .setColor(config.embeds.color || "#77fc03")
+        message.channel.send(ipEmbed);
+    }
 };

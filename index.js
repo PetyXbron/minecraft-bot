@@ -14,6 +14,8 @@ warn = c.keyword('yellow').bold,
 warns = config.settings.warns,
 server = Array
 
+let info = config.statusCH
+
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 bot.token = config.bot.token;
@@ -26,7 +28,7 @@ bot.activity = config.bot.activity.toUpperCase();
 server.type = config.server.type.toLowerCase();
 server.ip = config.server.ip.toLowerCase();
 server.port = parseInt(config.server.port)
-server.name = config.server.name
+server.work = true
 
 //Config check
 if(bot.token === '') { //Checks if you have entered bot token to config
@@ -58,9 +60,9 @@ if (!new Set(activites).has(bot.activity)) { //Checks if you have entered suppor
 
 if(!server.ip) {
     if(warns) console.log(error("You did not specify server's ip!") + c.white('\nMinecraft server disabled.'));
-    bot.server = false;
+    bot.server.work = false;
 } else {
-    bot.server = true;
+    bot.server.work = true;
 }
 
 if (server.type !== 'java' && server.type !== 'bedrock') {
@@ -86,7 +88,49 @@ if (!server.port) {
     }
 }
 
+if (config.server.name === '' || !config.server.name) {
+    if(warns) console.log(warn(`You did not specify server name, setting it to discord server name.`))
+    bot.server.name = false
+}
+
+config.embeds.error = config.embeds.colors.error ? config.embeds.colors.error : '#f53636'
+config.embeds.color = config.embeds.colors.normal ? config.embeds.colors.normal : '#77fc03' 
+
+
+if(config.settings.status) {
+    const dis = c.white('\nAuto changing status message disabled.')
+    if(!info.guild.id) {
+        console.log(error("You did not specify server ID in statusCH settings!") + dis);
+        config.settings.status = false
+    } else if(!info.channel.id) {
+        console.log(error("You did not specify channel ID in statusCH settings!") + dis);
+        config.settings.status = false
+    }
+
+    if(!info.time) {
+        if(warns) console.log(warn("You did not specify time update period. Setting it to 30 seconds."))
+        info.time = "30s"
+    }
+}
+
+const iconLINK = config.server.icon
+if(!iconLINK) {
+    server.icon = false
+} else if(!iconLINK.includes("png" || "jpg" || "webp" || "gif")) {
+    if(warns) console.log(warn("Unknown server icon file format. Setting it to undefined."))
+    server.icon = "https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg"
+} else if(!iconLINK.includes("https://" || "http://")) {
+    if(warns) console.log(warn("Server icon link did contain https or http. Setting it to undefined."))
+    server.icon = "https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg"
+} else {
+    server.icon = iconLINK
+}
+
+bot.settings = config.settings
+bot.settings.split = bot.settings.readyScan
 bot.server = server
+bot.config = config
+bot.info = info
 
 //Event handler
 const eventsFolder = fs.readdirSync('./events'); //Finds files in event folder
