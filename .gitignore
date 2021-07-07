@@ -1,7 +1,8 @@
 
 node_modules/
+.vscode/settings.json
+
+test/
 dev-config.js
 dev-index.js
-.vscode/settings.json
-test/
 json.sqlite
