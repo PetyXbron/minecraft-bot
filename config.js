@@ -69,6 +69,19 @@ module.exports = {
         ],
         vote: [
 
+        ],
+        version: [
+            'v'
+        ],
+        poll: [
+            'voting'
+        ],
+        lockdown: [
+            'lock'
+        ],
+        message: [
+            'announce',
+            'announcement'
         ]
     }
 };

@@ -18,7 +18,7 @@ This code could not be created without **Minecraft server util package**
 * Auto changing status
 * <s>Status command</s>
 * <s>Ip command</s>
-* Version command
+* <s>Version command</s>
 * <s>List command</s>
 * Vote command
 * Poll/Voting command

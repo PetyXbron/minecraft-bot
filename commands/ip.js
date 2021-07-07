@@ -10,12 +10,13 @@ module.exports.config = {
 
 module.exports.run = async (bot, message, args) => {
     const { server, config } = bot
+    let icon = server.icon ? server.icon : message.guild.icon
 
     if(server.work) {
         const ipEmbed = new Discord.MessageEmbed()
-            .setDescription(`**${config.server.name ? config.server.name : message.guild.name} IP:**
-                            \`${server.ip}\`:\`${server.port}\``)
-            .setColor(config.embeds.color || "#77fc03")
+            .setTitle((config.server.name ? config.server.name : message.guild.name) + ' IP:', icon)
+            .setDescription(`\`${server.ip}\`:\`${server.port}\``)
+            .setColor(config.embeds.color);
         message.channel.send(ipEmbed);
     }
 };
