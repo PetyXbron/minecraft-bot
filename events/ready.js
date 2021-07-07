@@ -67,7 +67,7 @@ module.exports = async (bot) => {
                         .setAuthor(config.server.name ? config.server.name : message.guild.name, 'attachment://logo.png')
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
-                            { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}\n\`\`\`${response.samplePlayers.map(p => `- ${p.name}`).join('\n')}\`\`\`` , inline: false },
+                            { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)
@@ -144,7 +144,7 @@ module.exports = async (bot) => {
                         .setAuthor(config.server.name ? config.server.name : message.guild.name, 'attachment://logo.png')
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
-                            { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}\n\`\`\`${response.samplePlayers.map(p => `- ${p.name}`).join('\n')}\`\`\`` , inline: false },
+                            { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)

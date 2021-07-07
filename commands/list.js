@@ -26,7 +26,7 @@ module.exports.run = async (bot, message) => {
                     .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                     .setDescription(`:white_check_mark: **ONLINE**`)
                     .addFields(
-                        { name: "Players", value: `**${response.onlinePlayers}**/**${response.maxPlayers}**\n\`\`\`${response.samplePlayers.map(p => `${p.name}`).join('\n')}\`\`\`` , inline: false },
+                        { name: "Players", value: `**${response.onlinePlayers}**/**${response.maxPlayers}**` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
                     )
                     .setColor(config.embeds.color)
                 message.channel.send(serverEmbed);
