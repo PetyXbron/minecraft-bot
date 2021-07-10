@@ -1,4 +1,4 @@
-//CONFIG DATA EXPLANATION - https://petyxbron.gitbook.io/minecraft-bot/installation/config-info
+//CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info
 module.exports = {
     //Your bot data
     bot: {
@@ -14,7 +14,8 @@ module.exports = {
         type: '', //"java" or "bedrock"
         ip: '', //IP of your server - do not include port - e.g. "mc.hypixel.net"
         port: '', //PORT of your server - empty => default port (BE 19132, JA 25565)
-        icon: '' //Link to icon - like "https://website.com/icon.png"
+        icon: '', //Link to icon - like "https://website.com/icon.png"
+        vote: '' //Vote link - like "https://minecraftpocket-servers.com/server/80103/vote/"
     },
 
     //Basic code settings
@@ -85,4 +86,4 @@ module.exports = {
         ]
     }
 };
-//CONFIG DATA EXPLANATION - https://petyxbron.gitbook.io/minecraft-bot/installation/config-info
+//CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info

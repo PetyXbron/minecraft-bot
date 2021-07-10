@@ -29,6 +29,7 @@ server.type = config.server.type.toLowerCase();
 server.ip = config.server.ip.toLowerCase();
 server.port = parseInt(config.server.port)
 server.work = true
+server.vote = config.server.vote
 
 //Config check
 if(bot.token === '') { //Checks if you have entered bot token to config
