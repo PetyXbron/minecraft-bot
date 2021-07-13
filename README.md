@@ -10,17 +10,18 @@ This code could not be created without **Minecraft server util package**
   * [Author Github Profile](https://github.com/PassTheMayo)
 
 ## HOW TO USE & INSTALL
+
 ### Go to our [documentation](https://petyxbron.gitbook.io/minecraft-bot/installation/install) and see.
-*Documentation is unfortunately incomplete*
 
 ## TO DO
+
 * <s>Auto changing status message</s>
 * Auto changing status
 * <s>Status command</s>
 * <s>Ip command</s>
 * <s>Version command</s>
 * <s>List command</s>
-* Vote command
+* <s>Vote command</s>
 * Poll/Voting command
 * AdminTeam applications
 * Slash commands

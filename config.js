@@ -30,7 +30,6 @@ module.exports = {
     statusCH: {
         time: '30s', //How long should the status always be updated? - like "3min", "20s" or "1min" etc.
         guild: {
-            name: '', //Discord server name
             id: '', //Discord server ID, where's your channel
         },
         channel: {
