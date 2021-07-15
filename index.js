@@ -98,19 +98,30 @@ config.embeds.error = config.embeds.colors.error ? config.embeds.colors.error : 
 config.embeds.color = config.embeds.colors.normal ? config.embeds.colors.normal : '#77fc03' 
 
 
-if(config.settings.status) {
+if(config.settings.statusCH) {
     const dis = c.white('\nAuto changing status message disabled.')
     if(!info.guild.id) {
         console.log(error("You did not specify server ID in statusCH settings!") + dis);
-        config.settings.status = false
+        config.settings.statusCH = false
     } else if(!info.channel.id) {
         console.log(error("You did not specify channel ID in statusCH settings!") + dis);
-        config.settings.status = false
+        config.settings.statusCH = false
     }
 
     if(!info.time) {
         if(warns) console.log(warn("You did not specify time update period. Setting it to 30 seconds."))
         info.time = "30s"
+    }
+}
+
+if(config.settings.votingCH) {
+    const dis = c.white('\nVoting channel disabled.')
+    if(!config.votingCH.guild.id) {
+        console.log(error("You did not specify server ID in votingCH settings!") + dis);
+        config.settings.votingCH = false
+    } else if(!config.votingCH.channel.id) {
+        console.log(error("You did not specify channel ID in votingCH settings!") + dis);
+        config.settings.votingCH = false
     }
 }
 

@@ -23,6 +23,7 @@ This code could not be created without **Minecraft server util package**
 * <s>List command</s>
 * <s>Vote command</s>
 * Poll/Voting command
+* <s>Poll/Voting channel</s>
 * AdminTeam applications
 * Slash commands
 * Send embed message

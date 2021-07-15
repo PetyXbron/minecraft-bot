@@ -19,7 +19,13 @@ module.exports = async (bot) => {
         }
     }
 
-    if(config.settings.status && server.work) {
+    if(config.settings.votingCH) {
+        const guild = bot.guilds.cache.get(config.votingCH.guild.id);
+        const channel = guild.channels.cache.get(config.votingCH.channel.id);
+        console.log(`✅ Channel ${gr(channel.name)} is now set as voting channel!`)
+    }
+
+    if(config.settings.statusCH && server.work) {
         const guild = bot.guilds.cache.get(info.guild.id);
         const channel = guild.channels.cache.get(info.channel.id);
         const icon = server.icon ? server.icon : guild.icon

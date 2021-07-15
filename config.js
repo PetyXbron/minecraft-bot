@@ -23,7 +23,18 @@ module.exports = {
         warns: true, //Show warns? - true or false (boolean)
         readyScan: true, //On bot's start, send to console server's basic info? - true or false (boolean)
         split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc.
-        status: false //Enable auto-changing status message - true or false (boolean)
+        statusCH: false, //Enable auto-changing status message - true or false (boolean)
+        votingCH: false //Enable voting channel - true or false (boolean)
+    },
+
+    //Voting channel - https://docs.petyxbron.cz/config/config-info#voting-ch
+    votingCH: {
+        guild: {
+            id: ''
+        },
+        channel: {
+            id: ''
+        }
     },
 
     //Auto changing status message
