@@ -108,9 +108,11 @@ if(config.settings.statusCH) {
         config.settings.statusCH = false
     }
 
-    if(!info.time) {
-        if(warns) console.log(warn("You did not specify time update period. Setting it to 30 seconds."))
-        info.time = "30s"
+    if(config.settings.statusCH) {
+        if(!info.time) {
+            if(warns) console.log(warn("You did not specify time update period of statusCH. Setting it to 30 seconds."))
+            info.time = "30s"
+        }
     }
 }
 
@@ -122,6 +124,24 @@ if(config.settings.votingCH) {
     } else if(!config.votingCH.channel.id) {
         console.log(error("You did not specify channel ID in votingCH settings!") + dis);
         config.settings.votingCH = false
+    }
+
+    if(config.votingCH) {
+        if(!config.votingCH.time) {
+            console.log(warn("You did not specify time in votingCH settings! Setting it to 30 seconds."));
+            config.votingCH.time = "30s"
+        }
+
+        if(!config.votingCH.reactions.first) {
+            config.votingCH.reactions.first = "👍"
+        }
+        if (!config.votingCH.reactions.second) {
+            console.log(warn("You did not specify second reaction emoji! Second reaction disabled."));
+            config.votingCH.reactions.second = false
+        }
+        if (!config.votingCH.reactions.cancel) {
+            config.votingCH.reactions.cancel = "❌"
+        }
     }
 }
 

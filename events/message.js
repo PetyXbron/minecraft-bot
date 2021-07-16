@@ -10,20 +10,22 @@ module.exports = async (bot, message) => {
     const args = messageArray.slice(1);
     
     if(config.settings.votingCH) {
-        if(message.content.startsWith(prefix) || message.content.startsWith('!')) return;
-        message.react("👍")
-        message.react("👎")
-        message.react("❌")
-        const filter = (reaction, user) => reaction.emoji.name === "❌" && (user.id === message.author.id || message.guild.member(user.id).permissions.has("MANAGE_MESSAGES") && user.id !== bot.user.id);
-        const cancel = await message.createReactionCollector(filter, { time: ms('30s'), max: 1 })
+        if(message.content.startsWith(prefix)) return;
 
-        cancel.on('collect', (reaction, user) => {
+        message.react(config.votingCH.reactions.first)
+        if(config.votingCH.reactions.second) message.react(config.votingCH.reactions.second)
+        message.react(config.votingCH.reactions.cancel)
+
+        const filter = (reaction, user) => reaction.emoji.name === config.votingCH.reactions.cancel && (user.id === message.author.id || message.guild.member(user.id).permissions.has("MANAGE_MESSAGES") && user.id !== bot.user.id);
+        const cancel = await message.createReactionCollector(filter, { time: ms(config.votingCH.time), max: 1 })
+
+        cancel.on('collect', () => {
             message.reactions.removeAll()
         })
 
         cancel.on('end', () => {
-            if(message.reactions.cache.get("❌")) {
-                message.reactions.cache.get("❌").remove()
+            if(message.reactions.cache.get(config.votingCH.reactions.cancel)) {
+                message.reactions.cache.get(config.votingCH.reactions.cancel).remove()
             }
         })
     }

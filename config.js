@@ -29,6 +29,12 @@ module.exports = {
 
     //Voting channel - https://docs.petyxbron.cz/config/config-info#voting-ch
     votingCH: {
+        time: '30s', //Time for how long the cancel reaction should be deleted.
+        reactions: {
+            first: '👍', //First added reaction (the positive one)
+            second: '👎', //Second added reacion (the negative one)
+            cancel: '❌' //Third added reaction (cancel/remove button)
+        },
         guild: {
             id: ''
         },
@@ -41,10 +47,10 @@ module.exports = {
     statusCH: {
         time: '30s', //How long should the status always be updated? - like "3min", "20s" or "1min" etc.
         guild: {
-            id: '', //Discord server ID, where's your channel
+            id: '',
         },
         channel: {
-            id: '', //Discord channel ID
+            id: '',
         }
     },
     
