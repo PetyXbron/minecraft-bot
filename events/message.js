@@ -1,7 +1,19 @@
 const ms = require('ms')
+const version = require('../package.json').version
 
 module.exports = async (bot, message) => {
     if(message.author.bot) return;
+    if(message.channel.type === "dm") {
+        if(message.content.includes('minecraft-bot version')) {
+            message.channel.startTyping();
+            setTimeout(function(){
+                message.channel.stopTyping();
+                message.channel.send(version);
+            }, ms('1,5s'));
+            return;
+        }
+        return;
+    }
 
     const { prefix, server, config } = bot;
 
@@ -9,7 +21,7 @@ module.exports = async (bot, message) => {
     const cmd = messageArray[0];
     const args = messageArray.slice(1);
     
-    if(config.settings.votingCH) {
+    if(config.settings.votingCH && message.channel.id === config.votingCH.channel.id) {
         if(message.content.startsWith(prefix)) return;
 
         message.react(config.votingCH.reactions.first)
