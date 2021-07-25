@@ -29,3 +29,6 @@ This code could not be created without **Minecraft server util package**
 * Send embed message
 * Send message/announcement
 * Lockdown mode
+* Custom reply for command ip, test and version
+* Installation with repl.it
+* Better test command

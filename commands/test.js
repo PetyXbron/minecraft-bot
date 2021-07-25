@@ -1,4 +1,5 @@
 const { commands } = require("../config");
+const util = require('minecraft-server-util')
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!
@@ -7,6 +8,8 @@ module.exports.config = {
     enable: true //Enable this command? - true or false (boolean)
 };
 
-module.exports.run = async (message) => {
-    try { message.channel.send("Everything should work!"); } catch(e) { console.log(e); };
+module.exports.run = async (bot, message) => {
+    const { server, config } = bot
+
+    message.channel.send('Didn\'t you mean toast?')
 };
