@@ -12,6 +12,7 @@ This code could not be created without **Minecraft server util package**
 ## HOW TO USE & INSTALL
 
 ### Go to our [documentation](https://petyxbron.gitbook.io/minecraft-bot/installation/install) and see.
+[![Run on Repl.it](https://repl.it/badge/github/MrMazzone/dotreplit-example)](https://repl.it/github/MrMazzone/dotreplit-example)
 
 ## TO DO
 

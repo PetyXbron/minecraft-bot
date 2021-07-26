@@ -1,6 +1,6 @@
 {
   "name": "minecraft-bot",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Discord minecraft bot, with which you can check your minecraft server status (online players, version, online status etc.)",
   "main": "index.js",
   "scripts": {
