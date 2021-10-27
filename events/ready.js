@@ -235,5 +235,5 @@ module.exports = async (bot) => {
         }
     }
 
-    console.log("✅ " + gr(bot.user.username) + " is now working")
+    console.log("✅ " + gr(bot.user.username) + " is now working with prefix " + gr(bot.prefix))
 }
