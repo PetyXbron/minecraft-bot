@@ -29,14 +29,14 @@ module.exports.run = async (bot, message) => {
                         { name: "Players", value: `**${response.onlinePlayers}**/**${response.maxPlayers}**` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
                     )
                     .setColor(config.embeds.color)
-                message.channel.send(serverEmbed);
+                message.channel.send({ embeds: [serverEmbed] });
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()
                     .setAuthor(`${ip1}:${port1}`, 'https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg')
                     .setDescription(':x: **OFFLINE**')
                     .setColor(config.embeds.error)
-                message.channel.send(errorEmbed);
+                message.channel.send({ embeds: [errorEmbed] });
 
                 throw error;
             });

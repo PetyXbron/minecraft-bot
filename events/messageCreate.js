@@ -5,10 +5,9 @@ module.exports = async (bot, message) => {
     if(message.author.bot) return;
     if(message.channel.type === "dm") {
         if(message.content.includes('minecraft-bot version')) {
-            message.channel.startTyping();
+            message.channel.sendTyping();
             setTimeout(function(){
-                message.channel.stopTyping();
-                message.channel.send(version);
+                message.channel.send({ content: version });
             }, ms('1,5s'));
             return;
         }
@@ -28,8 +27,8 @@ module.exports = async (bot, message) => {
         if(config.votingCH.reactions.second) message.react(config.votingCH.reactions.second)
         message.react(config.votingCH.reactions.cancel)
 
-        const filter = (reaction, user) => reaction.emoji.name === config.votingCH.reactions.cancel && (user.id === message.author.id || message.guild.member(user.id).permissions.has("MANAGE_MESSAGES") && user.id !== bot.user.id);
-        const cancel = await message.createReactionCollector(filter, { time: ms(config.votingCH.time), max: 1 })
+        const filter = (reaction, user) => reaction.emoji.name === config.votingCH.reactions.cancel && (user.id === message.author.id || message.guild.members.cache.get(user.id).permissions.has("MANAGE_MESSAGES") && user.id !== bot.user.id);
+        const cancel = await message.createReactionCollector({ filter, time: ms(config.votingCH.time), max: 1 })
 
         cancel.on('collect', () => {
             message.reactions.removeAll()

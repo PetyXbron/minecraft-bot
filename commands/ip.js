@@ -17,6 +17,6 @@ module.exports.run = async (bot, message, args) => {
             .setTitle((config.server.name ? config.server.name : message.guild.name) + ' IP:', icon)
             .setDescription(`\`${server.ip}\`:\`${server.port}\``)
             .setColor(config.embeds.color);
-        message.channel.send(ipEmbed);
+        message.channel.send({ embeds: [ipEmbed] });
     }
 };
