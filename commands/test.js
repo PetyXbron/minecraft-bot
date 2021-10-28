@@ -11,5 +11,5 @@ module.exports.config = {
 module.exports.run = async (bot, message) => {
     const { server, config } = bot
 
-    message.channel.send('Didn\'t you mean toast?')
+    message.channel.send({ content: 'Didn\'t you mean toast?' });
 };

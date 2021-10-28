@@ -41,7 +41,7 @@ module.exports = async (bot) => {
                         { name: "INFO", value: `EDITION §\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                     )
                     .setColor(config.embeds.color)
-                msg = await channel.send(serverEmbed)
+                msg = await channel.send({ embeds: [serverEmbed] })
             } catch(err) { console.log(err)}
 
             console.log(`✅ Successfully sent status message to ${gr(channel.name)}!`)
@@ -235,5 +235,5 @@ module.exports = async (bot) => {
         }
     }
 
-    console.log("✅ " + gr(bot.user.username) + " is now working")
+    console.log("✅ " + gr(bot.user.username) + " is now working with prefix " + gr(bot.prefix))
 }

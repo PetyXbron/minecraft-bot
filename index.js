@@ -1,10 +1,11 @@
 const Discord = require('discord.js'),
 fs = require('fs'),
 c = require('chalk'),
-ms = require('ms')
+ms = require('ms'),
+Intents = Discord.Intents
 
 //Discord client - I like "bot" more, then "client"
-const bot = new Discord.Client({disableEveryone: true});
+const bot = new Discord.Client({ intents: [ Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MESSAGE_TYPING, Intents.FLAGS.GUILD_MEMBERS ] });
 
 const config = require('./config'),
 activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activites, discord.js supports more (but I don't care)

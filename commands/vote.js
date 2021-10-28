@@ -19,6 +19,6 @@ module.exports.run = async (bot, message, args) => {
             .setTitle('Vote for ' + serverName, icon)
             .setDescription(`[Here](${server.vote}) you can vote for ${serverName}!`)
             .setColor(config.embeds.color);
-        message.channel.send(ipEmbed);
+        message.channel.send({ embeds: [ipEmbed] });
     }
 };

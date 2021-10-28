@@ -39,5 +39,5 @@ module.exports.run = async (bot, message, args) => {
         .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
         .setDescription(`**${version}**`)
         .setColor(config.embeds.color);
-    message.channel.send(versionEmbed);
+        message.channel.send({ embeds: [versionEmbed] });
 };
