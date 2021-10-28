@@ -17,7 +17,7 @@ This code could not be created without **Minecraft server util package**
 ## TO DO
 
 * <s>Auto changing status message</s>
-* Auto changing status
+* Auto changinng bot status (activity)
 * <s>Status command</s>
 * <s>Ip command</s>
 * <s>Version command</s>
@@ -27,9 +27,13 @@ This code could not be created without **Minecraft server util package**
 * <s>Poll/Voting channel</s>
 * AdminTeam applications
 * Slash commands
-* Send embed message
-* Send message/announcement
-* Lockdown mode
+* Send custom embed message
+* Send custom message/announcement
+* Lockdown mode (no messages, no new members)
 * Custom reply for command ip, test and version
-* Installation with repl.it
-* Better test command
+* <s>Installation with repl.it</s>
+* Better test command (shows mroe information)
+* More text languages (or custom)
+* Create threads from every message in voting channel
+* Bot status (activity) for players online number
+* Get invite link on every bot start

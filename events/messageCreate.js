@@ -3,14 +3,11 @@ const version = require('../package.json').version
 
 module.exports = async (bot, message) => {
     if(message.author.bot) return;
-    if(message.channel.type === "dm") {
-        if(message.content.includes('minecraft-bot version')) {
-            message.channel.sendTyping();
-            setTimeout(function(){
-                message.channel.send({ content: version });
-            }, ms('1,5s'));
-            return;
-        }
+    if(message.content.includes(`minecraft-bot version`)) {
+        message.channel.sendTyping();
+        setTimeout(function(){
+            message.channel.send({ content: version });
+        }, ms('1s'));
         return;
     }
 
