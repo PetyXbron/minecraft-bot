@@ -58,8 +58,13 @@ module.exports = async (bot) => {
                 .then((response) => {
                     const versionOriginal = response.version
                     if(settings.split) {
-                        const versionArray = versionOriginal.split(" ")
-                        var versionAdvanced = versionArray[versionArray.length - 1]
+                        if(versionOriginal.includes("Spigot")) {
+                            var versionAdvanced = versionOriginal.replace("Spigot", "")
+                        } else if (versionOriginal.includes("Paper")) {
+                            var versionAdvanced = versionOriginal.replace("Paper", "")
+                        } else if (versionOriginal.includes("Tuinity")) {
+                            var versionAdvanced = versionOriginal.replace("Tuinity", "")
+                        }
                     }
                     const version = versionAdvanced ? versionAdvanced : versionOriginal
     
@@ -89,12 +94,17 @@ module.exports = async (bot) => {
         } else {
             util.statusBedrock(ip1, { port: port1 })
             .then((response) => {
-              const versionOriginal = response.version;
-              if(settings.split) {
-                  const versionArray = versionOriginal.split(" ");
-                  var versionAdvanced = versionArray[versionArray.length - 1];
-              };
-              const version = versionAdvanced ? versionAdvanced : versionOriginal;
+                const versionOriginal = response.version
+                if(settings.split) {
+                    if(versionOriginal.includes("Spigot")) {
+                        var versionAdvanced = versionOriginal.replace("Spigot", "")
+                    } else if (versionOriginal.includes("Paper")) {
+                        var versionAdvanced = versionOriginal.replace("Paper", "")
+                    } else if (versionOriginal.includes("Tuinity")) {
+                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
+                    }
+                }
+                const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
                 .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
@@ -129,8 +139,13 @@ module.exports = async (bot) => {
                 .then((response) => {
                     const versionOriginal = response.version
                     if(settings.split) {
-                        const versionArray = versionOriginal.split(" ")
-                        var versionAdvanced = versionArray[versionArray.length - 1]
+                        if(versionOriginal.includes("Spigot")) {
+                            var versionAdvanced = versionOriginal.replace("Spigot", "")
+                        } else if (versionOriginal.includes("Paper")) {
+                            var versionAdvanced = versionOriginal.replace("Paper", "")
+                        } else if (versionOriginal.includes("Tuinity")) {
+                            var versionAdvanced = versionOriginal.replace("Tuinity", "")
+                        }
                     }
                     const version = versionAdvanced ? versionAdvanced : versionOriginal
     
@@ -161,12 +176,17 @@ module.exports = async (bot) => {
             setInterval(() =>
             util.statusBedrock(ip1, { port: port1 })
             .then((response) => {
-              const versionOriginal = response.version;
-              if(settings.split) {
-                  const versionArray = versionOriginal.split(" ");
-                  var versionAdvanced = versionArray[versionArray.length - 1];
-              };
-              const version = versionAdvanced ? versionAdvanced : versionOriginal;
+                const versionOriginal = response.version
+                if(settings.split) {
+                    if(versionOriginal.includes("Spigot")) {
+                        var versionAdvanced = versionOriginal.replace("Spigot", "")
+                    } else if (versionOriginal.includes("Paper")) {
+                        var versionAdvanced = versionOriginal.replace("Paper", "")
+                    } else if (versionOriginal.includes("Tuinity")) {
+                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
+                    }
+                }
+                const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
                 .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)

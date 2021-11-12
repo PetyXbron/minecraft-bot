@@ -21,18 +21,28 @@ module.exports.run = async (bot, message, args) => {
         const response = await util.status(server.ip, { port: server.port })
         const versionOriginal = response.version
         if(settings.split) {
-            const versionArray = versionOriginal.split(" ")
-            var versionAdvanced = versionArray[versionArray.length - 1]
+            if(versionOriginal.includes("Spigot")) {
+                var versionAdvanced = versionOriginal.replace("Spigot", "")
+            } else if (versionOriginal.includes("Paper")) {
+                var versionAdvanced = versionOriginal.replace("Paper", "")
+            } else if (versionOriginal.includes("Tuinity")) {
+                var versionAdvanced = versionOriginal.replace("Tuinity", "")
+            }
         }
-        var version = versionAdvanced ? versionAdvanced : versionOriginal
+        const version = versionAdvanced ? versionAdvanced : versionOriginal
     } else {
         const response = await util.statusBedrock(server.ip, { port: server.port })
         const versionOriginal = response.version
         if(settings.split) {
-            const versionArray = versionOriginal.split(" ")
-            var versionAdvanced = versionArray[versionArray.length - 1]
+            if(versionOriginal.includes("Spigot")) {
+                var versionAdvanced = versionOriginal.replace("Spigot", "")
+            } else if (versionOriginal.includes("Paper")) {
+                var versionAdvanced = versionOriginal.replace("Paper", "")
+            } else if (versionOriginal.includes("Tuinity")) {
+                var versionAdvanced = versionOriginal.replace("Tuinity", "")
+            }
         }
-        var version = versionAdvanced ? versionAdvanced : versionOriginal
+        const version = versionAdvanced ? versionAdvanced : versionOriginal
     }
 
     const versionEmbed = new Discord.MessageEmbed()

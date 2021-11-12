@@ -28,8 +28,13 @@ module.exports.run = async (bot, message) => {
 
                 const versionOriginal = response.version
                 if(settings.split) {
-                    const versionArray = versionOriginal.split(" ")
-                    var versionAdvanced = versionArray[versionArray.length - 1]
+                    if(versionOriginal.includes("Spigot")) {
+                        var versionAdvanced = versionOriginal.replace("Spigot", "")
+                    } else if (versionOriginal.includes("Paper")) {
+                        var versionAdvanced = versionOriginal.replace("Paper", "")
+                    } else if (versionOriginal.includes("Tuinity")) {
+                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
+                    }
                 }
                 const version = versionAdvanced ? versionAdvanced : versionOriginal
 
