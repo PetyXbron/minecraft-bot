@@ -32,7 +32,7 @@ This code could not be created without **Minecraft server util package**
 * Lockdown mode (no messages, no new members)
 * Custom reply for command ip, test and version
 * <s>Installation with repl.it</s>
-* Better test command (shows mroe information)
+* Better test command (shows more information)
 * More text languages (or custom)
 * Create threads from every message in voting channel
 * Bot status (activity) for players online number

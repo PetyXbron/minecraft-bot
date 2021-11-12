@@ -5,7 +5,7 @@ db = require('quick.db'),
 ms = require('ms'),
 gr = chalk.keyword('green').bold,
 bl = chalk.keyword('blue'),
-warn = chalk.keyword('yellow').bold
+warn = chalk.keyword('yellow').bold;
 
 module.exports = async (bot) => {
     const {server, config, info, settings} = bot
@@ -56,11 +56,6 @@ module.exports = async (bot) => {
         if(server.type === 'java') {
             util.status(ip1, { port: port1 })
                 .then((response) => {
-                    const favic = response.favicon
-                    let icon = favic.split(`,`);
-                    let imageStream = new Buffer.from(icon[1], 'base64');
-                    var attachment = new Discord.MessageAttachment(imageStream, 'logo.png');
-    
                     const versionOriginal = response.version
                     if(settings.split) {
                         const versionArray = versionOriginal.split(" ")
@@ -69,8 +64,7 @@ module.exports = async (bot) => {
                     const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                     const serverEmbed = new Discord.MessageEmbed()
-                        .attachFiles(attachment)
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, 'attachment://logo.png')
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
                             { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
@@ -79,7 +73,7 @@ module.exports = async (bot) => {
                         .setColor(config.embeds.color)
                         .setFooter('Updated')
                         .setTimestamp()
-                    msg.edit(serverEmbed);
+                    msg.edit({ embeds: [serverEmbed] })
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.MessageEmbed()
@@ -88,7 +82,7 @@ module.exports = async (bot) => {
                     .setColor(config.embeds.error)
                     .setFooter('Updated')
                     .setTimestamp()
-                    msg.edit(errorEmbed);
+                    msg.edit({ embeds: [errorEmbed] });
     
                     throw error;
                 })
@@ -112,7 +106,7 @@ module.exports = async (bot) => {
                 .setColor(config.embeds.color)
                 .setFooter('Updated')
                 .setTimestamp()
-                msg.edit(serverEmbed);
+                msg.edit({ embeds: [serverEmbed] });
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()
@@ -121,7 +115,7 @@ module.exports = async (bot) => {
                 .setColor(config.embeds.error)
                 .setFooter('Updated')
                 .setTimestamp()
-                msg.edit(errorEmbed);
+                msg.edit({ embeds: [errorEmbed] });
     
                 throw error;
             })
@@ -133,11 +127,6 @@ module.exports = async (bot) => {
             setInterval(() =>
             util.status(ip1, { port: port1 })
                 .then((response) => {
-                    const favic = response.favicon
-                    let icon = favic.split(`,`);
-                    let imageStream = new Buffer.from(icon[1], 'base64');
-                    var attachment = new Discord.MessageAttachment(imageStream, 'logo.png');
-    
                     const versionOriginal = response.version
                     if(settings.split) {
                         const versionArray = versionOriginal.split(" ")
@@ -146,8 +135,7 @@ module.exports = async (bot) => {
                     const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                     const serverEmbed = new Discord.MessageEmbed()
-                        .attachFiles(attachment)
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, 'attachment://logo.png')
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
                             { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
@@ -156,7 +144,7 @@ module.exports = async (bot) => {
                         .setColor(config.embeds.color)
                         .setFooter('Updated')
                         .setTimestamp()
-                    msg.edit(serverEmbed);
+                    msg.edit({ embeds: [serverEmbed] });
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.MessageEmbed()
@@ -165,7 +153,7 @@ module.exports = async (bot) => {
                     .setColor(config.embeds.error)
                     .setFooter('Updated')
                     .setTimestamp()
-                    msg.edit(errorEmbed);
+                    msg.edit({ embeds: [errorEmbed] });
     
                     throw error;
                 }), ms(info.time));
@@ -190,7 +178,7 @@ module.exports = async (bot) => {
                 .setColor(config.embeds.color)
                 .setFooter('Updated')
                 .setTimestamp()
-                msg.edit(serverEmbed);
+                msg.edit({ embeds: [serverEmbed] });
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()
@@ -199,7 +187,7 @@ module.exports = async (bot) => {
                 .setColor(config.embeds.error)
                 .setFooter('Updated')
                 .setTimestamp()
-                msg.edit(errorEmbed);
+                msg.edit({ embeds: [errorEmbed] });
     
                 throw error;
             }), ms(info.time));
