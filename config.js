@@ -21,9 +21,10 @@ module.exports = {
     //Basic code settings
     settings: {
         warns: true, //Show warns? - true or false (boolean)
-        debug: false, //Log most of changes and updates (pretty spam) - true or false (boolean)
+        debug: false, //Log most of changes and updates (pretty spam)? - true or false (boolean)
+        inviteLink: true, //Show bot invite link on bot start? - true or false (boolean)
         readyScan: true, //On bot's start, send to console server's basic info? - true or false (boolean)
-        split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc.
+        split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc. - true or false (boolean)
         statusCH: false, //Enable auto-changing status message - true or false (boolean)
         votingCH: false //Enable voting channel - true or false (boolean)
     },

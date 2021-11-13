@@ -35,4 +35,4 @@ This code could not be created without **Minecraft server util package**
 * More text languages (or custom)
 * Create threads from every message in voting channel
 * <s>Bot status (activity) for players online number</s>
-* Get invite link on every bot start
+* <s>Get invite link on bot start (available option in config)</s>

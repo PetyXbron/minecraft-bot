@@ -273,4 +273,5 @@ module.exports = async (bot) => {
     }
 
     console.log("✅ " + gr(bot.user.username) + " is now working with prefix " + gr(bot.prefix))
+    if(settings.inviteLink) console.log("☑️ " + " Invite " + chalk.blue.bold(bot.user.username) + " on " + chalk.blue.bold(`https://discord.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=11328`))
 }
