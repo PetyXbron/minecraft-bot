@@ -9,34 +9,45 @@ warn = chalk.keyword('yellow').bold;
 
 module.exports = async (bot) => {
     const {server, config, info, settings} = bot
+    const debug = config.settings.debug
 
     if(bot.status) {
-        if(bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
-            if(server.type === 'java') {
-                var response = await util.status(server.ip, { port: server.port })
-            } else {
-                var response = await util.statusBedrock(server.ip, { port: server.port })
+        if(settings.autoStatus) {
+            setInterval(async () => {
+                if(bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
+
+                    if(server.type === 'java') {
+                        var response = await util.status(server.ip, { port: server.port });
+                    } else {
+                        var response = await util.statusBedrock(server.ip, { port: server.port });
+                    };
+
+                    var status = bot.status;
+
+                    if(status.includes("{onlinePlayers}")) {
+                        status = status.replace("{onlinePlayers}", response.onlinePlayers)
+                    };
+                        
+                    if(status.includes("{maxPlayers}")) {
+                        status = status.replace("{maxPlayers}", response.maxPlayers)
+                    };
+                }
+
+                try {
+                    bot.user.setActivity(status, {type: bot.activity}) //Sets bot activity
+                    if(debug) console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${status}`))
+                } catch(e) {
+                    console.log()
+                }
+
+            }, ms(config.autoStatus.time));
+        } else {
+            try {
+                bot.user.setActivity(bot.status, {type: bot.activity}) //Sets bot activity
+                console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${bot.status}`))
+            } catch(e) {
+                console.log()
             }
-
-            var status = bot.status
-
-            if(status.includes("{onlinePlayers}")) {
-                status = status.replace("{onlinePlayers}", response.onlinePlayers)
-            }
-            
-            if(status.includes("{maxPlayers}")) {
-                status = status.replace("{maxPlayers}", response.maxPlayers)
-            }
-
-        }
-
-        const presence = status ? status : bot.status
-
-        try {
-            bot.user.setActivity(presence, {type: bot.activity}) //Sets bot activity
-            console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${bot.status}`))
-        } catch(e) {
-            console.log()
         }
     }
 

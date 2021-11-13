@@ -35,5 +35,5 @@ This code could not be created without **Minecraft server util package**
 * Better test command (shows more information)
 * More text languages (or custom)
 * Create threads from every message in voting channel
-* Bot status (activity) for players online number
+* <s>Bot status (activity) for players online number</s>
 * Get invite link on every bot start

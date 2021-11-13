@@ -98,6 +98,12 @@ if (config.server.name === '' || !config.server.name) {
 config.embeds.error = config.embeds.colors.error ? config.embeds.colors.error : '#f53636'
 config.embeds.color = config.embeds.colors.normal ? config.embeds.colors.normal : '#77fc03' 
 
+if(config.settings.autoStatus) {
+    if(!config.autoStatus.time) {
+        if(warns) console.log(warn("You did not specify time update period of bot's status. Setting it to 10 minutes."))
+        config.autoStatus.time = "10min"
+    }
+}
 
 if(config.settings.statusCH) {
     const dis = c.white('\nAuto changing status message disabled.')
