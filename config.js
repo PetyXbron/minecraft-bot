@@ -24,11 +24,11 @@ module.exports = {
         debug: false, //Log most of changes and updates (pretty spam) - true or false (boolean)
         readyScan: true, //On bot's start, send to console server's basic info? - true or false (boolean)
         split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc.
-        autoStatus: false, //Enable auto-changing bot's status - true or false (boolean)
         statusCH: false, //Enable auto-changing status message - true or false (boolean)
         votingCH: false //Enable voting channel - true or false (boolean)
     },
     
+    //Period of auto changing status if you are using {onlinePlayers} or {maxPlayers} in bot's status
     autoStatus: {
         time: '10min'
     },

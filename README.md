@@ -17,7 +17,6 @@ This code could not be created without **Minecraft server util package**
 ## TO DO
 
 * <s>Auto changing status message</s>
-* Auto changinng bot status (activity)
 * <s>Status command</s>
 * <s>Ip command</s>
 * <s>Version command</s>

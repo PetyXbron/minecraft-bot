@@ -12,26 +12,23 @@ module.exports = async (bot) => {
     const debug = config.settings.debug
 
     if(bot.status) {
-        if(settings.autoStatus) {
+        if(bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
             setInterval(async () => {
-                if(bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
+                let status = bot.status;
 
-                    if(server.type === 'java') {
-                        var response = await util.status(server.ip, { port: server.port });
-                    } else {
-                        var response = await util.statusBedrock(server.ip, { port: server.port });
-                    };
+                if(server.type === 'java') {
+                    var response = await util.status(server.ip, { port: server.port });
+                } else {
+                    var response = await util.statusBedrock(server.ip, { port: server.port });
+                };
 
-                    var status = bot.status;
-
-                    if(status.includes("{onlinePlayers}")) {
-                        status = status.replace("{onlinePlayers}", response.onlinePlayers)
-                    };
+                if(status.includes("{onlinePlayers}")) {
+                    status = status.replace("{onlinePlayers}", response.onlinePlayers)
+                };
                         
-                    if(status.includes("{maxPlayers}")) {
-                        status = status.replace("{maxPlayers}", response.maxPlayers)
-                    };
-                }
+                if(status.includes("{maxPlayers}")) {
+                    status = status.replace("{maxPlayers}", response.maxPlayers)
+                };
 
                 try {
                     bot.user.setActivity(status, {type: bot.activity}) //Sets bot activity
