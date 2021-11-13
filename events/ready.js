@@ -11,8 +11,29 @@ module.exports = async (bot) => {
     const {server, config, info, settings} = bot
 
     if(bot.status) {
+        if(bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
+            if(server.type === 'java') {
+                var response = await util.status(server.ip, { port: server.port })
+            } else {
+                var response = await util.statusBedrock(server.ip, { port: server.port })
+            }
+
+            var status = bot.status
+
+            if(status.includes("{onlinePlayers}")) {
+                status = status.replace("{onlinePlayers}", response.onlinePlayers)
+            }
+            
+            if(status.includes("{maxPlayers}")) {
+                status = status.replace("{maxPlayers}", response.maxPlayers)
+            }
+
+        }
+
+        const presence = status ? status : bot.status
+
         try {
-            bot.user.setActivity(bot.status, {type: bot.activity}) //Sets bot activity
+            bot.user.setActivity(presence, {type: bot.activity}) //Sets bot activity
             console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${bot.status}`))
         } catch(e) {
             console.log()
