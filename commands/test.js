@@ -9,7 +9,11 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message) => {
-    const { server, config } = bot
+    const { server, config, text } = bot
 
-    message.channel.send({ content: 'Didn\'t you mean toast?' });
+    if (!text.test.content) {
+        message.reply({ content: 'Test message reply.' });
+    } else {
+        message.reply({ content: text.test.content });
+    }
 };

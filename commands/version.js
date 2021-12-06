@@ -2,6 +2,7 @@ const { commands, settings } = require("../config");
 const Discord = require('discord.js');
 const db = require('quick.db')
 const util = require('minecraft-server-util')
+const warn = require('chalk').keyword('yellow').bold
 
 module.exports.config = {
     name: "version", //Name of command - RENAME THE FILE TOO!!!
@@ -11,43 +12,65 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message, args) => {
-    const { server, config } = bot;
-
+    const { server, config, text } = bot;
+    const warns = config.settings.warns;
+    const settings = config.settings
+;
     if(!server.work) return;
 
     let icon = server.icon ? server.icon : message.guild.icon;
     
     if(server.type === 'java') {
-        const response = await util.status(server.ip, { port: server.port })
-        const versionOriginal = response.version
-        if(settings.split) {
-            if(versionOriginal.includes("Spigot")) {
-                var versionAdvanced = versionOriginal.replace("Spigot", "")
-            } else if (versionOriginal.includes("Paper")) {
-                var versionAdvanced = versionOriginal.replace("Paper", "")
-            } else if (versionOriginal.includes("Tuinity")) {
-                var versionAdvanced = versionOriginal.replace("Tuinity", "")
-            }
-        }
-        const version = versionAdvanced ? versionAdvanced : versionOriginal
-    } else {
-        const response = await util.statusBedrock(server.ip, { port: server.port })
-        const versionOriginal = response.version
-        if(settings.split) {
-            if(versionOriginal.includes("Spigot")) {
-                var versionAdvanced = versionOriginal.replace("Spigot", "")
-            } else if (versionOriginal.includes("Paper")) {
-                var versionAdvanced = versionOriginal.replace("Paper", "")
-            } else if (versionOriginal.includes("Tuinity")) {
-                var versionAdvanced = versionOriginal.replace("Tuinity", "")
-            }
-        }
-        const version = versionAdvanced ? versionAdvanced : versionOriginal
-    }
+        try {
+            const response = await util.status(server.ip, { port: server.port })
+            var versionOriginal = response.version;
+        } catch(e) {
+            if (warns) console.log(warn(`Couldn't get version from server! Getting it from config..`))
+            var versionOriginal = config.server.version;
+        };   
 
-    const versionEmbed = new Discord.MessageEmbed()
+        console.log("settings.split " + settings.split)
+        console.log("versionOriginal " + versionOriginal)
+
+        if(settings.split) {
+            if(versionOriginal.includes("Spigot")) {
+                var versionAdvanced = versionOriginal.replace("Spigot", "")
+            } else if (versionOriginal.includes("Paper")) {
+                var versionAdvanced = versionOriginal.replace("Paper", "")
+            } else if (versionOriginal.includes("Tuinity")) {
+                var versionAdvanced = versionOriginal.replace("Tuinity", "")
+            }
+        }
+        const version = versionAdvanced ? versionAdvanced : versionOriginal
+        
+        const versionEmbed = new Discord.MessageEmbed()
         .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
         .setDescription(`**${version}**`)
         .setColor(config.embeds.color);
         message.channel.send({ embeds: [versionEmbed] });
+    } else {
+        try {
+            const response = await util.statusBedrock(server.ip, { port: server.port })
+            var versionOriginal = response.version
+        } catch(e) {
+            if (warns) console.log(warn(`Couldn't get version from server! Getting it from config..`))
+            var versionOriginal = config.server.version
+        }
+        if(settings.split) {
+            if(versionOriginal.includes("Spigot")) {
+                var versionAdvanced = versionOriginal.replace("Spigot", "")
+            } else if (versionOriginal.includes("Paper")) {
+                var versionAdvanced = versionOriginal.replace("Paper", "")
+            } else if (versionOriginal.includes("Tuinity")) {
+                var versionAdvanced = versionOriginal.replace("Tuinity", "")
+            }
+        }
+        const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+        const versionEmbed = new Discord.MessageEmbed()
+        .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
+        .setDescription(`**${version}**`)
+        .setColor(config.embeds.color);
+        message.channel.send({ embeds: [versionEmbed] });
+    }
 };

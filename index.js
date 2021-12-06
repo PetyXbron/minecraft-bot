@@ -168,6 +168,7 @@ bot.settings.split = bot.settings.readyScan
 bot.server = server
 bot.config = config
 bot.info = info
+bot.text = config.messages
 
 //Event handler
 const eventsFolder = fs.readdirSync('./events'); //Finds files in event folder

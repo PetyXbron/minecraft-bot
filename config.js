@@ -15,6 +15,7 @@ module.exports = {
         ip: '', //IP of your server - do not include port - e.g. "mc.hypixel.net"
         port: '', //PORT of your server - empty => default port (BE 19132, JA 25565)
         icon: '', //Link to icon - like "https://website.com/icon.png"
+        version: '', //Minecraft version of sever
         vote: '' //Vote link - like "https://minecraftpocket-servers.com/server/80103/vote/"
     },
 
@@ -107,6 +108,29 @@ module.exports = {
             'announce',
             'announcement'
         ]
+    },
+
+    messages: {
+        ip: {
+            title: "{serverName} IP:",
+            description: "\`{serverIp}\`:\`{serverPort}\`"
+        },
+        list: {
+            //NOT AVAILABLE YET
+        },
+        status: {
+            //NOT AVAILABLE YET
+        },
+        test: {
+            content: "Test message reply."
+        },
+        version: {
+            //NOT AVAILABLE YET
+        },
+        vote: {
+            title: "Vote for {serverName}:",
+            description: "[Here]({voteLink}) you can vote for {serverName}."
+        }
     }
 };
 //CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info
