@@ -10,6 +10,7 @@ warn = chalk.keyword('yellow').bold;
 module.exports = async (bot) => {
     const {server, config, info, settings} = bot
     const debug = config.settings.debug
+    var warns = config.settings.warns
 
     if(bot.status) {
         if(bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
@@ -17,24 +18,44 @@ module.exports = async (bot) => {
                 let status = bot.status;
 
                 if(server.type === 'java') {
-                    var response = await util.status(server.ip, { port: server.port });
+                    try {
+                        var result = await util.status(server.ip, server.port)
+                    } catch(err) {
+                        console.log(err)
+                        var errored = true
+                    }
                 } else {
-                    var response = await util.statusBedrock(server.ip, { port: server.port });
+                    try {
+                        var result = await util.statusBedrock(server.ip, server.port)
+                    } catch(err) {
+                        console.log(err)
+                        var errored = true
+                    }
                 };
 
-                if(status.includes("{onlinePlayers}")) {
-                    status = status.replace("{onlinePlayers}", response.onlinePlayers)
-                };
-                        
-                if(status.includes("{maxPlayers}")) {
-                    status = status.replace("{maxPlayers}", response.maxPlayers)
-                };
+                if(!errored) {
+                    if(status.includes("{onlinePlayers}")) {
+                        status = status.replace("{onlinePlayers}", result.players.online)
+                    };
+                            
+                    if(status.includes("{maxPlayers}")) {
+                        status = status.replace("{maxPlayers}", result.players.max)
+                    };
 
-                try {
-                    bot.user.setActivity(status, {type: bot.activity}) //Sets bot activity
-                    if(debug) console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${status}`))
-                } catch(e) {
-                    console.log()
+                    try {
+                        bot.user.setActivity(status, {type: bot.activity}) //Sets bot activity
+                        if(debug) console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${status}`))
+                    } catch(e) {
+                        console.log()
+                    }
+                } else {
+                    const status = "Offline"
+                    try {
+                        bot.user.setActivity(status, {type: bot.activity}) //Sets bot activity
+                        if(debug) console.log(warn('Server was not found! Status set to ') + gr(`${bot.activity.toLowerCase()} ${status}`))
+                    } catch(e) {
+                        console.log()
+                    }
                 }
 
             }, ms(config.autoStatus.time));
@@ -83,9 +104,9 @@ module.exports = async (bot) => {
         port1 = server.port
     
         if(server.type === 'java') {
-            util.status(ip1, { port: port1 })
-                .then((response) => {
-                    const versionOriginal = response.version
+            util.status(ip1, port1)
+                .then((result) => {
+                    const versionOriginal = result.version.name
                     if(settings.split) {
                         if(versionOriginal.includes("Spigot")) {
                             var versionAdvanced = versionOriginal.replace("Spigot", "")
@@ -101,7 +122,7 @@ module.exports = async (bot) => {
                         .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
-                            { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
+                            { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + (result.samplePlayers ? "\n\`\`\`" + result.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)
@@ -111,19 +132,19 @@ module.exports = async (bot) => {
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                    .setDescription(':x: **OFFLINE**')
-                    .setColor(config.embeds.error)
-                    .setFooter('Updated')
-                    .setTimestamp()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setDescription(':x: **OFFLINE**')
+                        .setColor(config.embeds.error)
+                        .setFooter('Updated')
+                        .setTimestamp()
                     msg.edit({ embeds: [errorEmbed] });
-    
-                    throw error;
+
+                    if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error)
                 })
         } else {
-            util.statusBedrock(ip1, { port: port1 })
-            .then((response) => {
-                const versionOriginal = response.version
+            util.statusBedrock(ip1, port1)
+            .then((result) => {
+                const versionOriginal = result.version.name
                 if(settings.split) {
                     if(versionOriginal.includes("Spigot")) {
                         var versionAdvanced = versionOriginal.replace("Spigot", "")
@@ -139,7 +160,7 @@ module.exports = async (bot) => {
                 .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                 .setDescription(`:white_check_mark: **ONLINE**`)
                 .addFields(
-                    { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` , inline: false },
+                    { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` , inline: false },
                     { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                 )
                 .setColor(config.embeds.color)
@@ -149,14 +170,14 @@ module.exports = async (bot) => {
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                .setDescription(':x: **OFFLINE**')
-                .setColor(config.embeds.error)
-                .setFooter('Updated')
-                .setTimestamp()
+                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setDescription(':x: **OFFLINE**')
+                    .setColor(config.embeds.error)
+                    .setFooter('Updated')
+                    .setTimestamp()
                 msg.edit({ embeds: [errorEmbed] });
     
-                throw error;
+                if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error)
             })
         }
 
@@ -164,9 +185,9 @@ module.exports = async (bot) => {
 
         if(server.type === 'java') {
             setInterval(() =>
-            util.status(ip1, { port: port1 })
-                .then((response) => {
-                    const versionOriginal = response.version
+            util.status(ip1, port1)
+                .then((result) => {
+                    const versionOriginal = result.version.name
                     if(settings.split) {
                         if(versionOriginal.includes("Spigot")) {
                             var versionAdvanced = versionOriginal.replace("Spigot", "")
@@ -182,7 +203,7 @@ module.exports = async (bot) => {
                         .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
-                            { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
+                            { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + (result.samplePlayers ? "\n\`\`\`" + result.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)
@@ -192,20 +213,20 @@ module.exports = async (bot) => {
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                    .setDescription(':x: **OFFLINE**')
-                    .setColor(config.embeds.error)
-                    .setFooter('Updated')
-                    .setTimestamp()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setDescription(':x: **OFFLINE**')
+                        .setColor(config.embeds.error)
+                        .setFooter('Updated')
+                        .setTimestamp()
                     msg.edit({ embeds: [errorEmbed] });
-    
-                    throw error;
+
+                    if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error)
                 }), ms(info.time));
         } else {
             setInterval(() =>
-            util.statusBedrock(ip1, { port: port1 })
-            .then((response) => {
-                const versionOriginal = response.version
+            util.statusBedrock(ip1, port1)
+            .then((result) => {
+                const versionOriginal = result.version.name
                 if(settings.split) {
                     if(versionOriginal.includes("Spigot")) {
                         var versionAdvanced = versionOriginal.replace("Spigot", "")
@@ -218,27 +239,27 @@ module.exports = async (bot) => {
                 const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                .setDescription(`:white_check_mark: **ONLINE**`)
-                .addFields(
-                    { name: "PLAYERS", value: `${response.onlinePlayers}/${response.maxPlayers}` , inline: false },
-                    { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
-                )
-                .setColor(config.embeds.color)
-                .setFooter('Updated')
-                .setTimestamp()
+                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setDescription(`:white_check_mark: **ONLINE**`)
+                    .addFields(
+                        { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` , inline: false },
+                        { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
+                    )
+                    .setColor(config.embeds.color)
+                    .setFooter('Updated')
+                    .setTimestamp()
                 msg.edit({ embeds: [serverEmbed] });
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                .setDescription(':x: **OFFLINE**')
-                .setColor(config.embeds.error)
-                .setFooter('Updated')
-                .setTimestamp()
+                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setDescription(':x: **OFFLINE**')
+                    .setColor(config.embeds.error)
+                    .setFooter('Updated')
+                    .setTimestamp()
                 msg.edit({ embeds: [errorEmbed] });
     
-                throw error;
+                if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error)
             }), ms(info.time));
         }
     
@@ -246,24 +267,24 @@ module.exports = async (bot) => {
 
     if(bot.readyScan && server.work) {
         if(server.type === 'java') {
-            util.status(server.ip, { port: server.port })
-                .then((response) => {
+            util.status(server.ip, server.port)
+                .then((result) => {
                     console.log(`✅ Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')
-                    + bl('IP:	 ') +  `${server.ip}:${response.port ? response.port : server.port}\n`
-                    + bl('VERSION: ') + `${response.version ? response.version : 'unknown'}\n`
-                    + bl('PLAYERS: ') + gr(`${response.onlinePlayers ? response.onlinePlayers : '0'}`) + '/' + gr(`${response.maxPlayers ? response.maxPlayers : '0'}`)
+                    + bl('IP:	 ') +  `${server.ip}:${result.port ? result.port : server.port}\n`
+                    + bl('VERSION: ') + `${result.version.name ? result.version.name : 'unknown'}\n`
+                    + bl('PLAYERS: ') + gr(`${result.players.online ? result.players.online: '0'}`) + '/' + gr(`${result.players.max ? result.players.max : '0'}`)
                     )
                 })
                 .catch((error) => {
                     console.log(warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error)
                 });
         } else if(server.type === 'bedrock') {
-            util.statusBedrock(server.ip, { port: server.port })
-            .then((response) => {
+            util.statusBedrock(server.ip, server.port)
+            .then((result) => {
                 console.log(`✅ Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')
-                + bl('IP:	 ') +  `${server.ip}:${response.port ? response.port : server.port}\n`
-                + bl('VERSION: ') + `${response.version ? response.version : 'unknown'}\n`
-                + bl('PLAYERS: ') + gr(`${response.onlinePlayers ? response.onlinePlayers : '0'}`) + '/' + gr(`${response.maxPlayers ? response.maxPlayers : '0'}`)
+                + bl('IP:	 ') +  `${server.ip}:${result.port ? result.port : server.port}\n`
+                + bl('VERSION: ') + `${result.version.name ? result.version.name : 'unknown'}\n`
+                + bl('PLAYERS: ') + gr(`${result.players.online ? result.players.online : '0'}`) + '/' + gr(`${result.players.max ? result.players.max : '0'}`)
                 )
             })
             .catch((error) => {

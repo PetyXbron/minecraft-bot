@@ -10,7 +10,9 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message) => {
-    const { server, config } = bot
+    const { server, config } = bot,
+    warn = c.keyword('yellow').bold,
+    warns = config.settings.warns
 
     if(!server.work) return
 
@@ -20,13 +22,13 @@ module.exports.run = async (bot, message) => {
     icon = server.icon ? server.icon : message.guild.icon
 
     if(server.type === 'java') {
-        util.status(ip1, { port: port1 })
-            .then((response) => {
+        util.status(ip1, port1)
+            .then((result) => {
                 const serverEmbed = new Discord.MessageEmbed()
                     .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                     .setDescription(`:white_check_mark: **ONLINE**`)
                     .addFields(
-                        { name: "Players", value: `**${response.onlinePlayers}**/**${response.maxPlayers}**` + (response.samplePlayers ? "\n\`\`\`" + response.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
+                        { name: "Players", value: `**${result.players.online}**/**${result.players.max}**` + (result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
                     )
                     .setColor(config.embeds.color)
                 message.channel.send({ embeds: [serverEmbed] });
@@ -38,10 +40,11 @@ module.exports.run = async (bot, message) => {
                     .setColor(config.embeds.error)
                 message.channel.send({ embeds: [errorEmbed] });
 
-                throw error;
+                if (warns) console.log(warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error)
             });
     } else {
         //Doesn't work for bedrock edition, sorry.
+        message.reply('Sorry, but this function is not working for Bedrock servers.')
     }
 
 };

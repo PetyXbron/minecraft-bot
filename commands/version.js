@@ -22,8 +22,8 @@ module.exports.run = async (bot, message, args) => {
     
     if(server.type === 'java') {
         try {
-            const response = await util.status(server.ip, { port: server.port })
-            var versionOriginal = response.version;
+            const result = await util.status(server.ip, server.port)
+            var versionOriginal = result.version.name
         } catch(e) {
             if (warns) console.log(warn(`Couldn't get version from server! Getting it from config..`))
             var versionOriginal = config.server.version;
@@ -50,8 +50,8 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send({ embeds: [versionEmbed] });
     } else {
         try {
-            const response = await util.statusBedrock(server.ip, { port: server.port })
-            var versionOriginal = response.version
+            const result = await util.statusBedrock(server.ip, server.port)
+            var versionOriginal = result.version.name
         } catch(e) {
             if (warns) console.log(warn(`Couldn't get version from server! Getting it from config..`))
             var versionOriginal = config.server.version
