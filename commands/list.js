@@ -1,6 +1,7 @@
 const { commands} = require("../config");
 const util = require('minecraft-server-util');
 const Discord = require('discord.js');
+const c = require('chalk')
 
 module.exports.config = {
     name: "list", //Name of command - RENAME THE FILE TOO!!!
@@ -24,11 +25,13 @@ module.exports.run = async (bot, message) => {
     if(server.type === 'java') {
         util.status(ip1, port1)
             .then((result) => {
+                const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
+
                 const serverEmbed = new Discord.MessageEmbed()
                     .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                     .setDescription(`:white_check_mark: **ONLINE**`)
                     .addFields(
-                        { name: "Players", value: `**${result.players.online}**/**${result.players.max}**` + (result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
+                        { name: "Players", value: `**${result.players.online}**/**${result.players.max}**` + trueList, inline: false },
                     )
                     .setColor(config.embeds.color)
                 message.channel.send({ embeds: [serverEmbed] });

@@ -117,12 +117,14 @@ module.exports = async (bot) => {
                         }
                     }
                     const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+                    const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
     
                     const serverEmbed = new Discord.MessageEmbed()
                         .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
-                            { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + (result.samplePlayers ? "\n\`\`\`" + result.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
+                            { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)
@@ -198,12 +200,14 @@ module.exports = async (bot) => {
                         }
                     }
                     const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+                    const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
     
                     const serverEmbed = new Discord.MessageEmbed()
                         .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
-                            { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + (result.samplePlayers ? "\n\`\`\`" + result.samplePlayers.map(p => ` ${p.name} `).join('\n') + "\`\`\`":"") , inline: false },
+                            { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)
