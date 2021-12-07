@@ -29,9 +29,6 @@ module.exports.run = async (bot, message, args) => {
             var versionOriginal = config.server.version;
         };   
 
-        console.log("settings.split " + settings.split)
-        console.log("versionOriginal " + versionOriginal)
-
         if(settings.split) {
             if(versionOriginal.includes("Spigot")) {
                 var versionAdvanced = versionOriginal.replace("Spigot", "")

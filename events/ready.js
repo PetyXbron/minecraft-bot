@@ -21,14 +21,14 @@ module.exports = async (bot) => {
                     try {
                         var result = await util.status(server.ip, server.port)
                     } catch(err) {
-                        console.log(err)
+                        console.log()
                         var errored = true
                     }
                 } else {
                     try {
                         var result = await util.statusBedrock(server.ip, server.port)
                     } catch(err) {
-                        console.log(err)
+                        console.log()
                         var errored = true
                     }
                 };
