@@ -21,13 +21,15 @@ module.exports.run = async (bot, message, args) => {
         } else {
             text.ip.title = text.ip.title.replace('{serverIp}', server.ip)
             text.ip.title = text.ip.title.replace('{serverPort}', server.port)
-            text.ip.title = text.ip.title.replace('{serverName}', config.server.name)
+            text.ip.title = text.ip.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
             text.ip.title = text.ip.title.replace('{voteLink}', config.server.vote)
+            text.ip.title = text.ip.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
             text.ip.description = text.ip.description.replace('{serverIp}', server.ip)
             text.ip.description = text.ip.description.replace('{serverPort}', server.port)
-            text.ip.description = text.ip.description.replace('{serverName}', config.server.name)
+            text.ip.description = text.ip.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
             text.ip.description = text.ip.description.replace('{voteLink}', config.server.vote)
+            text.ip.description = text.ip.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
             const ipEmbed = new Discord.MessageEmbed()
                 .setTitle(text.ip.title, icon)

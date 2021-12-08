@@ -40,11 +40,33 @@ module.exports.run = async (bot, message, args) => {
         }
         const version = versionAdvanced ? versionAdvanced : versionOriginal
         
-        const versionEmbed = new Discord.MessageEmbed()
-        .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
-        .setDescription(`**${version}**`)
-        .setColor(config.embeds.color);
-        message.channel.send({ embeds: [versionEmbed] });
+        if(text.version.title === "" || text.version.description === "") {
+            const versionEmbed = new Discord.MessageEmbed()
+                .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
+                .setDescription(`**${version}**`)
+                .setColor(config.embeds.color);
+            message.channel.send({ embeds: [versionEmbed] });
+        } else {
+            text.version.title = text.version.title.replace('{serverIp}', server.ip)
+            text.version.title = text.version.title.replace('{serverPort}', server.port)
+            text.version.title = text.version.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+            text.version.title = text.version.title.replace('{voteLink}', config.server.vote)
+            text.version.title = text.version.title.replace('{serverVersion}', version)
+            text.version.title = text.version.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+
+            text.version.description = text.version.description.replace('{serverIp}', server.ip)
+            text.version.description = text.version.description.replace('{serverPort}', server.port)
+            text.version.description = text.version.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+            text.version.description = text.version.description.replace('{voteLink}', config.server.vote)
+            text.version.description = text.version.description.replace('{serverVersion}', version)
+            text.version.description = text.version.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+
+            const versionEmbed = new Discord.MessageEmbed()
+                .setTitle(text.version.title, icon)
+                .setDescription(text.version.description)
+                .setColor(config.embeds.color);
+            message.channel.send({ embeds: [versionEmbed] });
+        }
     } else {
         try {
             const result = await util.statusBedrock(server.ip, server.port)
@@ -64,10 +86,32 @@ module.exports.run = async (bot, message, args) => {
         }
         const version = versionAdvanced ? versionAdvanced : versionOriginal
 
-        const versionEmbed = new Discord.MessageEmbed()
-        .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
-        .setDescription(`**${version}**`)
-        .setColor(config.embeds.color);
-        message.channel.send({ embeds: [versionEmbed] });
+        if(text.version.title === "" || text.version.description === "") {
+            const versionEmbed = new Discord.MessageEmbed()
+                .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
+                .setDescription(`**${version}**`)
+                .setColor(config.embeds.color);
+            message.channel.send({ embeds: [versionEmbed] });
+        } else {
+            text.version.title = text.version.title.replace('{serverIp}', server.ip)
+            text.version.title = text.version.title.replace('{serverPort}', server.port)
+            text.version.title = text.version.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+            text.version.title = text.version.title.replace('{voteLink}', config.server.vote)
+            text.version.title = text.version.title.replace('{serverVersion}', version)
+            text.version.title = text.version.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+
+            text.version.description = text.version.description.replace('{serverIp}', server.ip)
+            text.version.description = text.version.description.replace('{serverPort}', server.port)
+            text.version.description = text.version.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+            text.version.description = text.version.description.replace('{voteLink}', config.server.vote)
+            text.version.description = text.version.description.replace('{serverVersion}', version)
+            text.version.description = text.version.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+
+            const versionEmbed = new Discord.MessageEmbed()
+                .setTitle(text.version.title, icon)
+                .setDescription(text.version.description)
+                .setColor(config.embeds.color);
+            message.channel.send({ embeds: [versionEmbed] });
+        }
     }
 };

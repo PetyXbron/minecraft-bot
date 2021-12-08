@@ -23,13 +23,15 @@ module.exports.run = async (bot, message, args) => {
     } else {
         text.vote.title = text.vote.title.replace('{serverIp}', server.ip)
         text.vote.title = text.vote.title.replace('{serverPort}', server.port)
-        text.vote.title = text.vote.title.replace('{serverName}', config.server.name)
+        text.vote.title = text.vote.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
         text.vote.title = text.vote.title.replace('{voteLink}', config.server.vote)
+        text.vote.title = text.vote.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
         text.vote.description = text.vote.description.replace('{serverIp}', server.ip)
         text.vote.description = text.vote.description.replace('{serverPort}', server.port)
-        text.vote.description = text.vote.description.replace('{serverName}', config.server.name)
+        text.vote.description = text.vote.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
         text.vote.description = text.vote.description.replace('{voteLink}', config.server.vote)
+        text.vote.description = text.vote.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
         const voteEmbed = new Discord.MessageEmbed()
             .setTitle(text.vote.title, icon)

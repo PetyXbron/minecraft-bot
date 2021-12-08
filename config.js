@@ -70,53 +70,15 @@ module.exports = {
         }
     },
 
-    //Commands aliases
-    commands: {
-        status: [
-            'info',
-            'server'
-        ],
-        help: [
-            'commands',
-            'menu'
-        ],
-        test: [
-            'try',
-            'testing'
-        ],
-        ip: [
-            'ip-address',
-            'address',
-            'connect'
-        ],
-        list: [
-            'players'
-        ],
-        vote: [
-
-        ],
-        version: [
-            'v'
-        ],
-        poll: [
-            'voting'
-        ],
-        lockdown: [
-            'lock'
-        ],
-        message: [
-            'announce',
-            'announcement'
-        ]
-    },
-
     messages: {
         ip: {
             title: "{serverName} IP:",
             description: "\`{serverIp}\`:\`{serverPort}\`"
         },
         list: {
-            //NOT AVAILABLE YET
+            title: "{serverName} list:",
+            description: "**{playersOnline}**/**{playersMax}**",
+            listFormat: "```{playersList}```"
         },
         status: {
             //NOT AVAILABLE YET
@@ -125,12 +87,44 @@ module.exports = {
             content: "Test message reply."
         },
         version: {
-            //NOT AVAILABLE YET
+            title: "{serverName} version:",
+            description: "{serverType} {serverVersion}"
         },
         vote: {
             title: "Vote for {serverName}:",
             description: "[Here]({voteLink}) you can vote for {serverName}."
         }
+    },
+
+    //Commands aliases
+    commands: {
+        status: [
+            'info',
+            'server',
+            'overview',
+            'ov'
+        ],
+        test: [
+            'try',
+            'testing'
+        ],
+        ip: [
+            'ip-address',
+            'address',
+            'connect',
+            'join'
+        ],
+        list: [
+            'players',
+            'plist'
+        ],
+        vote: [
+            'votelink'
+        ],
+        version: [
+            'v',
+            'ver'
+        ]
     }
 };
 //CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info
