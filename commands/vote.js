@@ -16,7 +16,8 @@ module.exports.run = async (bot, message, args) => {
 
     if(text.vote.title === "" || text.vote.description === "") {
         const voteEmbed = new Discord.MessageEmbed()
-            .setTitle('Vote for ' + serverName, icon)
+            .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+            .setTitle("Server list vote link:")
             .setDescription(server.vote ? `[Here](${server.vote}) you can vote for ${serverName}!` : "VOTE LINK IS NOT DEFINED IN CONFIG!")
             .setColor(config.embeds.color);
         message.channel.send({ embeds: [voteEmbed] });
@@ -34,7 +35,8 @@ module.exports.run = async (bot, message, args) => {
         text.vote.description = text.vote.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
         const voteEmbed = new Discord.MessageEmbed()
-            .setTitle(text.vote.title, icon)
+            .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+            .setTitle(text.vote.title)
             .setDescription(text.vote.description)
             .setColor(config.embeds.color);
         message.channel.send({ embeds: [voteEmbed] })

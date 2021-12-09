@@ -19,7 +19,7 @@ This code could not be created without **Minecraft server util package**
 
 * <s>Auto changing status message</s>
 * <s>Status command</s>
-* <s>IP adress command</s>
+* <s>IP address command</s>
 * <s>Minecraft version command</s>
 * <s>Player list command</s>
 * <s>Vote link command</s>
@@ -31,7 +31,7 @@ This code could not be created without **Minecraft server util package**
 * Send custom message/announcement command
 * <s>Custom reply for ip, test and version command</s>
 * <s>Installation with repl.it</s>
-* Better test command (shows more information about bot process)
+* Better test command variables (more process info - like uptime)
 * <s>More text languages (or custom)</s>
 * Create threads from every message in voting channel
 * <s>Bot status (activity) for players online number</s>

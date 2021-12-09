@@ -1,4 +1,4 @@
-const { commands, settings } = require("../config");
+const { commands } = require("../config");
 const Discord = require('discord.js');
 const db = require('quick.db')
 const util = require('minecraft-server-util')
@@ -42,7 +42,8 @@ module.exports.run = async (bot, message, args) => {
         
         if(text.version.title === "" || text.version.description === "") {
             const versionEmbed = new Discord.MessageEmbed()
-                .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
+                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                .setTitle("Minecraft version:")
                 .setDescription(`**${version}**`)
                 .setColor(config.embeds.color);
             message.channel.send({ embeds: [versionEmbed] });
@@ -62,7 +63,8 @@ module.exports.run = async (bot, message, args) => {
             text.version.description = text.version.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
             const versionEmbed = new Discord.MessageEmbed()
-                .setTitle(text.version.title, icon)
+                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                .setTitle(text.version.title)
                 .setDescription(text.version.description)
                 .setColor(config.embeds.color);
             message.channel.send({ embeds: [versionEmbed] });
@@ -88,7 +90,8 @@ module.exports.run = async (bot, message, args) => {
 
         if(text.version.title === "" || text.version.description === "") {
             const versionEmbed = new Discord.MessageEmbed()
-                .setTitle((config.server.name ? config.server.name : message.guild.name) + ' Version:', icon)
+                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                .setTitle("Minecraft version:")
                 .setDescription(`**${version}**`)
                 .setColor(config.embeds.color);
             message.channel.send({ embeds: [versionEmbed] });
@@ -108,7 +111,8 @@ module.exports.run = async (bot, message, args) => {
             text.version.description = text.version.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
             const versionEmbed = new Discord.MessageEmbed()
-                .setTitle(text.version.title, icon)
+                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                .setTitle(text.version.title)
                 .setDescription(text.version.description)
                 .setColor(config.embeds.color);
             message.channel.send({ embeds: [versionEmbed] });

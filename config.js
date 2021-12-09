@@ -20,14 +20,16 @@ module.exports = {
     },
 
     //Basic code settings
+    //All settings are boolean wanted - Use "true" for enabling, "false" for disablign setting.
     settings: {
-        warns: true, //Show warns? - true or false (boolean)
-        debug: false, //Log most of changes and updates (pretty spam)? - true or false (boolean)
-        inviteLink: true, //Show bot invite link on bot start? - true or false (boolean)
-        readyScan: true, //On bot's start, send to console server's basic info? - true or false (boolean)
-        split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc. - true or false (boolean)
-        statusCH: false, //Enable auto-changing status message - true or false (boolean)
-        votingCH: false //Enable voting channel - true or false (boolean)
+        warns: true, //Show warns?
+        debug: false, //Log most of changes and updates (pretty spam)?
+        inviteLink: true, //Show bot invite link on bot start?
+        readyScan: true, //On bot's start, send to console server's basic info?
+        split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc.
+        randomColor: false, //Enable random hex color generator for embeds? Overwrites embeds settings!
+        statusCH: false, //Enable auto-changing status message
+        votingCH: false //Enable voting channel
     },
     
     //Period of auto changing status if you are using {onlinePlayers} or {maxPlayers} in bot's status
@@ -70,28 +72,43 @@ module.exports = {
         }
     },
 
+    //Custom text settings
     messages: {
         ip: {
-            title: "{serverName} IP:",
+            title: "IP address:",
             description: "\`{serverIp}\`:\`{serverPort}\`"
         },
         list: {
-            title: "{serverName} list:",
+            title: "Online player list:",
             description: "**{playersOnline}**/**{playersMax}**",
             listFormat: "```{playersList}```"
         },
         status: {
-            //NOT AVAILABLE YET
+            title: "Server status:",
+            description:
+            `:white_check_mark: **ONLINE**
+            
+            **Description**
+            {motd}
+            
+            **IP Address**
+            \`{serverIp}\`:\`{serverPort}\`
+            
+            **Version**
+            {serverType} {serverVersion}
+            
+            **Players**
+            **{playersOnline}**/**{playersMax}**`,
         },
         test: {
             content: "Test message reply."
         },
         version: {
-            title: "{serverName} version:",
+            title: "Minecraft version:",
             description: "{serverType} {serverVersion}"
         },
         vote: {
-            title: "Vote for {serverName}:",
+            title: "Server list vote link:",
             description: "[Here]({voteLink}) you can vote for {serverName}."
         }
     },
@@ -99,22 +116,26 @@ module.exports = {
     //Commands aliases
     commands: {
         status: [
+            's',
             'info',
             'server',
             'overview',
             'ov'
         ],
         test: [
+            't',
             'try',
             'testing'
         ],
         ip: [
+            'i',
             'ip-address',
             'address',
             'connect',
             'join'
         ],
         list: [
+            'l',
             'players',
             'plist'
         ],
@@ -127,4 +148,5 @@ module.exports = {
         ]
     }
 };
+
 //CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info

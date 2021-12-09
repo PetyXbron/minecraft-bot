@@ -1,4 +1,3 @@
 run = "npm start"
 onBoot = "npm install"
-ignoredPaths=[".gitignore"]
-language = "js"
+language = "nodejs"

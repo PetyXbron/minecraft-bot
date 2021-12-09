@@ -1,5 +1,6 @@
 const ms = require('ms')
 const version = require('../package.json').version
+const math = require('math')
 
 module.exports = async (bot, message) => {
     if(message.author.bot) return;
@@ -14,7 +15,7 @@ module.exports = async (bot, message) => {
     const { prefix, server, config } = bot;
 
     const messageArray = message.content.split(' ');
-    const cmd = messageArray[0];
+    const cmd = messageArray[0].toLowerCase();
     const args = messageArray.slice(1);
     
     if(config.settings.votingCH && message.channel.id === config.votingCH.channel.id) {
@@ -40,5 +41,8 @@ module.exports = async (bot, message) => {
 
     if(!message.content.startsWith(prefix)) return;
     let commandfile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(cmd.slice(prefix.length)));
-    if(commandfile) commandfile.run(bot,message,args,server);
+    if(commandfile) {
+        if (config.settings.randomColor) config.embeds.color = Math.floor(Math.random()*16777215).toString(16);
+        commandfile.run(bot,message,args,server);
+    }
 }   

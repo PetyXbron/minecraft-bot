@@ -1,7 +1,8 @@
-const { commands, settings } = require("../config");
+const { commands } = require("../config");
 const util = require('minecraft-server-util');
 const Discord = require('discord.js');
-const c = require('chalk')
+const c = require('chalk');
+const { Console } = require("console");
 
 module.exports.config = {
     name: "status", //Name of command - RENAME THE FILE TOO!!!
@@ -11,7 +12,7 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message) => {
-    const { server, config } = bot,
+    const { server, config, text } = bot,
     settings = config.settings,
     warn = c.keyword('yellow').bold,
     warns = config.settings.warns
@@ -26,7 +27,6 @@ module.exports.run = async (bot, message) => {
     if(server.type === 'java') {
         util.status(ip1, port1)
             .then((result) => {
-                const description11 = result.motd.clean
                 const versionOriginal = result.version.name
                 if(settings.split) {
                     if(versionOriginal.includes("Spigot")) {
@@ -39,23 +39,60 @@ module.exports.run = async (bot, message) => {
                 }
                 const version = versionAdvanced ? versionAdvanced : versionOriginal
 
-                const serverEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, 'attachment://logo.png')
-                    .setDescription(`:white_check_mark: **ONLINE**`)
-                    .addFields(
-                        { name: "Description", value: `${description11}` , inline: false },
-                        { name: "IP Address", value: `\`${server.ip}\`:\`${server.port}\`` , inline: false },
-                        { name: "Version", value: `JAVA **${version}**` , inline: true },
-                        { name: "Players", value: `**${result.players.online}**/**${result.players.max}**` , inline: true },
-                    )
-                    .setColor(config.embeds.color)
-                message.channel.send({ embeds: [serverEmbed] });
+                if (text.status.title === "" || text.status.description === "") {
+                    const serverEmbed = new Discord.MessageEmbed()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setTitle("Server status:")
+                        .setDescription(`:white_check_mark: **ONLINE**
+            
+                        **Description**
+                        ${result.motd.clean}
+                        
+                        **IP Address**
+                        \`${server.ip}\`:\`${server.port}\`
+                        
+                        **Version**
+                        ${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} ${version}
+                        
+                        **Players**
+                        **${result.players.online}**/**${result.players.max}**`)
+                        .setColor(config.embeds.color)
+                    message.channel.send({ embeds: [serverEmbed] });
+                } else {
+                    text.status.title = text.status.title.replace('{serverIp}', server.ip)
+                    text.status.title = text.status.title.replace('{serverPort}', server.port)
+                    text.status.title = text.status.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+                    text.status.title = text.status.title.replace('{voteLink}', config.server.vote)
+                    text.status.title = text.status.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+                    text.status.title = text.status.title.replace('{playersOnline}', result.players.online)
+                    text.status.title = text.status.title.replace('{playersMax}', result.players.max)
+                    text.status.title = text.status.title.replace('{motd}', result.motd.clean)
+                    text.status.title = text.status.title.replace('{serverVersion}', version)
+            
+                    text.status.description = text.status.description.replace('{serverIp}', server.ip)
+                    text.status.description = text.status.description.replace('{serverPort}', server.port)
+                    text.status.description = text.status.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+                    text.status.description = text.status.description.replace('{voteLink}', config.server.vote)
+                    text.status.description = text.status.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+                    text.status.description = text.status.description.replace('{playersOnline}', result.players.online)
+                    text.status.description = text.status.description.replace('{playersMax}', result.players.max)
+                    text.status.description = text.status.description.replace('{motd}', result.motd.clean)
+                    text.status.description = text.status.description.replace('{serverVersion}', version)
+
+                    const serverEmbed = new Discord.MessageEmbed()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setTitle(text.status.title)
+                        .setDescription(text.status.description)
+                        .setColor(config.embeds.color)
+                    message.channel.send({ embeds: [serverEmbed] });
+                }
             })
             .catch((error) => {
-                const errorEmbed = new Discord.MessageEmbed()
-                .setAuthor(`${ip1}:${port1}`, 'https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg')
-                .setDescription(':x: **OFFLINE**')
-                .setColor(config.embeds.error)
+                const errorEmbed = new Discord.MessageEmbed()   
+                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setTitle("Server status:")
+                    .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
+                    .setColor(config.embeds.error)
                 message.channel.send({ embeds: [errorEmbed] });
 
                 if (warns) console.log(warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error)
@@ -63,27 +100,72 @@ module.exports.run = async (bot, message) => {
     } else {
         util.statusBedrock(ip1, port1)
         .then((result) => {
-            const description11 = result.motd.clean
+            const versionOriginal = result.version.name
+                if(settings.split) {
+                    if(versionOriginal.includes("Spigot")) {
+                        var versionAdvanced = versionOriginal.replace("Spigot", "")
+                    } else if (versionOriginal.includes("Paper")) {
+                        var versionAdvanced = versionOriginal.replace("Paper", "")
+                    } else if (versionOriginal.includes("Tuinity")) {
+                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
+                    }
+                }
+                const version = versionAdvanced ? versionAdvanced : versionOriginal
 
-            const version = result.version.name
+                if (text.status.title === "" || text.status.description === "") {
+                    const serverEmbed = new Discord.MessageEmbed()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setTitle("Server status:")
+                        .setDescription(`:white_check_mark: **ONLINE**
+            
+                        **Description**
+                        ${result.motd.clean}
+                        
+                        **IP Address**
+                        \`${server.ip}\`:\`${server.port}\`
+                        
+                        **Version**
+                        ${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} ${version}
+                        
+                        **Players**
+                        **${result.players.online}**/**${result.players.max}**`)
+                        .setColor(config.embeds.color)
+                    message.channel.send({ embeds: [serverEmbed] });
+                } else {
+                    text.status.title = text.status.title.replace('{serverIp}', server.ip)
+                    text.status.title = text.status.title.replace('{serverPort}', server.port)
+                    text.status.title = text.status.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+                    text.status.title = text.status.title.replace('{voteLink}', config.server.vote)
+                    text.status.title = text.status.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+                    text.status.title = text.status.title.replace('{playersOnline}', result.players.online)
+                    text.status.title = text.status.title.replace('{playersMax}', result.players.max)
+                    text.status.title = text.status.title.replace('{motd}', result.motd.clean)
+                    text.status.title = text.status.title.replace('{serverVersion}', version)
+            
+                    text.status.description = text.status.description.replace('{serverIp}', server.ip)
+                    text.status.description = text.status.description.replace('{serverPort}', server.port)
+                    text.status.description = text.status.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+                    text.status.description = text.status.description.replace('{voteLink}', config.server.vote)
+                    text.status.description = text.status.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+                    text.status.description = text.status.description.replace('{playersOnline}', result.players.online)
+                    text.status.description = text.status.description.replace('{playersMax}', result.players.max)
+                    text.status.description = text.status.description.replace('{motd}', result.motd.clean)
+                    text.status.description = text.status.description.replace('{serverVersion}', version)
 
-            const serverEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                .setDescription(`:white_check_mark: **ONLINE**`)
-                .addFields(
-                    { name: "Description", value: `${description11}` , inline: false },
-                    { name: "IP Address", value: `\`${server.ip}\`:\`${server.port}\`` , inline: false },
-                    { name: "Version", value: `BEDROCK **${version}**` , inline: true },
-                    { name: "Players", value: `**${result.players.online}**/**${result.players.max}**` , inline: true },
-                )
-                .setColor('#77fc03')
-            message.channel.send({ embeds: [serverEmbed] });
+                    const serverEmbed = new Discord.MessageEmbed()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setTitle(text.status.title)
+                        .setDescription(text.status.description)
+                        .setColor(config.embeds.color)
+                    message.channel.send({ embeds: [serverEmbed] });
+                }
         })
         .catch((error) => {
             const errorEmbed = new Discord.MessageEmbed()
                 .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                .setDescription(':x: **OFFLINE**')
-                .setColor('#f53636')
+                .setTitle("Server status:")
+                .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
+                .setColor(config.embeds.error)
             message.channel.send({ embeds: [errorEmbed] });
 
             if (warns) console.log(warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error)

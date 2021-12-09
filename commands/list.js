@@ -29,7 +29,8 @@ module.exports.run = async (bot, message) => {
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
 
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setTitle(config.server.name ? config.server.name : message.guild.name + " list:")
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setTitle("Online player list:")
                         .setDescription(`**${result.players.online}**/**${result.players.max}**` + trueList)
                         .setColor(config.embeds.color)
                     message.channel.send({ embeds: [serverEmbed] });
@@ -55,6 +56,7 @@ module.exports.run = async (bot, message) => {
                     }
                     
                     const serverEmbed = new Discord.MessageEmbed()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                         .setTitle(text.list.title)
                         .setDescription(text.list.description + (trueList ? `\n${trueList}` : ""))
                         .setColor(config.embeds.color)
@@ -62,11 +64,27 @@ module.exports.run = async (bot, message) => {
                 }
             })
             .catch((error) => {
-                const errorEmbed = new Discord.MessageEmbed()
-                    .setTitle(config.server.name ? config.server.name : message.guild.name + " list:")
-                    .setDescription(':x: **OFFLINE**')
-                    .setColor(config.embeds.error)
-                message.channel.send({ embeds: [errorEmbed] });
+                if (text.list.title === "" || text.list.description === "" || text.list.listFormat === "") {
+                    const errorEmbed = new Discord.MessageEmbed()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setTitle("Online player list:")
+                        .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
+                        .setColor(config.embeds.error)
+                    message.channel.send({ embeds: [errorEmbed] });
+                } else {
+                    text.list.title = text.list.title.replace('{serverIp}', server.ip)
+                    text.list.title = text.list.title.replace('{serverPort}', server.port)
+                    text.list.title = text.list.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
+                    text.list.title = text.list.title.replace('{voteLink}', config.server.vote)
+                    text.list.title = text.list.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
+
+                    const errorEmbed = new Discord.MessageEmbed()
+                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setTitle("Online player list:")
+                        .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
+                        .setColor(config.embeds.error)
+                    message.channel.send({ embeds: [errorEmbed] });
+                }
 
                 if (warns) console.log(warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error)
             });

@@ -84,11 +84,11 @@ module.exports = async (bot) => {
             let msg
             try {
                 const serverEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : guild.name)
+                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
                     .setDescription(`🔄 **SETTING...**`)
                     .addFields(
-                        { name: "PLAYERS", value: `§/§\n\`\`\`§\`\`\`` , inline: false },
-                        { name: "INFO", value: `EDITION §\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
+                        { name: "PLAYERS", value: `�/�` , inline: false },
+                        { name: "INFO", value: `${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} �\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                     )
                     .setColor(config.embeds.color)
                 msg = await channel.send({ embeds: [serverEmbed] })
@@ -159,15 +159,15 @@ module.exports = async (bot) => {
                 const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
-                .setDescription(`:white_check_mark: **ONLINE**`)
-                .addFields(
-                    { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` , inline: false },
-                    { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
-                )
-                .setColor(config.embeds.color)
-                .setFooter('Updated')
-                .setTimestamp()
+                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setDescription(`:white_check_mark: **ONLINE**`)
+                    .addFields(
+                        { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` , inline: false },
+                        { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
+                    )
+                    .setColor(config.embeds.color)
+                    .setFooter('Updated')
+                    .setTimestamp()
                 msg.edit({ embeds: [serverEmbed] });
             })
             .catch((error) => {
