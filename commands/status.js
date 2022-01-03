@@ -41,7 +41,7 @@ module.exports.run = async (bot, message) => {
 
                 if (text.status.title === "" || text.status.description === "") {
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Server status:")
                         .setDescription(`:white_check_mark: **ONLINE**
             
@@ -80,7 +80,7 @@ module.exports.run = async (bot, message) => {
                     text.status.description = text.status.description.replace('{serverVersion}', version)
 
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle(text.status.title)
                         .setDescription(text.status.description)
                         .setColor(config.embeds.color)
@@ -89,7 +89,7 @@ module.exports.run = async (bot, message) => {
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()   
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setTitle("Server status:")
                     .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
                     .setColor(config.embeds.error)
@@ -114,7 +114,7 @@ module.exports.run = async (bot, message) => {
 
                 if (text.status.title === "" || text.status.description === "") {
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Server status:")
                         .setDescription(`:white_check_mark: **ONLINE**
             
@@ -153,7 +153,7 @@ module.exports.run = async (bot, message) => {
                     text.status.description = text.status.description.replace('{serverVersion}', version)
 
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle(text.status.title)
                         .setDescription(text.status.description)
                         .setColor(config.embeds.color)
@@ -162,7 +162,7 @@ module.exports.run = async (bot, message) => {
         })
         .catch((error) => {
             const errorEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                 .setTitle("Server status:")
                 .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
                 .setColor(config.embeds.error)

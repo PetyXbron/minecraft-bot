@@ -84,7 +84,7 @@ module.exports = async (bot) => {
             let msg
             try {
                 const serverEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setDescription(`🔄 **SETTING...**`)
                     .addFields(
                         { name: "PLAYERS", value: `�/�` , inline: false },
@@ -121,23 +121,23 @@ module.exports = async (bot) => {
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
     
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)
-                        .setFooter('Updated')
+                        .setFooter({ text: 'Updated' })
                         .setTimestamp()
                     msg.edit({ embeds: [serverEmbed] })
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
-                        .setFooter('Updated')
+                        .setFooter({ text: 'Updated' })
                         .setTimestamp()
                     msg.edit({ embeds: [errorEmbed] });
 
@@ -159,23 +159,23 @@ module.exports = async (bot) => {
                 const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setDescription(`:white_check_mark: **ONLINE**`)
                     .addFields(
                         { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` , inline: false },
                         { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                     )
                     .setColor(config.embeds.color)
-                    .setFooter('Updated')
+                    .setFooter({ text: 'Updated' })
                     .setTimestamp()
                 msg.edit({ embeds: [serverEmbed] });
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setDescription(':x: **OFFLINE**')
                     .setColor(config.embeds.error)
-                    .setFooter('Updated')
+                    .setFooter({ text: 'Updated' })
                     .setTimestamp()
                 msg.edit({ embeds: [errorEmbed] });
     
@@ -204,23 +204,23 @@ module.exports = async (bot) => {
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
     
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(`:white_check_mark: **ONLINE**`)
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList , inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                         )
                         .setColor(config.embeds.color)
-                        .setFooter('Updated')
+                        .setFooter({ text: 'Updated' })
                         .setTimestamp()
                     msg.edit({ embeds: [serverEmbed] });
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
-                        .setFooter('Updated')
+                        .setFooter({ text: 'Updated' })
                         .setTimestamp()
                     msg.edit({ embeds: [errorEmbed] });
 
@@ -243,23 +243,23 @@ module.exports = async (bot) => {
                 const version = versionAdvanced ? versionAdvanced : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setDescription(`:white_check_mark: **ONLINE**`)
                     .addFields(
                         { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` , inline: false },
                         { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\`` , inline: true }
                     )
                     .setColor(config.embeds.color)
-                    .setFooter('Updated')
+                    .setFooter({ text: 'Updated' })
                     .setTimestamp()
                 msg.edit({ embeds: [serverEmbed] });
             })
             .catch((error) => {
                 const errorEmbed = new Discord.MessageEmbed()
-                    .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                    .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setDescription(':x: **OFFLINE**')
                     .setColor(config.embeds.error)
-                    .setFooter('Updated')
+                    .setFooter({ text: 'Updated' })
                     .setTimestamp()
                 msg.edit({ embeds: [errorEmbed] });
     

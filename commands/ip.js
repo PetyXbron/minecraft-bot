@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
 
         if(text.ip.title === "" || text.ip.description === "") {
             const ipEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                 .setTitle("IP address:")
                 .setDescription(`\`${server.ip}\`:\`${server.port}\``)
                 .setColor(config.embeds.color);
@@ -33,7 +33,7 @@ module.exports.run = async (bot, message, args) => {
             text.ip.description = text.ip.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
             const ipEmbed = new Discord.MessageEmbed()
-                .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                 .setTitle(text.ip.title)
                 .setDescription(text.ip.description)
                 .setColor(config.embeds.color);

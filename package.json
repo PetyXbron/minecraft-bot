@@ -1,6 +1,6 @@
 {
   "name": "minecraft-bot",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Discord minecraft bot, with which you can check your minecraft server status (online players, version, online status etc.)",
   "main": "index.js",
   "scripts": {
@@ -26,14 +26,18 @@
   "bugs": {
     "url": "https://github.com/PetyXbron/minecraft-bot/issues"
   },
-  "homepage": "https://github.com/PetyXbron/minecraft-bot#readme",
+  "homepage": "https://github.com/PetyXbron/minecraft-bot",
+  "engines": {
+    "node": "17.0.1",
+    "npm": "8.1.0"
+  },
   "dependencies": {
     "chalk": "^4.1.2",
-    "discord.js": "^13.3.1",
+    "discord.js": "^13.5.0",
     "fs": "^0.0.1-security",
     "math": "^0.0.3",
-    "minecraft-motd-util": "^1.1.6",
-    "minecraft-server-util": "^5.1.2",
+    "minecraft-motd-util": "^1.1.9",
+    "minecraft-server-util": "^5.2.8",
     "ms": "^2.1.3",
     "quick.db": "^7.1.3"
   }

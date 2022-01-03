@@ -29,7 +29,7 @@ module.exports.run = async (bot, message) => {
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
 
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Online player list:")
                         .setDescription(`**${result.players.online}**/**${result.players.max}**` + trueList)
                         .setColor(config.embeds.color)
@@ -56,7 +56,7 @@ module.exports.run = async (bot, message) => {
                     }
                     
                     const serverEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle(text.list.title)
                         .setDescription(text.list.description + (trueList ? `\n${trueList}` : ""))
                         .setColor(config.embeds.color)
@@ -66,7 +66,7 @@ module.exports.run = async (bot, message) => {
             .catch((error) => {
                 if (text.list.title === "" || text.list.description === "" || text.list.listFormat === "") {
                     const errorEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Online player list:")
                         .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
                         .setColor(config.embeds.error)
@@ -79,7 +79,7 @@ module.exports.run = async (bot, message) => {
                     text.list.title = text.list.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1))
 
                     const errorEmbed = new Discord.MessageEmbed()
-                        .setAuthor(config.server.name ? config.server.name : message.guild.name, icon)
+                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Online player list:")
                         .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
                         .setColor(config.embeds.error)
