@@ -2,6 +2,8 @@ const Discord = require('discord.js'),
 fs = require('fs'),
 c = require('chalk'),
 ms = require('ms'),
+{ REST } = require('@discordjs/rest'),
+{ Routes } = require('discord-api-types/v9'),
 Intents = Discord.Intents
 
 //Discord client - I like "bot" more, then "client"
@@ -19,6 +21,7 @@ let info = config.statusCH
 
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
+bot.slashes = new Discord.Collection();
 bot.token = config.bot.token;
 bot.prefix = config.bot.prefix;
 bot.status = config.bot.status;
@@ -171,30 +174,45 @@ bot.info = info
 bot.text = config.messages
 
 //Event handler
-const eventsFolder = fs.readdirSync('./events'); //Finds files in event folder
+const eventsFolder = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 for (const file of eventsFolder) {
-    const eventFile = require(`./events/${file}`); //The file
+    const eventFile = require(`./events/${file}`);
     const event = file.split(".")[0]
-    bot.on(event, eventFile.bind(null, bot)); //Runs the file
+    bot.on(event, eventFile.bind(null, bot));
 };
 
 //Command handler
-fs.readdir("./commands/", (err, files) => {
-    if(err) console.log(err);
-    let jsfile = files.filter(f => f.split(".").pop() === "js");
-    jsfile.forEach((f, i) => {
-        let pull = require(`./commands/${f}`);
-        if(pull.config.enable) {
-            if(!pull.config.name) {
-                if(warns) console.log(warn(`Missing command name of file '${f}'!`) + '\nCommand disabled.')
-            } else {
-                bot.commands.set(pull.config.name, pull);  
-                pull.config.aliases.forEach(alias => {
-                    bot.aliases.set(alias, pull.config.name)
-                });
-            }
-        }
+const commandsFolder = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+for (const file of commandsFolder) {
+    const commandFile = require(`./commands/${file}`);
+    const command = file.split(".")[0];
+    bot.commands.set(command, commandFile);
+    commandFile.config.aliases.forEach(alias => {
+        bot.aliases.set(alias, command);
     });
+};
+
+//Slash command handler
+let slashCommands = [];
+const slashCommandsFolder = fs.readdirSync('./slashes').filter(file => file.endsWith('.js'));
+for (const file of slashCommandsFolder) {
+    const commandFile = require(`./slashes/${file}`);
+    const slashCommand = file.split(".")[0];
+    bot.slashes.set(slashCommand, commandFile);
+    slashCommands.push(commandFile.data.toJSON());
+};
+
+bot.once('ready', async (bot) => {
+    const rest = new REST({ version: '9' }).setToken(bot.token);
+
+    try {
+        await rest.put(
+            Routes.applicationCommands(bot.user.id),
+            { body: slashCommands },
+        );
+    } catch (err) {
+        console.log(err);
+    };
 });
 
 //Bot login
