@@ -1,6 +1,5 @@
 const ms = require('ms')
 const version = require('../package.json').version
-const math = require('math')
 
 module.exports = async (bot, message) => {
     if(message.author.bot) return;

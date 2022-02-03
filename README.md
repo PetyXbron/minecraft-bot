@@ -1,12 +1,14 @@
 ## [DOCUMENTATION HERE 🔗](https://petyxbron.gitbook.io/minecraft-bot/installation)
 
 # Custom Discord Minecraft bot
-### *Get info about your minecraft server with this discord bot!*
+### *Get info about your minecraft server with this Discord bot!*
+
+[![Repo stars](https://img.shields.io/github/stars/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=Stars)](https://github.com/PetyXbron/minecraft-bot/stargazers) [![Repo forks](https://img.shields.io/github/forks/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=Forks)](https://github.com/PetyXbron/minecraft-bot/network) [![Repo license](https://img.shields.io/github/license/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=License)](https://github.com/PetyXbron/minecraft-bot/blob/main/LICENSE)
 
 This code uses **Minecraft server util package** for getting status of Minecraft servers
 * minecraft-server-util package
   * [Github Repository](https://github.com/PassTheMayo/minecraft-server-util)
-  * [npmjs package](https://www.npmjs.com/package/minecraft-server-util)
+  * [npmjs Package](https://www.npmjs.com/package/minecraft-server-util)
   * [Author Github Profile](https://github.com/PassTheMayo)
 
 ## WHAT CAN THIS BOT DO?
@@ -20,28 +22,28 @@ This code uses **Minecraft server util package** for getting status of Minecraft
     - `vote` command for getting vote link for voting for server on Minecraft server list
 - **Auto updating bot's status** with online and max players (setup in config with variables)
 
-![Auto updating bot status](https://i.imgur.com/xNDVb2D.png)
-![Bot status config variables](https://i.imgur.com/7TXaWTC.png)
+  ![Auto updating bot status](https://i.imgur.com/xNDVb2D.png)
+  ![Bot status config variables](https://i.imgur.com/7TXaWTC.png)
 - More Discord bot activites: `playing`, `listening`, `watching` and `competing`
 - **Poll/Voting channel** with reactions
 
-![Voting channel](https://4254518267-files.gitbook.io/~/files/v0/b/gitbook-28427.appspot.com/o/assets%2F-MbqA4Jea2-IO37rpuOb%2F-MejM8GdpoTFx3MovYuy%2F-MejY9Dg6WsJ5LJ7qIVO%2Fvoting-channel.gif?alt=media&token=2a1d71d6-7544-4ba4-a6ff-f468872121c6)
+  ![Voting channel](https://4254518267-files.gitbook.io/~/files/v0/b/gitbook-28427.appspot.com/o/assets%2F-MbqA4Jea2-IO37rpuOb%2F-MejM8GdpoTFx3MovYuy%2F-MejY9Dg6WsJ5LJ7qIVO%2Fvoting-channel.gif?alt=media&token=2a1d71d6-7544-4ba4-a6ff-f468872121c6)
 - Custom responses for each command, editable in [config file](config.js)
 - **Auto updating status message** with player list
 
-![Auto status messsage](https://i.imgur.com/L6gFK4Q.png)
+  ![Auto status messsage](https://i.imgur.com/L6gFK4Q.png)
 - **Random** RGB **color of command embeds** (each message another)
 
-![Random embed color](https://i.imgur.com/pA7h5rC.png)
+  ![Random embed color](https://i.imgur.com/pA7h5rC.png)
 - **Clear colorful console** logging
 
-![minecraft-bot console](https://i.imgur.com/N17AfDn.png)
+  ![minecraft-bot console](https://i.imgur.com/N17AfDn.png)
 
 ## HOW TO USE & INSTALL
 
 ### Go to our [documentation](https://petyxbron.gitbook.io/minecraft-bot/installation/install) and see.
 [![Run on Repl.it](https://repl.it/badge/github/MrMazzone/dotreplit-example)](https://repl.it/github/PetyXbron/minecraft-bot)
-*Repl will not be updated for node v16. (not needed with version [1.1.5](https://github.com/PetyXbron/minecraft-bot/commit/a14fe3024b561a2b5516fb2390431f6650afe8b9))*
+*Repl will not be updated for node v16. (not needed with version [1.1.5](https://github.com/PetyXbron/minecraft-bot/commit/a14fe3024b561a2b5516fb2390431f6650afe8b9) and lower)*
 
 ## TO DO
 

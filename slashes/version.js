@@ -27,16 +27,37 @@ module.exports.run = async (bot, interaction) => {
             var versionOriginal = config.server.version;
         };   
 
+        let versionAdvanced = false
+
         if(settings.split) {
-            if(versionOriginal.includes("Spigot")) {
-                var versionAdvanced = versionOriginal.replace("Spigot", "")
-            } else if (versionOriginal.includes("Paper")) {
-                var versionAdvanced = versionOriginal.replace("Paper", "")
-            } else if (versionOriginal.includes("Tuinity")) {
-                var versionAdvanced = versionOriginal.replace("Tuinity", "")
-            }
+            versionAdvanced = versionOriginal.toLocaleLowerCase()
+                .replace("bukkit ", "")
+                .replace("craftbukkit ", "")
+                .replace("spigot ", "")
+                .replace("forge ", "")
+                .replace("fabric ", "")
+                .replace("paper ", "")
+                .replace("purpur ", "")
+                .replace("tacospigot ", "")
+                .replace("glowstone ", "")
+                .replace("bungecord ", "")
+                .replace("waterfall ", "")
+                .replace("flexpipe ", "")
+                .replace("hexacord ", "")
+                .replace("velocity ", "")
+                .replace("airplane ", "")
+                .replace("sonarlint ", "")
+                .replace("geyser ", "")
+                .replace("cuberite ", "")
+                .replace("yatopia ", "")
+                .replace("mohist ", "")
+                .replace("leafish ", "")
+                .replace("cardboard ", "")
+                .replace("magma ", "")
+                .replace("empirecraft ", "")
         }
-        const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+        const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
         
         if(text.version.title === "" || text.version.description === "") {
             const versionEmbed = new Discord.MessageEmbed()
@@ -75,16 +96,38 @@ module.exports.run = async (bot, interaction) => {
             if (warns) console.log(warn(`Couldn't get version from server! Getting it from config..`))
             var versionOriginal = config.server.version
         }
+
+        let versionAdvanced = false
+
         if(settings.split) {
-            if(versionOriginal.includes("Spigot")) {
-                var versionAdvanced = versionOriginal.replace("Spigot", "")
-            } else if (versionOriginal.includes("Paper")) {
-                var versionAdvanced = versionOriginal.replace("Paper", "")
-            } else if (versionOriginal.includes("Tuinity")) {
-                var versionAdvanced = versionOriginal.replace("Tuinity", "")
-            }
+            versionAdvanced = versionOriginal.toLocaleLowerCase()
+                .replace("bukkit ", "")
+                .replace("craftbukkit ", "")
+                .replace("spigot ", "")
+                .replace("forge ", "")
+                .replace("fabric ", "")
+                .replace("paper ", "")
+                .replace("purpur ", "")
+                .replace("tacospigot ", "")
+                .replace("glowstone ", "")
+                .replace("bungecord ", "")
+                .replace("waterfall ", "")
+                .replace("flexpipe ", "")
+                .replace("hexacord ", "")
+                .replace("velocity ", "")
+                .replace("airplane ", "")
+                .replace("sonarlint ", "")
+                .replace("geyser ", "")
+                .replace("cuberite ", "")
+                .replace("yatopia ", "")
+                .replace("mohist ", "")
+                .replace("leafish ", "")
+                .replace("cardboard ", "")
+                .replace("magma ", "")
+                .replace("empirecraft ", "")
         }
-        const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+        const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
 
         if(text.version.title === "" || text.version.description === "") {
             const versionEmbed = new Discord.MessageEmbed()

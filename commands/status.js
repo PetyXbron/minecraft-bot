@@ -26,24 +26,45 @@ module.exports.run = async (bot, message) => {
     if(server.type === 'java') {
         util.status(ip1, port1)
             .then((result) => {
-                const versionOriginal = result.version.name
+                let versionOriginal = result.version.name,
+                    versionAdvanced = false
+
                 if(settings.split) {
-                    if(versionOriginal.includes("Spigot")) {
-                        var versionAdvanced = versionOriginal.replace("Spigot", "")
-                    } else if (versionOriginal.includes("Paper")) {
-                        var versionAdvanced = versionOriginal.replace("Paper", "")
-                    } else if (versionOriginal.includes("Tuinity")) {
-                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
-                    }
+                        versionAdvanced = versionOriginal.toLocaleLowerCase()
+                            .replace("bukkit ", "")
+                            .replace("craftbukkit ", "")
+                            .replace("spigot ", "")
+                            .replace("forge ", "")
+                            .replace("fabric ", "")
+                            .replace("paper ", "")
+                            .replace("purpur ", "")
+                            .replace("tacospigot ", "")
+                            .replace("glowstone ", "")
+                            .replace("bungecord ", "")
+                            .replace("waterfall ", "")
+                            .replace("flexpipe ", "")
+                            .replace("hexacord ", "")
+                            .replace("velocity ", "")
+                            .replace("airplane ", "")
+                            .replace("sonarlint ", "")
+                            .replace("geyser ", "")
+                            .replace("cuberite ", "")
+                            .replace("yatopia ", "")
+                            .replace("mohist ", "")
+                            .replace("leafish ", "")
+                            .replace("cardboard ", "")
+                            .replace("magma ", "")
+                            .replace("empirecraft ", "")
                 }
-                const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+                const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
 
                 if (text.status.title === "" || text.status.description === "") {
                     const serverEmbed = new Discord.MessageEmbed()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Server status:")
                         .setDescription(`:white_check_mark: **ONLINE**
-            
+
                         **Description**
                         ${result.motd.clean}
                         
@@ -67,7 +88,7 @@ module.exports.run = async (bot, message) => {
                     text.status.title = text.status.title.replace('{playersMax}', result.players.max)
                     text.status.title = text.status.title.replace('{motd}', result.motd.clean)
                     text.status.title = text.status.title.replace('{serverVersion}', version)
-            
+
                     text.status.description = text.status.description.replace('{serverIp}', server.ip)
                     text.status.description = text.status.description.replace('{serverPort}', server.port)
                     text.status.description = text.status.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)
@@ -100,23 +121,44 @@ module.exports.run = async (bot, message) => {
         util.statusBedrock(ip1, port1)
         .then((result) => {
             const versionOriginal = result.version.name
-                if(settings.split) {
-                    if(versionOriginal.includes("Spigot")) {
-                        var versionAdvanced = versionOriginal.replace("Spigot", "")
-                    } else if (versionOriginal.includes("Paper")) {
-                        var versionAdvanced = versionOriginal.replace("Paper", "")
-                    } else if (versionOriginal.includes("Tuinity")) {
-                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
-                    }
-                }
-                const version = versionAdvanced ? versionAdvanced : versionOriginal
+            let versionAdvanced = false
+
+            if(settings.split) {
+                versionAdvanced = versionOriginal.toLocaleLowerCase()
+                    .replace("bukkit ", "")
+                    .replace("craftbukkit ", "")
+                    .replace("spigot ", "")
+                    .replace("forge ", "")
+                    .replace("fabric ", "")
+                    .replace("paper ", "")
+                    .replace("purpur ", "")
+                    .replace("tacospigot ", "")
+                    .replace("glowstone ", "")
+                    .replace("bungecord ", "")
+                    .replace("waterfall ", "")
+                    .replace("flexpipe ", "")
+                    .replace("hexacord ", "")
+                    .replace("velocity ", "")
+                    .replace("airplane ", "")
+                    .replace("sonarlint ", "")
+                    .replace("geyser ", "")
+                    .replace("cuberite ", "")
+                    .replace("yatopia ", "")
+                    .replace("mohist ", "")
+                    .replace("leafish ", "")
+                    .replace("cardboard ", "")
+                    .replace("magma ", "")
+                    .replace("empirecraft ", "")
+            }
+
+                const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
 
                 if (text.status.title === "" || text.status.description === "") {
                     const serverEmbed = new Discord.MessageEmbed()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Server status:")
                         .setDescription(`:white_check_mark: **ONLINE**
-            
+                        
                         **Description**
                         ${result.motd.clean}
                         
@@ -140,7 +182,7 @@ module.exports.run = async (bot, message) => {
                     text.status.title = text.status.title.replace('{playersMax}', result.players.max)
                     text.status.title = text.status.title.replace('{motd}', result.motd.clean)
                     text.status.title = text.status.title.replace('{serverVersion}', version)
-            
+
                     text.status.description = text.status.description.replace('{serverIp}', server.ip)
                     text.status.description = text.status.description.replace('{serverPort}', server.port)
                     text.status.description = text.status.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name)

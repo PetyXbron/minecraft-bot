@@ -107,16 +107,37 @@ module.exports = async (bot) => {
             util.status(ip1, port1)
                 .then((result) => {
                     const versionOriginal = result.version.name
+                    let versionAdvanced = false
+
                     if(settings.split) {
-                        if(versionOriginal.includes("Spigot")) {
-                            var versionAdvanced = versionOriginal.replace("Spigot", "")
-                        } else if (versionOriginal.includes("Paper")) {
-                            var versionAdvanced = versionOriginal.replace("Paper", "")
-                        } else if (versionOriginal.includes("Tuinity")) {
-                            var versionAdvanced = versionOriginal.replace("Tuinity", "")
-                        }
+                        versionAdvanced = versionOriginal.toLocaleLowerCase()
+                            .replace("bukkit ", "")
+                            .replace("craftbukkit ", "")
+                            .replace("spigot ", "")
+                            .replace("forge ", "")
+                            .replace("fabric ", "")
+                            .replace("paper ", "")
+                            .replace("purpur ", "")
+                            .replace("tacospigot ", "")
+                            .replace("glowstone ", "")
+                            .replace("bungecord ", "")
+                            .replace("waterfall ", "")
+                            .replace("flexpipe ", "")
+                            .replace("hexacord ", "")
+                            .replace("velocity ", "")
+                            .replace("airplane ", "")
+                            .replace("sonarlint ", "")
+                            .replace("geyser ", "")
+                            .replace("cuberite ", "")
+                            .replace("yatopia ", "")
+                            .replace("mohist ", "")
+                            .replace("leafish ", "")
+                            .replace("cardboard ", "")
+                            .replace("magma ", "")
+                            .replace("empirecraft ", "")
                     }
-                    const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+                    const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
 
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
     
@@ -147,16 +168,37 @@ module.exports = async (bot) => {
             util.statusBedrock(ip1, port1)
             .then((result) => {
                 const versionOriginal = result.version.name
+                let versionAdvanced = false
+
                 if(settings.split) {
-                    if(versionOriginal.includes("Spigot")) {
-                        var versionAdvanced = versionOriginal.replace("Spigot", "")
-                    } else if (versionOriginal.includes("Paper")) {
-                        var versionAdvanced = versionOriginal.replace("Paper", "")
-                    } else if (versionOriginal.includes("Tuinity")) {
-                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
-                    }
+                    versionAdvanced = versionOriginal.toLocaleLowerCase()
+                        .replace("bukkit ", "")
+                        .replace("craftbukkit ", "")
+                        .replace("spigot ", "")
+                        .replace("forge ", "")
+                        .replace("fabric ", "")
+                        .replace("paper ", "")
+                        .replace("purpur ", "")
+                        .replace("tacospigot ", "")
+                        .replace("glowstone ", "")
+                        .replace("bungecord ", "")
+                        .replace("waterfall ", "")
+                        .replace("flexpipe ", "")
+                        .replace("hexacord ", "")
+                        .replace("velocity ", "")
+                        .replace("airplane ", "")
+                        .replace("sonarlint ", "")
+                        .replace("geyser ", "")
+                        .replace("cuberite ", "")
+                        .replace("yatopia ", "")
+                        .replace("mohist ", "")
+                        .replace("leafish ", "")
+                        .replace("cardboard ", "")
+                        .replace("magma ", "")
+                        .replace("empirecraft ", "")
                 }
-                const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+                const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
                     .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
@@ -190,16 +232,37 @@ module.exports = async (bot) => {
             util.status(ip1, port1)
                 .then((result) => {
                     const versionOriginal = result.version.name
+                    let versionAdvanced = false
+
                     if(settings.split) {
-                        if(versionOriginal.includes("Spigot")) {
-                            var versionAdvanced = versionOriginal.replace("Spigot", "")
-                        } else if (versionOriginal.includes("Paper")) {
-                            var versionAdvanced = versionOriginal.replace("Paper", "")
-                        } else if (versionOriginal.includes("Tuinity")) {
-                            var versionAdvanced = versionOriginal.replace("Tuinity", "")
-                        }
+                        versionAdvanced = versionOriginal.toLocaleLowerCase()
+                            .replace("bukkit ", "")
+                            .replace("craftbukkit ", "")
+                            .replace("spigot ", "")
+                            .replace("forge ", "")
+                            .replace("fabric ", "")
+                            .replace("paper ", "")
+                            .replace("purpur ", "")
+                            .replace("tacospigot ", "")
+                            .replace("glowstone ", "")
+                            .replace("bungecord ", "")
+                            .replace("waterfall ", "")
+                            .replace("flexpipe ", "")
+                            .replace("hexacord ", "")
+                            .replace("velocity ", "")
+                            .replace("airplane ", "")
+                            .replace("sonarlint ", "")
+                            .replace("geyser ", "")
+                            .replace("cuberite ", "")
+                            .replace("yatopia ", "")
+                            .replace("mohist ", "")
+                            .replace("leafish ", "")
+                            .replace("cardboard ", "")
+                            .replace("magma ", "")
+                            .replace("empirecraft ", "")
                     }
-                    const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+                    const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
 
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`":""
     
@@ -231,16 +294,37 @@ module.exports = async (bot) => {
             util.statusBedrock(ip1, port1)
             .then((result) => {
                 const versionOriginal = result.version.name
+                let versionAdvanced = false
+
                 if(settings.split) {
-                    if(versionOriginal.includes("Spigot")) {
-                        var versionAdvanced = versionOriginal.replace("Spigot", "")
-                    } else if (versionOriginal.includes("Paper")) {
-                        var versionAdvanced = versionOriginal.replace("Paper", "")
-                    } else if (versionOriginal.includes("Tuinity")) {
-                        var versionAdvanced = versionOriginal.replace("Tuinity", "")
-                    }
+                    versionAdvanced = versionOriginal.toLocaleLowerCase()
+                        .replace("bukkit ", "")
+                        .replace("craftbukkit ", "")
+                        .replace("spigot ", "")
+                        .replace("forge ", "")
+                        .replace("fabric ", "")
+                        .replace("paper ", "")
+                        .replace("purpur ", "")
+                        .replace("tacospigot ", "")
+                        .replace("glowstone ", "")
+                        .replace("bungecord ", "")
+                        .replace("waterfall ", "")
+                        .replace("flexpipe ", "")
+                        .replace("hexacord ", "")
+                        .replace("velocity ", "")
+                        .replace("airplane ", "")
+                        .replace("sonarlint ", "")
+                        .replace("geyser ", "")
+                        .replace("cuberite ", "")
+                        .replace("yatopia ", "")
+                        .replace("mohist ", "")
+                        .replace("leafish ", "")
+                        .replace("cardboard ", "")
+                        .replace("magma ", "")
+                        .replace("empirecraft ", "")
                 }
-                const version = versionAdvanced ? versionAdvanced : versionOriginal
+
+                const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal
     
                 const serverEmbed = new Discord.MessageEmbed()
                     .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
