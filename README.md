@@ -60,9 +60,9 @@ This code uses **Minecraft server util package** for getting status of Minecraft
 - [x] <s>More text languages (or custom)</s>
 - [x] <s>Bot status (activity) for players online number</s>
 - [x] <s>Get invite link on bot start (available option in config)</s>
-- [ ] Poll/Voting command
-- [ ] AdminTeam applications
+- [ ] Poll/Voting command (simple or with more options)
+- [ ] Help command with all commands listing
+- [ ] Server AdminTeam applications
 - [ ] Send custom embed message command
 - [ ] Send custom message/announcement command
 - [ ] Better test command variables (more process info - like uptime)
-- [ ] Create threads from every message in voting channel

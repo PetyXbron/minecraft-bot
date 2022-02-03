@@ -1,7 +1,7 @@
 const { commands } = require("../config");
 const util = require('minecraft-server-util');
 const Discord = require('discord.js');
-const c = require('chalk')
+const c = require('chalk');
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!
@@ -12,7 +12,7 @@ module.exports.config = {
 
 module.exports.run = async (bot, message, args) => {
     const { server, config, text } = bot,
-    warn = c.keyword('yellow').bold,
-    warns = config.settings.warns
+        warn = c.keyword('yellow').bold,
+        warns = config.settings.warns;
     //action
 };

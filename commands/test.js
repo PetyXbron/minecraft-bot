@@ -1,5 +1,5 @@
 const { commands } = require("../config");
-const util = require('minecraft-server-util')
+const util = require('minecraft-server-util');
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!
@@ -9,7 +9,7 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message) => {
-    const { server, config, text } = bot
+    const { server, config, text } = bot;
 
     if (!text.test.content) {
         message.reply({ content: 'Test message reply.' });
