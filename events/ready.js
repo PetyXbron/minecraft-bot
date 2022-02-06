@@ -3,8 +3,10 @@ const chalk = require('chalk'),
     Discord = require('discord.js'),
     db = require('quick.db'),
     ms = require('ms'),
-    gr = chalk.keyword('green').bold,
-    bl = chalk.keyword('blue'),
+    gr = chalk.green.bold,
+    bold = chalk.bold,
+    bl = chalk.blue.bold,
+    blu = chalk.blue.bold.underline,
     warn = chalk.keyword('yellow').bold;
 
 module.exports = async (bot) => {
@@ -44,7 +46,7 @@ module.exports = async (bot) => {
 
                     try {
                         bot.user.setActivity(status, { type: bot.activity }); //Sets bot activity
-                        if (debug) console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${status}`));
+                        if (debug) console.log(`${bot.emotes.success} Successfully set status to ` + gr(`${bot.activity.toLowerCase()} ${status}`));
                     } catch (e) {
                         console.log();
                     }
@@ -52,7 +54,7 @@ module.exports = async (bot) => {
                     const status = "Offline";
                     try {
                         bot.user.setActivity(status, { type: bot.activity }); //Sets bot activity
-                        if (debug) console.log(warn('Server was not found! Status set to ') + gr(`${bot.activity.toLowerCase()} ${status}`));
+                        if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Status set to ') + gr(`${bot.activity.toLowerCase()} ${status}`));
                     } catch (e) {
                         console.log();
                     }
@@ -62,7 +64,7 @@ module.exports = async (bot) => {
         } else {
             try {
                 bot.user.setActivity(bot.status, { type: bot.activity }); //Sets bot activity
-                console.log('✅ Successfully set status to ' + gr(`${bot.activity.toLowerCase()} ${bot.status}`));
+                console.log(`${bot.emotes.success} Successfully set status to ` + gr(`${bot.activity.toLowerCase()} ${bot.status}`));
             } catch (e) {
                 console.log();
             }
@@ -72,7 +74,7 @@ module.exports = async (bot) => {
     if (config.settings.votingCH) {
         const guild = bot.guilds.cache.get(config.votingCH.guild.id);
         const channel = guild.channels.cache.get(config.votingCH.channel.id);
-        console.log(`✅ Channel ${gr(channel.name)} is now set as voting channel!`);
+        console.log(`${bot.emotes.success} Channel ${gr(channel.name)} is now set as voting channel!`);
     }
 
     if (config.settings.statusCH && server.work) {
@@ -94,7 +96,7 @@ module.exports = async (bot) => {
                 msg = await channel.send({ embeds: [serverEmbed] });
             } catch (err) { console.log(err); }
 
-            console.log(`✅ Successfully sent status message to ${gr(channel.name)}!`);
+            console.log(`${bot.emotes.success} Successfully sent status message to ${gr(channel.name)}!`);
             db.set('statusCHMsgID', msg.id);
         }
 
@@ -162,7 +164,7 @@ module.exports = async (bot) => {
                         .setTimestamp();
                     msg.edit({ embeds: [errorEmbed] });
 
-                    if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error);
+                    if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                 });
         } else {
             util.statusBedrock(ip1, port1)
@@ -221,11 +223,11 @@ module.exports = async (bot) => {
                         .setTimestamp();
                     msg.edit({ embeds: [errorEmbed] });
 
-                    if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error);
+                    if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                 });
         }
 
-        console.log(`✅ Successfully updated status message in ${gr(channel.name)}!`);
+        console.log(`${bot.emotes.success} Successfully updated status message in ${gr(channel.name)}!`);
 
         if (server.type === 'java') {
             setInterval(() =>
@@ -287,7 +289,7 @@ module.exports = async (bot) => {
                             .setTimestamp();
                         msg.edit({ embeds: [errorEmbed] });
 
-                        if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error);
+                        if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                     }), ms(info.time));
         } else {
             setInterval(() =>
@@ -347,7 +349,7 @@ module.exports = async (bot) => {
                             .setTimestamp();
                         msg.edit({ embeds: [errorEmbed] });
 
-                        if (warns) console.log(warn(`Error when posting status message! Error:\n`) + error);
+                        if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                     }), ms(info.time));
         }
 
@@ -357,30 +359,30 @@ module.exports = async (bot) => {
         if (server.type === 'java') {
             util.status(server.ip, server.port)
                 .then((result) => {
-                    console.log(`✅ Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')
-                        + bl('IP:	 ') + `${server.ip}:${result.port ? result.port : server.port}\n`
-                        + bl('VERSION: ') + `${result.version.name ? result.version.name : 'unknown'}\n`
-                        + bl('PLAYERS: ') + gr(`${result.players.online ? result.players.online : '0'}`) + '/' + gr(`${result.players.max ? result.players.max : '0'}`)
+                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
+                        + "   " + bold('IP:	 ') + bl(`${server.ip}:${result.port ? result.port : server.port}\n`)
+                        + "   " + bold('VERSION: ') + bl(`${result.version.name ? result.version.name : 'unknown'}\n`)
+                        + "   " + bold('PLAYERS: ') + bl(`${result.players.online ? result.players.online : '0'}` + '/' + `${result.players.max ? result.players.max : '0'}`)
                     );
                 })
                 .catch((error) => {
-                    console.log(warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
+                    console.log(`${bot.emotes.warn} ` + warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
                 });
         } else if (server.type === 'bedrock') {
             util.statusBedrock(server.ip, server.port)
                 .then((result) => {
-                    console.log(`✅ Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + chalk.blue.bold('Server info:\n')
-                        + bl('IP:	 ') + `${server.ip}:${result.port ? result.port : server.port}\n`
-                        + bl('VERSION: ') + `${result.version.name ? result.version.name : 'unknown'}\n`
-                        + bl('PLAYERS: ') + gr(`${result.players.online ? result.players.online : '0'}`) + '/' + gr(`${result.players.max ? result.players.max : '0'}`)
+                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
+                        + "   " + bold('IP:	 ') + bl(`${server.ip}:${result.port ? result.port : server.port}\n`)
+                        + "   " + bold('VERSION: ') + bl(`${result.version.name ? result.version.name : 'unknown'}\n`)
+                        + "   " + bold('PLAYERS: ') + bl(`${result.players.online ? result.players.online : '0'}` + '/' + `${result.players.max ? result.players.max : '0'}`)
                     );
                 })
                 .catch((error) => {
-                    console.log(warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
+                    console.log(`${bot.emotes.warn} ` + (`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
                 });
         }
     }
 
-    console.log("✅ " + gr(bot.user.username) + " is now working with prefix " + gr(bot.prefix));
-    if (settings.inviteLink) console.log("▶️ " + " Invite " + chalk.blue.bold(bot.user.username) + " with " + chalk.blue.bold(`https://discord.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=11328&scope=applications.commands%20bot`));
+    console.log(`${bot.emotes.success} ` + gr(bot.user.username) + " is now working with prefix " + gr(bot.prefix));
+    if (settings.inviteLink) console.log(`${bot.emotes.info} ` + "Invite " + bl(bot.user.username) + " with " + blu(`https://discord.com/oauth2/authorize?client_id=${bot.user.id}&permissions=274877918272&scope=bot%20applications.commands`));
 };

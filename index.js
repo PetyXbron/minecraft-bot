@@ -7,12 +7,20 @@ const Discord = require('discord.js'),
     Intents = Discord.Intents;
 
 //Discord client - I like "bot" more, then "client"
-const bot = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MESSAGE_TYPING, Intents.FLAGS.GUILD_MEMBERS] });
+const bot = new Discord.Client({
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_INTEGRATIONS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.GUILD_MESSAGE_TYPING
+    ]
+});
 
 const config = require('./config'),
     activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activites, discord.js supports more (but I don't care)
     error = c.keyword('red').bold,
-    kill = c.white('\nKilling process...'),
+    kill = '\nKilling process...',
     warn = c.keyword('yellow').bold,
     warns = config.settings.warns,
     server = Array;
@@ -37,34 +45,34 @@ server.vote = config.server.vote;
 
 //Config check
 if (bot.token === '') { //Checks if you have entered bot token to config
-    console.log(error('Bot token in config is empty!') + kill);
+    console.log(`${bot.emotes.error} ` + error('Bot token in config is empty!') + kill);
     return process.exit(1);
 } else if (bot.prefix === '') { //Checks if you have entered bot prefix to config
-    console.log(error('Bot prefix in config is empty!') + kill);
+    console.log(`${bot.emotes.error} ` + error('Bot prefix in config is empty!') + kill);
     return process.exit(1);
 };
 
 if (bot.status === '') { //Checks if you have entered custom status for bot to config
-    if (warns) console.log(warn('Bot status in config was empty! Bot status was disabled.'));
+    if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status in config was empty! Bot status was disabled.'));
     bot.status = false;
 }
 
 if (!bot.activity) { //Checks if you have entered status activity type to config
     if (bot.status) {
-        if (warns) console.log(warn('Bot activity type in config was empty! Activity type is now "playing"'));
+        if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot activity type in config was empty! Activity type is now "playing"'));
         bot.activity = 'PLAYING';
     };
 };
 
 if (!new Set(activites).has(bot.activity)) { //Checks if you have entered supported activity
     if (bot.status) {
-        if (warns) console.log(warn(`"${bot.activity}" activity is not supported. Bot status was disabled.`));
+        if (warns) console.log(`${bot.emotes.warn} ` + warn(`"${bot.activity}" activity is not supported. Bot status was disabled.`));
         bot.status = false;
     };
 };
 
 if (!server.ip) {
-    if (warns) console.log(error("You did not specify server's ip!") + c.white('\nMinecraft server disabled.'));
+    if (warns) console.log(`${bot.emotes.error} ` + error("You did not specify server's ip!") + c.white('\nMinecraft server disabled.'));
     bot.server.work = false;
 } else {
     bot.server.work = true;
@@ -73,10 +81,10 @@ if (!server.ip) {
 if (server.type !== 'java' && server.type !== 'bedrock') {
     if (bot.server) {
         if (!server.type) {
-            if (warns) console.log(warn(`You did not specify server's edition, setting it to java.`));
+            if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server's edition, setting it to java.`));
             server.type = 'java';
         } else {
-            console.log(error('Unknown server edition') + kill);
+            console.log(`${bot.emotes.error} ` + error('Unknown server edition') + kill);
             return process.exit(1);
         }
     }
@@ -84,7 +92,7 @@ if (server.type !== 'java' && server.type !== 'bedrock') {
 
 if (!server.port) {
     if (bot.server) {
-        if (warns) console.log(warn(`You did not specify server port, setting it to default.`));
+        if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server port, setting it to default.`));
         if (server.type === 'bedrock') {
             server.port = 19132;
         } else {
@@ -94,7 +102,7 @@ if (!server.port) {
 }
 
 if (config.server.name === '' || !config.server.name) {
-    if (warns) console.log(warn(`You did not specify server name, setting it to discord server name.`));
+    if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server name, setting it to discord server name.`));
     bot.server.name = false;
 }
 
@@ -102,23 +110,23 @@ config.embeds.error = config.embeds.colors.error ? config.embeds.colors.error : 
 config.embeds.color = config.embeds.colors.normal ? config.embeds.colors.normal : '#77fc03';
 
 if (!config.autoStatus.time) {
-    if (warns) console.log(warn("You did not specify time update period of bot's status. Setting it to 10 minutes."));
+    if (warns) console.log(`${bot.emotes.warn} ` + warn("You did not specify time update period of bot's status. Setting it to 10 minutes."));
     config.autoStatus.time = "10min";
 }
 
 if (config.settings.statusCH) {
     const dis = c.white('\nAuto changing status message disabled.');
     if (!info.guild.id) {
-        console.log(error("You did not specify server ID in statusCH settings!") + dis);
+        console.log(`${bot.emotes.error} ` + error("You did not specify server ID in statusCH settings!") + dis);
         config.settings.statusCH = false;
     } else if (!info.channel.id) {
-        console.log(error("You did not specify channel ID in statusCH settings!") + dis);
+        console.log(`${bot.emotes.error} ` + error("You did not specify channel ID in statusCH settings!") + dis);
         config.settings.statusCH = false;
     }
 
     if (config.settings.statusCH) {
         if (!info.time) {
-            if (warns) console.log(warn("You did not specify time update period of statusCH. Setting it to 30 seconds."));
+            if (warns) console.log(`${bot.emotes.warn} ` + warn("You did not specify time update period of statusCH. Setting it to 30 seconds."));
             info.time = "30s";
         }
     }
@@ -127,16 +135,16 @@ if (config.settings.statusCH) {
 if (config.settings.votingCH) {
     const dis = c.white('\nVoting channel disabled.');
     if (!config.votingCH.guild.id) {
-        console.log(error("You did not specify server ID in votingCH settings!") + dis);
+        console.log(`${bot.emotes.error} ` + error("You did not specify server ID in votingCH settings!") + dis);
         config.settings.votingCH = false;
     } else if (!config.votingCH.channel.id) {
-        console.log(error("You did not specify channel ID in votingCH settings!") + dis);
+        console.log(`${bot.emotes.error} ` + error("You did not specify channel ID in votingCH settings!") + dis);
         config.settings.votingCH = false;
     }
 
     if (config.votingCH) {
         if (!config.votingCH.time) {
-            console.log(warn("You did not specify time in votingCH settings! Setting it to 30 seconds."));
+            console.log(`${bot.emotes.warn} ` + warn("You did not specify time in votingCH settings! Setting it to 30 seconds."));
             config.votingCH.time = "30s";
         }
 
@@ -144,7 +152,7 @@ if (config.settings.votingCH) {
             config.votingCH.reactions.first = "👍";
         }
         if (!config.votingCH.reactions.second) {
-            console.log(warn("You did not specify second reaction emoji! Second reaction disabled."));
+            console.log(`${bot.emotes.warn} ` + warn("You did not specify second reaction emoji! Second reaction disabled."));
             config.votingCH.reactions.second = false;
         }
         if (!config.votingCH.reactions.cancel) {
@@ -157,14 +165,20 @@ const iconLINK = config.server.icon;
 if (!iconLINK) {
     server.icon = false;
 } else if (!iconLINK.includes("png" || "jpg" || "webp" || "gif")) {
-    if (warns) console.log(warn("Unknown server icon file format. Setting it to undefined."));
+    if (warns) console.log(`${bot.emotes.warn} ` + warn("Unknown server icon file format. Setting it to undefined."));
     server.icon = "https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg";
 } else if (!iconLINK.includes("https://" || "http://")) {
-    if (warns) console.log(warn("Server icon link did contain https or http. Setting it to undefined."));
+    if (warns) console.log(`${bot.emotes.warn} ` + warn("Server icon link did contain https or http. Setting it to undefined."));
     server.icon = "https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg";
 } else {
     server.icon = iconLINK;
 }
+
+let emojis = config.console.emojis;
+if (!emojis.success) emojis.success = '💚';
+if (!emojis.info) emojis.info = '💙';
+if (!emojis.warn) emojis.warn = '💛';
+if (!emojis.error) emojis.error = '🛑';
 
 bot.settings = config.settings;
 bot.settings.split = bot.settings.readyScan;
@@ -172,6 +186,7 @@ bot.server = server;
 bot.config = config;
 bot.info = info;
 bot.text = config.messages;
+bot.emotes = emojis;
 
 //Event handler
 const eventsFolder = fs.readdirSync('./events').filter(file => file.endsWith('.js'));

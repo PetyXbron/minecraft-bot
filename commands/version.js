@@ -24,7 +24,7 @@ module.exports.run = async (bot, message, args) => {
             const result = await util.status(server.ip, server.port);
             var versionOriginal = result.version.name;
         } catch (e) {
-            if (warns) console.log(warn(`Couldn't get version from server! Getting it from config..`));
+            if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
             var versionOriginal = config.server.version;
         };
 
@@ -94,7 +94,7 @@ module.exports.run = async (bot, message, args) => {
             const result = await util.statusBedrock(server.ip, server.port);
             var versionOriginal = result.version.name;
         } catch (e) {
-            if (warns) console.log(warn(`Couldn't get version from server! Getting it from config..`));
+            if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
             var versionOriginal = config.server.version;
         }
 

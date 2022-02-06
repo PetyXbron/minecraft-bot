@@ -72,6 +72,16 @@ module.exports = {
         }
     },
 
+    //Program process console logging
+    console: {
+        emojis: {
+            success: "💚",
+            info: "💙",
+            warn: "💛",
+            error: "🛑"
+        }
+    },
+
     //Custom text settings
     messages: {
         ip: {

@@ -85,7 +85,7 @@ module.exports.run = async (bot, interaction) => {
                     interaction.reply({ embeds: [errorEmbed] });
                 }
 
-                if (warns) console.log(warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error);
+                if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error);
             });
     } else {
         //Doesn't work for bedrock edition, sorry.
