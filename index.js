@@ -44,6 +44,13 @@ server.work = true;
 server.vote = config.server.vote;
 
 //Config check
+let emojis = config.console.emojis;
+if (!emojis.success) emojis.success = '💚';
+if (!emojis.info) emojis.info = '💙';
+if (!emojis.warn) emojis.warn = '💛';
+if (!emojis.error) emojis.error = '🛑';
+bot.emotes = emojis;
+
 if (bot.token === '') { //Checks if you have entered bot token to config
     console.log(`${bot.emotes.error} ` + error('Bot token in config is empty!') + kill);
     return process.exit(1);
@@ -174,19 +181,12 @@ if (!iconLINK) {
     server.icon = iconLINK;
 }
 
-let emojis = config.console.emojis;
-if (!emojis.success) emojis.success = '💚';
-if (!emojis.info) emojis.info = '💙';
-if (!emojis.warn) emojis.warn = '💛';
-if (!emojis.error) emojis.error = '🛑';
-
 bot.settings = config.settings;
 bot.settings.split = bot.settings.readyScan;
 bot.server = server;
 bot.config = config;
 bot.info = info;
 bot.text = config.messages;
-bot.emotes = emojis;
 
 //Event handler
 const eventsFolder = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
