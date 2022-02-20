@@ -80,7 +80,7 @@ module.exports = async (bot) => {
     if (config.settings.statusCH && server.work) {
         const guild = bot.guilds.cache.get(info.guild.id);
         const channel = guild.channels.cache.get(info.channel.id);
-        const icon = server.icon ? server.icon : guild.icon;
+        const icon = server.icon ? server.icon : guild.iconURL();
 
         if (!db.get('statusCHMsgID')) {
             let msg;

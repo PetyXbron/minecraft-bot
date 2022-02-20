@@ -9,7 +9,7 @@ module.exports = {
 
 module.exports.run = async (bot, interaction) => {
     const { server, config, text } = bot;
-    let icon = server.icon ? server.icon : interaction.guild.icon;
+    let icon = server.icon ? server.icon : interaction.guild.iconURL();
 
     if (text.ip.title === "" || text.ip.description === "") {
         const ipEmbed = new Discord.MessageEmbed()

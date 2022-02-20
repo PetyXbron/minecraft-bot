@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, args) => {
         ;
     if (!server.work) return;
 
-    let icon = server.icon ? server.icon : message.guild.icon;
+    let icon = server.icon ? server.icon : message.guild.iconURL();
 
     if (server.type === 'java') {
         try {

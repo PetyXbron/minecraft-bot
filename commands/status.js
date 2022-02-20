@@ -21,7 +21,7 @@ module.exports.run = async (bot, message) => {
     let
         ip1 = server.ip,
         port1 = server.port,
-        icon = server.icon ? server.icon : message.guild.icon;
+        icon = server.icon ? server.icon : message.guild.iconURL();
 
     if (server.type === 'java') {
         util.status(ip1, port1)

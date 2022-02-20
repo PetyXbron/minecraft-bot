@@ -9,7 +9,7 @@ module.exports = {
 
 module.exports.run = async (bot, interaction) => {
     const { server, config, text } = bot;
-    let icon = server.icon ? server.icon : interaction.guild.icon;
+    let icon = server.icon ? server.icon : interaction.guild.iconURL();
     let serverName = config.server.name ? config.server.name : interaction.guild.name;
 
     if (text.vote.title === "" || text.vote.description === "") {
