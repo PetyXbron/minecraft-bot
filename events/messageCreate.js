@@ -28,12 +28,14 @@ module.exports = async (bot, message) => {
         const cancel = await message.createReactionCollector({ filter, time: ms(config.votingCH.time), max: 1 });
 
         cancel.on('collect', () => {
-            message.reactions.removeAll();
+            if (message) message.reactions.removeAll();
         });
 
         cancel.on('end', () => {
-            if (message.reactions.cache.get(config.votingCH.reactions.cancel)) {
-                message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
+            if (message) {
+                if (message.reactions.cache.get(config.votingCH.reactions.cancel)) {
+                    message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
+                }
             }
         });
     }

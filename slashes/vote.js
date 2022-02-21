@@ -20,17 +20,17 @@ module.exports.run = async (bot, interaction) => {
             .setColor(config.embeds.color);
         interaction.reply({ embeds: [voteEmbed] });
     } else {
-        text.vote.title = text.vote.title.replace('{serverIp}', server.ip);
-        text.vote.title = text.vote.title.replace('{serverPort}', server.port);
-        text.vote.title = text.vote.title.replace('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-        text.vote.title = text.vote.title.replace('{voteLink}', config.server.vote);
-        text.vote.title = text.vote.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+        text.vote.title = text.vote.title.replaceAll('{serverIp}', server.ip);
+        text.vote.title = text.vote.title.replaceAll('{serverPort}', server.port);
+        text.vote.title = text.vote.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+        text.vote.title = text.vote.title.replaceAll('{voteLink}', config.server.vote);
+        text.vote.title = text.vote.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-        text.vote.description = text.vote.description.replace('{serverIp}', server.ip);
-        text.vote.description = text.vote.description.replace('{serverPort}', server.port);
-        text.vote.description = text.vote.description.replace('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-        text.vote.description = text.vote.description.replace('{voteLink}', config.server.vote);
-        text.vote.description = text.vote.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+        text.vote.description = text.vote.description.replaceAll('{serverIp}', server.ip);
+        text.vote.description = text.vote.description.replaceAll('{serverPort}', server.port);
+        text.vote.description = text.vote.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+        text.vote.description = text.vote.description.replaceAll('{voteLink}', config.server.vote);
+        text.vote.description = text.vote.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
         const voteEmbed = new Discord.MessageEmbed()
             .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })

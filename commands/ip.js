@@ -20,17 +20,17 @@ module.exports.run = async (bot, message, args) => {
             .setColor(config.embeds.color);
         message.channel.send({ embeds: [ipEmbed] });
     } else {
-        text.ip.title = text.ip.title.replace('{serverIp}', server.ip);
-        text.ip.title = text.ip.title.replace('{serverPort}', server.port);
-        text.ip.title = text.ip.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name);
-        text.ip.title = text.ip.title.replace('{voteLink}', config.server.vote);
-        text.ip.title = text.ip.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+        text.ip.title = text.ip.title.replaceAll('{serverIp}', server.ip);
+        text.ip.title = text.ip.title.replaceAll('{serverPort}', server.port);
+        text.ip.title = text.ip.title.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
+        text.ip.title = text.ip.title.replaceAll('{voteLink}', config.server.vote);
+        text.ip.title = text.ip.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-        text.ip.description = text.ip.description.replace('{serverIp}', server.ip);
-        text.ip.description = text.ip.description.replace('{serverPort}', server.port);
-        text.ip.description = text.ip.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name);
-        text.ip.description = text.ip.description.replace('{voteLink}', config.server.vote);
-        text.ip.description = text.ip.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+        text.ip.description = text.ip.description.replaceAll('{serverIp}', server.ip);
+        text.ip.description = text.ip.description.replaceAll('{serverPort}', server.port);
+        text.ip.description = text.ip.description.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
+        text.ip.description = text.ip.description.replaceAll('{voteLink}', config.server.vote);
+        text.ip.description = text.ip.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
         const ipEmbed = new Discord.MessageEmbed()
             .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })

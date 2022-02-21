@@ -37,11 +37,11 @@ module.exports = async (bot) => {
 
                 if (!errored) {
                     if (status.includes("{onlinePlayers}")) {
-                        status = status.replace("{onlinePlayers}", result.players.online);
+                        status = status.replaceAll("{onlinePlayers}", result.players.online);
                     };
 
                     if (status.includes("{maxPlayers}")) {
-                        status = status.replace("{maxPlayers}", result.players.max);
+                        status = status.replaceAll("{maxPlayers}", result.players.max);
                     };
 
                     try {

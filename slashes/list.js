@@ -34,24 +34,24 @@ module.exports.run = async (bot, interaction) => {
                         .setColor(config.embeds.color);
                     interaction.reply({ embeds: [serverEmbed] });
                 } else {
-                    text.list.title = text.list.title.replace('{serverIp}', server.ip);
-                    text.list.title = text.list.title.replace('{serverPort}', server.port);
-                    text.list.title = text.list.title.replace('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-                    text.list.title = text.list.title.replace('{voteLink}', config.server.vote);
-                    text.list.title = text.list.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
-                    text.list.title = text.list.title.replace('{playersOnline}', result.players.online);
-                    text.list.title = text.list.title.replace('{playersMax}', result.players.max);
+                    text.list.title = text.list.title.replaceAll('{serverIp}', server.ip);
+                    text.list.title = text.list.title.replaceAll('{serverPort}', server.port);
+                    text.list.title = text.list.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+                    text.list.title = text.list.title.replaceAll('{voteLink}', config.server.vote);
+                    text.list.title = text.list.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+                    text.list.title = text.list.title.replaceAll('{playersOnline}', result.players.online);
+                    text.list.title = text.list.title.replaceAll('{playersMax}', result.players.max);
 
-                    text.list.description = text.list.description.replace('{serverIp}', server.ip);
-                    text.list.description = text.list.description.replace('{serverPort}', server.port);
-                    text.list.description = text.list.description.replace('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-                    text.list.description = text.list.description.replace('{voteLink}', config.server.vote);
-                    text.list.description = text.list.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
-                    text.list.description = text.list.description.replace('{playersOnline}', result.players.online);
-                    text.list.description = text.list.description.replace('{playersMax}', result.players.max);
+                    text.list.description = text.list.description.replaceAll('{serverIp}', server.ip);
+                    text.list.description = text.list.description.replaceAll('{serverPort}', server.port);
+                    text.list.description = text.list.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+                    text.list.description = text.list.description.replaceAll('{voteLink}', config.server.vote);
+                    text.list.description = text.list.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+                    text.list.description = text.list.description.replaceAll('{playersOnline}', result.players.online);
+                    text.list.description = text.list.description.replaceAll('{playersMax}', result.players.max);
 
                     if (result.players.sample) {
-                        var trueList = text.list.listFormat.replace('{playersList}', result.players.sample.map(p => ` ${p.name} `).join('\r\n'));
+                        var trueList = text.list.listFormat.replaceAll('{playersList}', result.players.sample.map(p => ` ${p.name} `).join('\r\n'));
                     }
 
                     const serverEmbed = new Discord.MessageEmbed()
@@ -71,11 +71,11 @@ module.exports.run = async (bot, interaction) => {
                         .setColor(config.embeds.error);
                     interaction.reply({ embeds: [errorEmbed] });
                 } else {
-                    text.list.title = text.list.title.replace('{serverIp}', server.ip);
-                    text.list.title = text.list.title.replace('{serverPort}', server.port);
-                    text.list.title = text.list.title.replace('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-                    text.list.title = text.list.title.replace('{voteLink}', config.server.vote);
-                    text.list.title = text.list.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+                    text.list.title = text.list.title.replaceAll('{serverIp}', server.ip);
+                    text.list.title = text.list.title.replaceAll('{serverPort}', server.port);
+                    text.list.title = text.list.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+                    text.list.title = text.list.title.replaceAll('{voteLink}', config.server.vote);
+                    text.list.title = text.list.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
                     const errorEmbed = new Discord.MessageEmbed()
                         .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })

@@ -68,19 +68,19 @@ module.exports.run = async (bot, message, args) => {
                 .setColor(config.embeds.color);
             message.channel.send({ embeds: [versionEmbed] });
         } else {
-            text.version.title = text.version.title.replace('{serverIp}', server.ip);
-            text.version.title = text.version.title.replace('{serverPort}', server.port);
-            text.version.title = text.version.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name);
-            text.version.title = text.version.title.replace('{voteLink}', config.server.vote);
-            text.version.title = text.version.title.replace('{serverVersion}', version);
-            text.version.title = text.version.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.version.title = text.version.title.replaceAll('{serverIp}', server.ip);
+            text.version.title = text.version.title.replaceAll('{serverPort}', server.port);
+            text.version.title = text.version.title.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
+            text.version.title = text.version.title.replaceAll('{voteLink}', config.server.vote);
+            text.version.title = text.version.title.replaceAll('{serverVersion}', version);
+            text.version.title = text.version.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-            text.version.description = text.version.description.replace('{serverIp}', server.ip);
-            text.version.description = text.version.description.replace('{serverPort}', server.port);
-            text.version.description = text.version.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name);
-            text.version.description = text.version.description.replace('{voteLink}', config.server.vote);
-            text.version.description = text.version.description.replace('{serverVersion}', version);
-            text.version.description = text.version.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.version.description = text.version.description.replaceAll('{serverIp}', server.ip);
+            text.version.description = text.version.description.replaceAll('{serverPort}', server.port);
+            text.version.description = text.version.description.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
+            text.version.description = text.version.description.replaceAll('{voteLink}', config.server.vote);
+            text.version.description = text.version.description.replaceAll('{serverVersion}', version);
+            text.version.description = text.version.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
             const versionEmbed = new Discord.MessageEmbed()
                 .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
@@ -138,19 +138,19 @@ module.exports.run = async (bot, message, args) => {
                 .setColor(config.embeds.color);
             message.channel.send({ embeds: [versionEmbed] });
         } else {
-            text.version.title = text.version.title.replace('{serverIp}', server.ip);
-            text.version.title = text.version.title.replace('{serverPort}', server.port);
-            text.version.title = text.version.title.replace('{serverName}', config.server.name ? config.server.name : message.guild.name);
-            text.version.title = text.version.title.replace('{voteLink}', config.server.vote);
-            text.version.title = text.version.title.replace('{serverVersion}', version);
-            text.version.title = text.version.title.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.version.title = text.version.title.replaceAll('{serverIp}', server.ip);
+            text.version.title = text.version.title.replaceAll('{serverPort}', server.port);
+            text.version.title = text.version.title.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
+            text.version.title = text.version.title.replaceAll('{voteLink}', config.server.vote);
+            text.version.title = text.version.title.replaceAll('{serverVersion}', version);
+            text.version.title = text.version.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-            text.version.description = text.version.description.replace('{serverIp}', server.ip);
-            text.version.description = text.version.description.replace('{serverPort}', server.port);
-            text.version.description = text.version.description.replace('{serverName}', config.server.name ? config.server.name : message.guild.name);
-            text.version.description = text.version.description.replace('{voteLink}', config.server.vote);
-            text.version.description = text.version.description.replace('{serverVersion}', version);
-            text.version.description = text.version.description.replace('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.version.description = text.version.description.replaceAll('{serverIp}', server.ip);
+            text.version.description = text.version.description.replaceAll('{serverPort}', server.port);
+            text.version.description = text.version.description.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
+            text.version.description = text.version.description.replaceAll('{voteLink}', config.server.vote);
+            text.version.description = text.version.description.replaceAll('{serverVersion}', version);
+            text.version.description = text.version.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
             const versionEmbed = new Discord.MessageEmbed()
                 .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
