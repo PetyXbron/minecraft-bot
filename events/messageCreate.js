@@ -46,9 +46,9 @@ module.exports = async (bot, message) => {
         if (config.settings.randomColor) {
             const randomColor = Math.floor(Math.random() * 16777215).toString(16);
             if (randomColor === config.embeds.color) {
-                config.embeds.color = Math.floor(Math.random() * 16777215).toString(16)
+                config.embeds.color = Math.floor(Math.random() * 16777215).toString(16);
             } else {
-                config.embeds.color = randomColor
+                config.embeds.color = randomColor;
             }
         }
 

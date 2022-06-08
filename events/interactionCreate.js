@@ -3,4 +3,4 @@ module.exports = async (bot, interaction) => {
 
     const command = bot.slashes.get(interaction.commandName);
     if (command) command.run(bot, interaction);
-}
+};

@@ -84,6 +84,10 @@ module.exports = {
 
     //Custom text settings
     messages: {
+        help: {
+            title: "{serverName} bot commands:",
+            description: "> **Prefix:** \`{prefix}\`\n> **Commands:\n**{commands}"
+        },
         ip: {
             title: "IP address:",
             description: "\`{serverIp}\`:\`{serverPort}\`"
@@ -96,7 +100,7 @@ module.exports = {
         status: {
             title: "Server status:",
             description:
-            `:white_check_mark: **ONLINE**
+                `{status}
             
             **Description**
             {motd}
@@ -125,17 +129,10 @@ module.exports = {
 
     //Commands aliases
     commands: {
-        status: [
-            's',
-            'info',
-            'server',
-            'overview',
-            'ov'
-        ],
-        test: [
-            't',
-            'try',
-            'testing'
+        help: [
+            'help',
+            'commands',
+            'menu'
         ],
         ip: [
             'i',
@@ -149,12 +146,24 @@ module.exports = {
             'players',
             'plist'
         ],
-        vote: [
-            'votelink'
+        status: [
+            's',
+            'info',
+            'server',
+            'overview',
+            'ov'
+        ],
+        test: [
+            't',
+            'try',
+            'testing'
         ],
         version: [
             'v',
             'ver'
+        ],
+        vote: [
+            'votelink'
         ]
     }
 };

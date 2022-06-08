@@ -18,20 +18,22 @@ module.exports = async (bot) => {
         if (bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
             setInterval(async () => {
                 let status = bot.status;
+                let errored = false,
+                    result = undefined;
 
                 if (server.type === 'java') {
                     try {
-                        var result = await util.status(server.ip, server.port);
+                        result = await util.status(server.ip, server.port);
                     } catch (err) {
                         console.log();
-                        var errored = true;
+                        errored = true;
                     }
                 } else {
                     try {
-                        var result = await util.statusBedrock(server.ip, server.port);
+                        result = await util.statusBedrock(server.ip, server.port);
                     } catch (err) {
                         console.log();
-                        var errored = true;
+                        errored = true;
                     }
                 };
 
@@ -111,6 +113,10 @@ module.exports = async (bot) => {
                     const versionOriginal = result.version.name;
                     let versionAdvanced = false;
 
+                    let maintenceStatus = false,
+                        lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
+                    if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
+
                     if (settings.split) {
                         versionAdvanced = versionOriginal.toLocaleLowerCase()
                             .replace("bukkit ", "")
@@ -145,7 +151,7 @@ module.exports = async (bot) => {
 
                     const serverEmbed = new Discord.MessageEmbed()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-                        .setDescription(`:white_check_mark: **ONLINE**`)
+                        .setDescription(`:white_check_mark: ${maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**"}`)
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList, inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
@@ -171,6 +177,10 @@ module.exports = async (bot) => {
                 .then((result) => {
                     const versionOriginal = result.version.name;
                     let versionAdvanced = false;
+
+                    let maintenceStatus = false,
+                        lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
+                    if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
                     if (settings.split) {
                         versionAdvanced = versionOriginal.toLocaleLowerCase()
@@ -204,7 +214,7 @@ module.exports = async (bot) => {
 
                     const serverEmbed = new Discord.MessageEmbed()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-                        .setDescription(`:white_check_mark: **ONLINE**`)
+                        .setDescription(`${maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**"}`)
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}`, inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
@@ -235,6 +245,10 @@ module.exports = async (bot) => {
                     .then((result) => {
                         const versionOriginal = result.version.name;
                         let versionAdvanced = false;
+
+                        let maintenceStatus = false,
+                            lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
+                        if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
                         if (settings.split) {
                             versionAdvanced = versionOriginal.toLocaleLowerCase()
@@ -270,7 +284,7 @@ module.exports = async (bot) => {
 
                         const serverEmbed = new Discord.MessageEmbed()
                             .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-                            .setDescription(`:white_check_mark: **ONLINE**`)
+                            .setDescription(`${maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**"}`)
                             .addFields(
                                 { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList, inline: false },
                                 { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
@@ -297,6 +311,10 @@ module.exports = async (bot) => {
                     .then((result) => {
                         const versionOriginal = result.version.name;
                         let versionAdvanced = false;
+
+                        let maintenceStatus = false,
+                            lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
+                        if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
                         if (settings.split) {
                             versionAdvanced = versionOriginal.toLocaleLowerCase()
@@ -330,7 +348,7 @@ module.exports = async (bot) => {
 
                         const serverEmbed = new Discord.MessageEmbed()
                             .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-                            .setDescription(`:white_check_mark: **ONLINE**`)
+                            .setDescription(`${maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**"}`)
                             .addFields(
                                 { name: "PLAYERS", value: `${result.players.online}/${result.players.max}`, inline: false },
                                 { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
