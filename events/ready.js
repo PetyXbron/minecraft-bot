@@ -14,10 +14,12 @@ module.exports = async (bot) => {
     const debug = config.settings.debug;
     var warns = config.settings.warns;
 
-    if (bot.status) {
-        if (bot.status.includes("{onlinePlayers}") | bot.status.includes("{maxPlayers}")) {
-            setInterval(async () => {
-                let status = bot.status;
+    if (bot.pres) {
+        let presence = config.bot.presence,
+            status = config.bot.status.toLowerCase(),
+            activity = config.bot.activity.toUpperCase();
+        if (bot.pres.includes("{onlinePlayers}") | bot.pres.includes("{maxPlayers}")) {
+            async function autoUpdatingPresence() {
                 let errored = false,
                     result = undefined;
 
@@ -38,35 +40,36 @@ module.exports = async (bot) => {
                 };
 
                 if (!errored) {
-                    if (status.includes("{onlinePlayers}")) {
-                        status = status.replaceAll("{onlinePlayers}", result.players.online);
+                    if (presence.includes("{onlinePlayers}")) {
+                        presence = presence.replaceAll("{onlinePlayers}", result.players.online);
                     };
 
-                    if (status.includes("{maxPlayers}")) {
-                        status = status.replaceAll("{maxPlayers}", result.players.max);
+                    if (presence.includes("{maxPlayers}")) {
+                        presence = presence.replaceAll("{maxPlayers}", result.players.max);
                     };
 
                     try {
-                        bot.user.setActivity(status, { type: bot.activity }); //Sets bot activity
-                        if (debug) console.log(`${bot.emotes.success} Successfully set status to ` + gr(`${bot.activity.toLowerCase()} ${status}`));
+                        bot.user.setPresence({ activities: [{ name: presence }], status: status, type: activity, afk: false }); //Sets bot activity
+                        if (debug) console.log(`${bot.emotes.success} Successfully set presence to ` + gr(`${bot.activity.toLowerCase()} ${presence}`));
                     } catch (e) {
                         console.log();
                     }
                 } else {
-                    const status = "Offline";
+                    const presence = "Offline";
                     try {
-                        bot.user.setActivity(status, { type: bot.activity }); //Sets bot activity
-                        if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Status set to ') + gr(`${bot.activity.toLowerCase()} ${status}`));
+                        bot.user.setPresence({ activities: [{ name: presence }], status: status, type: activity, afk: false }); //Sets bot activity
+                        if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Presence set to ') + gr(`${bot.activity.toLowerCase()} ${presence}`));
                     } catch (e) {
                         console.log();
                     }
                 }
-
-            }, ms(config.autoStatus.time));
+            }
+            autoUpdatingPresence()
+            setInterval(autoUpdatingPresence, ms(config.autoStatus.time));
         } else {
             try {
-                bot.user.setActivity(bot.status, { type: bot.activity }); //Sets bot activity
-                console.log(`${bot.emotes.success} Successfully set status to ` + gr(`${bot.activity.toLowerCase()} ${bot.status}`));
+                bot.user.setPresence({ activities: [{ name: presence }], status: status, type: activity, afk: false }); //Sets bot activity
+                if (debug) console.log(`${bot.emotes.success} Successfully set presence to ` + gr(`${bot.activity.toLowerCase()} ${bot.pres}`));
             } catch (e) {
                 console.log();
             }
@@ -377,7 +380,7 @@ module.exports = async (bot) => {
         if (server.type === 'java') {
             util.status(server.ip, server.port)
                 .then((result) => {
-                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
+                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type.toUpperCase())} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
                         + "   " + bold('IP:	 ') + bl(`${server.ip}:${result.port ? result.port : server.port}\n`)
                         + "   " + bold('VERSION: ') + bl(`${result.version.name ? result.version.name : 'unknown'}\n`)
                         + "   " + bold('PLAYERS: ') + bl(`${result.players.online ? result.players.online : '0'}` + '/' + `${result.players.max ? result.players.max : '0'}`)
@@ -389,7 +392,7 @@ module.exports = async (bot) => {
         } else if (server.type === 'bedrock') {
             util.statusBedrock(server.ip, server.port)
                 .then((result) => {
-                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type)} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
+                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type.toUpperCase())} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
                         + "   " + bold('IP:	 ') + bl(`${server.ip}:${result.port ? result.port : server.port}\n`)
                         + "   " + bold('VERSION: ') + bl(`${result.version.name ? result.version.name : 'unknown'}\n`)
                         + "   " + bold('PLAYERS: ') + bl(`${result.players.online ? result.players.online : '0'}` + '/' + `${result.players.max ? result.players.max : '0'}`)

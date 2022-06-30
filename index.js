@@ -17,8 +17,12 @@ const bot = new Discord.Client({
     ]
 });
 
-const config = require('./config'),
+let dev;
+try { if (fs.existsSync('./dev-config.js')) { dev = true; } }
+catch (err) { console.error(err); }
+const config = require(dev ? './dev-config' : './config'),
     activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activites, discord.js supports more (but I don't care)
+    statuses = ['online', 'idle', 'dnd', 'invisible'], //Supported activites
     error = c.keyword('red').bold,
     kill = '\nKilling process...',
     warn = c.keyword('yellow').bold,
@@ -33,6 +37,7 @@ bot.slashes = new Discord.Collection();
 bot.token = config.bot.token;
 bot.prefix = config.bot.prefix;
 bot.status = config.bot.status;
+bot.pres = config.bot.presence;
 bot.warns = warns;
 bot.readyScan = config.settings.readyScan;
 bot.server = Boolean;
@@ -59,24 +64,43 @@ if (bot.token === '') { //Checks if you have entered bot token to config
     return process.exit(1);
 };
 
-if (bot.status === '') { //Checks if you have entered custom status for bot to config
-    if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status in config was empty! Bot status was disabled.'));
-    bot.status = false;
+if (bot.pres === '') { //Checks if you have entered custom presence text message for bot to config
+    if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status in config was empty! Bot presence was disabled.'));
+    bot.pres = false;
 }
 
 if (!bot.activity) { //Checks if you have entered status activity type to config
-    if (bot.status) {
+    if (bot.pres) {
         if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot activity type in config was empty! Activity type is now "playing"'));
         bot.activity = 'PLAYING';
     };
 };
 
-if (!new Set(activites).has(bot.activity)) { //Checks if you have entered supported activity
-    if (bot.status) {
-        if (warns) console.log(`${bot.emotes.warn} ` + warn(`"${bot.activity}" activity is not supported. Bot status was disabled.`));
-        bot.status = false;
+if (!new Set(activites).has(bot.activity.toUpperCase())) { //Checks if you have entered supported activity
+    if (bot.pres) {
+        if (warns) console.log(`${bot.emotes.warn} ` + warn(`"${bot.activity}" activity is not supported. Bot presence was disabled.`));
+        bot.pres = false;
     };
 };
+
+if (!bot.status) { //Checks if you have entered status activity type to config
+    if (bot.pres) {
+        if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status type in config was empty! Bot presence is now set to "online"'));
+        bot.status = 'ONLINE';
+    };
+};
+
+if (!new Set(statuses).has(bot.status.toLowerCase())) { //Checks if you have entered supported activity
+    if (bot.pres) {
+        if (bot.status.toLowerCase() === "do not disturb") {
+            bot.status = "dnd"
+        } else {
+            if (warns) console.log(`${bot.emotes.warn} ` + warn(`"${bot.status}" status is not supported. Bot presence was disabled.`));
+            bot.pres = false;
+        }
+    };
+};
+
 
 if (!server.ip) {
     if (warns) console.log(`${bot.emotes.error} ` + error("You did not specify server's ip!") + c.white('\nMinecraft server disabled.'));
@@ -173,10 +197,10 @@ if (!iconLINK) {
     server.icon = false;
 } else if (!iconLINK.includes("png" || "jpg" || "webp" || "gif")) {
     if (warns) console.log(`${bot.emotes.warn} ` + warn("Unknown server icon file format. Setting it to undefined."));
-    server.icon = "https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg";
+    server.icon = "https://media.minecraftforum.net/attachments/300/619/636977108000120237.png";
 } else if (!iconLINK.includes("https://" || "http://")) {
     if (warns) console.log(`${bot.emotes.warn} ` + warn("Server icon link did contain https or http. Setting it to undefined."));
-    server.icon = "https://www.planetminecraft.com/files/image/minecraft/project/2020/224/12627341-image_l.jpg";
+    server.icon = "https://media.minecraftforum.net/attachments/300/619/636977108000120237.png";
 } else {
     server.icon = iconLINK;
 }

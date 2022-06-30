@@ -4,7 +4,8 @@ module.exports = {
     bot: {
         token: '', //Your bot token - https://tinyurl.com/discordbot-token
         prefix: '', //Your custom prefix of the bot, like "!" or "."
-        status: '', //Custom activity/status text
+        presence: '', //Custom activity/status text
+        status: '',  //You can choose: ONLINE, IDLE, DND (do not disturb), INVISIBLE
         activity: '' //You can choose: PLAYING, LISTENING, WATCHING, COMPETING
     },
 

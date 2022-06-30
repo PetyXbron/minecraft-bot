@@ -4,5 +4,4 @@ package-lock.json
 
 test/
 dev-config.js
-dev-index.js
 json.sqlite
