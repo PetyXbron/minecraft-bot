@@ -22,7 +22,7 @@ try { if (fs.existsSync('./dev-config.js')) { dev = true; } }
 catch (err) { console.error(err); }
 const config = require(dev ? './dev-config' : './config'),
     activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activites, discord.js supports more (but I don't care)
-    statuses = ['online', 'idle', 'dnd', 'invisible'], //Supported activites
+    statuses = ['online', 'idle', 'dnd', 'invisible'], //Supported statuses
     error = c.keyword('red').bold,
     kill = '\nKilling process...',
     warn = c.keyword('yellow').bold,
