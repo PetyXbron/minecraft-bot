@@ -9,7 +9,7 @@ module.exports = {
         activity: '' //You can choose: PLAYING, LISTENING, WATCHING, COMPETING
     },
 
-    //Your minecraft server data
+    //Your Minecraft server data
     server: {
         name: '', //Your server name
         type: '', //"java" or "bedrock"
@@ -83,89 +83,102 @@ module.exports = {
         }
     },
 
-    //Custom text settings
-    messages: {
+    //All commands settings
+    commands: {
+        enableSlashes: true, //If you want to disable only specific slashes, leave this true and go down
+        //List of all commands:
         help: {
-            title: "{serverName} bot commands:",
-            description: "> **Prefix:** \`{prefix}\`\n> **Commands:\n**{commands}"
+            enableNormal: true, //Enables normal command
+            enableSlash: true, //Enables slash command
+            aliases: [ //Only for normal commands
+                'commands', 'menu'
+            ],
+            text: { //Custom text settings (for translating or customization)
+                title: "{serverName} bot commands:",
+                description: "> **Prefix:** \`{prefix}\`\n> **Commands:**\n{commands}",
+                errorTitle: "Error! Command \"{arg0}\" doesn't exist.",
+                errorDescription: "Command `{arg0}` was not found.\nYou are entering the wrong alias or the command is disabled."
+            }
         },
         ip: {
-            title: "IP address:",
-            description: "\`{serverIp}\`:\`{serverPort}\`"
+            enableNormal: true, //Enables normal command
+            enableSlash: true, //Enables slash command
+            aliases: [ //Only for normal commands
+                'i', 'ip-address', 'address', 'connect', 'join'
+            ],
+            text: { //Custom text settings (for translating or customization)
+                title: "IP address:",
+                description: "\`{serverIp}\`:\`{serverPort}\`"
+            }
         },
         list: {
-            title: "Online player list:",
-            description: "**{playersOnline}**/**{playersMax}**",
-            listFormat: "```{playersList}```"
+            enableNormal: true, //Enables normal command
+            enableSlash: true, //Enables slash command
+            aliases: [ //Only for normal commands
+                'l', 'players', 'plist'
+            ],
+            text: { //Custom text settings (for translating or customization)
+                title: "Online player list:",
+                description: "**{playersOnline}**/**{playersMax}**",
+                listFormat: "```{playersList}```"
+            }
         },
         status: {
-            title: "Server status:",
-            description:
-                `{status}
-            
-            **Description**
-            {motd}
-            
-            **IP Address**
-            \`{serverIp}\`:\`{serverPort}\`
-            
-            **Version**
-            {serverType} {serverVersion}
-            
-            **Players**
-            **{playersOnline}**/**{playersMax}**`,
+            enableNormal: true, //Enables normal command
+            enableSlash: true, //Enables slash command
+            aliases: [ //Only for normal commands
+                's', 'info', 'server', 'overview', 'ov'
+            ],
+            text: { //Custom text settings (for translating or customization)
+                title: "Server status:",
+                description:
+                    `{status}
+                    
+                    **Description**
+                    {motd}
+                    
+                    **IP Address**
+                    \`{serverIp}\`:\`{serverPort}\`
+                    
+                    **Version**
+                    {serverType} {serverVersion}
+                    
+                    **Players**
+                    **{playersOnline}**/**{playersMax}**`,
+            }
         },
         test: {
-            content: "Test message reply."
+            enableNormal: true, //Enables normal command
+            //Test command doesn't have slash type. Is it really neccesary?
+            aliases: [ //Only for normal commands
+                't', 'try', 'testing'
+            ],
+            text: { //Custom text settings (for translating or customization)
+                content: "Test message reply."
+            }
         },
         version: {
-            title: "Minecraft version:",
-            description: "{serverType} {serverVersion}"
+            enableNormal: true, //Enables normal command
+            enableSlash: true, //Enables slash command
+            aliases: [ //Only for normal commands
+                'v', 'ver'
+            ],
+            text: { //Custom text settings (for translating or customization)
+                title: "Minecraft version:",
+                description: "{serverType} {serverVersion}"
+            }
         },
         vote: {
-            title: "Server list vote link:",
-            description: "[Here]({voteLink}) you can vote for {serverName}."
-        }
-    },
-
-    //Commands aliases
-    commands: {
-        help: [
-            'help',
-            'commands',
-            'menu'
-        ],
-        ip: [
-            'i',
-            'ip-address',
-            'address',
-            'connect',
-            'join'
-        ],
-        list: [
-            'l',
-            'players',
-            'plist'
-        ],
-        status: [
-            's',
-            'info',
-            'server',
-            'overview',
-            'ov'
-        ],
-        test: [
-            't',
-            'try',
-            'testing'
-        ],
-        version: [
-            'v',
-            'ver'
-        ],
-        vote: [
-            'votelink'
-        ]
+            enableNormal: true, //Enables normal command
+            enableSlash: true, //Enables slash command
+            aliases: [ //Only for normal commands
+                'votelink'
+            ],
+            text: { //Custom text settings (for translating or customization)
+                title: "Server list vote link:",
+                description: "[Here]({voteLink}) you can vote for {serverName}."
+            }
+        },
     }
 };
 

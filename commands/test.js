@@ -1,19 +1,21 @@
-const { commands } = require("../config");
 const util = require('minecraft-server-util');
+const fs = require('fs');
+const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!
     description: "Test command", //Description of command - you can change it :)
-    aliases: commands.test, //Command's aliases - set them in config.js
-    enable: true //Enable this command? - true or false (boolean)
+    aliases: commands.test.aliases //Command's aliases - set them in config.js
 };
 
 module.exports.run = async (bot, message) => {
-    const { server, config, text } = bot;
+    let { server, config } = bot,
+        text = commands.test.text,
+        icon = server.icon ? server.icon : message.guild.iconURL();
 
-    if (!text.test.content) {
+    if (!text.content) {
         message.reply({ content: 'Test message reply.' });
     } else {
-        message.reply({ content: text.test.content });
+        message.reply({ content: text.content });
     }
 };

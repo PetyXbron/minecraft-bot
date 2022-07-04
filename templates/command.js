@@ -1,18 +1,21 @@
-const { commands } = require("../config");
 const util = require('minecraft-server-util');
 const Discord = require('discord.js');
 const c = require('chalk');
+const fs = require('fs');
+const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!
     description: "Test command", //Description of command - you can change it :)
-    aliases: commands.test, //Command's aliases - set them in config.js
-    enable: false //Enable this command? - true or false (boolean)
+    aliases: commands.test.aliases //Command's aliases - set them in config.js
 };
 
 module.exports.run = async (bot, message, args) => {
-    const { server, config, text } = bot,
+    let { server, config } = bot,
+        text = commands.test.text,
         warn = c.keyword('yellow').bold,
-        warns = config.settings.warns;
+        warns = config.settings.warns,
+        icon = server.icon ? server.icon : message.guild.iconURL(),
+        serverName = config.server.name ? config.server.name : message.guild.name;
     //action
 };

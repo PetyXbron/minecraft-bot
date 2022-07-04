@@ -2,6 +2,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require('discord.js');
 const util = require('minecraft-server-util');
 const warn = require('chalk').keyword('yellow').bold;
+const fs = require('fs');
+const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,13 +12,13 @@ module.exports = {
 };
 
 module.exports.run = async (bot, interaction) => {
-    const { server, config, text } = bot;
+    let { server, config } = bot,
+        text = commands.version.text,
+        icon = server.icon ? server.icon : message.guild.iconURL();
     const warns = config.settings.warns;
     const settings = config.settings
         ;
     if (!server.work) return;
-
-    let icon = server.icon ? server.icon : interaction.guild.iconURL();
 
     if (server.type === 'java') {
         try {
@@ -59,7 +61,7 @@ module.exports.run = async (bot, interaction) => {
 
         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
-        if (text.version.title === "" || text.version.description === "") {
+        if (text.title === "" || text.description === "") {
             const versionEmbed = new Discord.MessageEmbed()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle("Minecraft version:")
@@ -67,24 +69,24 @@ module.exports.run = async (bot, interaction) => {
                 .setColor(config.embeds.color);
             interaction.reply({ embeds: [versionEmbed] });
         } else {
-            text.version.title = text.version.title.replaceAll('{serverIp}', server.ip);
-            text.version.title = text.version.title.replaceAll('{serverPort}', server.port);
-            text.version.title = text.version.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-            text.version.title = text.version.title.replaceAll('{voteLink}', config.server.vote);
-            text.version.title = text.version.title.replaceAll('{serverVersion}', version);
-            text.version.title = text.version.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.title = text.title.replaceAll('{serverIp}', server.ip);
+            text.title = text.title.replaceAll('{serverPort}', server.port);
+            text.title = text.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+            text.title = text.title.replaceAll('{voteLink}', config.server.vote);
+            text.title = text.title.replaceAll('{serverVersion}', version);
+            text.title = text.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-            text.version.description = text.version.description.replaceAll('{serverIp}', server.ip);
-            text.version.description = text.version.description.replaceAll('{serverPort}', server.port);
-            text.version.description = text.version.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-            text.version.description = text.version.description.replaceAll('{voteLink}', config.server.vote);
-            text.version.description = text.version.description.replaceAll('{serverVersion}', version);
-            text.version.description = text.version.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.description = text.description.replaceAll('{serverIp}', server.ip);
+            text.description = text.description.replaceAll('{serverPort}', server.port);
+            text.description = text.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+            text.description = text.description.replaceAll('{voteLink}', config.server.vote);
+            text.description = text.description.replaceAll('{serverVersion}', version);
+            text.description = text.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
             const versionEmbed = new Discord.MessageEmbed()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
-                .setTitle(text.version.title)
-                .setDescription(text.version.description)
+                .setTitle(text.title)
+                .setDescription(text.description)
                 .setColor(config.embeds.color);
             interaction.reply({ embeds: [versionEmbed] });
         }
@@ -129,7 +131,7 @@ module.exports.run = async (bot, interaction) => {
 
         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
-        if (text.version.title === "" || text.version.description === "") {
+        if (text.title === "" || text.description === "") {
             const versionEmbed = new Discord.MessageEmbed()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle("Minecraft version:")
@@ -137,24 +139,24 @@ module.exports.run = async (bot, interaction) => {
                 .setColor(config.embeds.color);
             interaction.reply({ embeds: [versionEmbed] });
         } else {
-            text.version.title = text.version.title.replaceAll('{serverIp}', server.ip);
-            text.version.title = text.version.title.replaceAll('{serverPort}', server.port);
-            text.version.title = text.version.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-            text.version.title = text.version.title.replaceAll('{voteLink}', config.server.vote);
-            text.version.title = text.version.title.replaceAll('{serverVersion}', version);
-            text.version.title = text.version.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.title = text.title.replaceAll('{serverIp}', server.ip);
+            text.title = text.title.replaceAll('{serverPort}', server.port);
+            text.title = text.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+            text.title = text.title.replaceAll('{voteLink}', config.server.vote);
+            text.title = text.title.replaceAll('{serverVersion}', version);
+            text.title = text.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-            text.version.description = text.version.description.replaceAll('{serverIp}', server.ip);
-            text.version.description = text.version.description.replaceAll('{serverPort}', server.port);
-            text.version.description = text.version.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-            text.version.description = text.version.description.replaceAll('{voteLink}', config.server.vote);
-            text.version.description = text.version.description.replaceAll('{serverVersion}', version);
-            text.version.description = text.version.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+            text.description = text.description.replaceAll('{serverIp}', server.ip);
+            text.description = text.description.replaceAll('{serverPort}', server.port);
+            text.description = text.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+            text.description = text.description.replaceAll('{voteLink}', config.server.vote);
+            text.description = text.description.replaceAll('{serverVersion}', version);
+            text.description = text.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
             const versionEmbed = new Discord.MessageEmbed()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
-                .setTitle(text.version.title)
-                .setDescription(text.version.description)
+                .setTitle(text.title)
+                .setDescription(text.description)
                 .setColor(config.embeds.color);
             interaction.reply({ embeds: [versionEmbed] });
         }

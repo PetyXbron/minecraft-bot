@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require('discord.js');
+const fs = require('fs');
+const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,11 +10,12 @@ module.exports = {
 };
 
 module.exports.run = async (bot, interaction) => {
-    const { server, config, text } = bot;
-    let icon = server.icon ? server.icon : interaction.guild.iconURL();
-    let serverName = config.server.name ? config.server.name : interaction.guild.name;
+    let { server, config } = bot,
+        text = commands.vote.text,
+        icon = server.icon ? server.icon : message.guild.iconURL(),
+        serverName = config.server.name ? config.server.name : interaction.guild.name;
 
-    if (text.vote.title === "" || text.vote.description === "") {
+    if (text.title === "" || text.description === "") {
         const voteEmbed = new Discord.MessageEmbed()
             .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
             .setTitle("Server list vote link:")
@@ -20,22 +23,22 @@ module.exports.run = async (bot, interaction) => {
             .setColor(config.embeds.color);
         interaction.reply({ embeds: [voteEmbed] });
     } else {
-        text.vote.title = text.vote.title.replaceAll('{serverIp}', server.ip);
-        text.vote.title = text.vote.title.replaceAll('{serverPort}', server.port);
-        text.vote.title = text.vote.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-        text.vote.title = text.vote.title.replaceAll('{voteLink}', config.server.vote);
-        text.vote.title = text.vote.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+        text.title = text.title.replaceAll('{serverIp}', server.ip);
+        text.title = text.title.replaceAll('{serverPort}', server.port);
+        text.title = text.title.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+        text.title = text.title.replaceAll('{voteLink}', config.server.vote);
+        text.title = text.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-        text.vote.description = text.vote.description.replaceAll('{serverIp}', server.ip);
-        text.vote.description = text.vote.description.replaceAll('{serverPort}', server.port);
-        text.vote.description = text.vote.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
-        text.vote.description = text.vote.description.replaceAll('{voteLink}', config.server.vote);
-        text.vote.description = text.vote.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+        text.description = text.description.replaceAll('{serverIp}', server.ip);
+        text.description = text.description.replaceAll('{serverPort}', server.port);
+        text.description = text.description.replaceAll('{serverName}', config.server.name ? config.server.name : interaction.guild.name);
+        text.description = text.description.replaceAll('{voteLink}', config.server.vote);
+        text.description = text.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
         const voteEmbed = new Discord.MessageEmbed()
             .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
-            .setTitle(text.vote.title)
-            .setDescription(text.vote.description)
+            .setTitle(text.title)
+            .setDescription(text.description)
             .setColor(config.embeds.color);
         interaction.reply({ embeds: [voteEmbed] });
     }
