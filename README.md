@@ -1,9 +1,10 @@
 ## [DOCUMENTATION HERE 🔗](https://petyxbron.gitbook.io/minecraft-bot/installation)
+## [DOWNLOAD LATEST .ZIP 🔗](https://github.com/PetyXbron/minecraft-bot/archive/refs/heads/main.zip)
 
-# Custom Discord Minecraft bot
+# <img src="https://imgur.com/2L1l0lk.png" width="40" height="40"/>Custom Discord Minecraft bot<img src="https://imgur.com/2L1l0lk.png" width="40" height="40"/>
 ### *Get info about your Minecraft server with this Discord bot!*
 
-[![Repo stars](https://img.shields.io/github/stars/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=Stars)](https://github.com/PetyXbron/minecraft-bot/stargazers) [![Repo forks](https://img.shields.io/github/forks/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=Forks)](https://github.com/PetyXbron/minecraft-bot/network) [![Repo license](https://img.shields.io/github/license/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=License)](https://github.com/PetyXbron/minecraft-bot/blob/main/LICENSE)
+[![Repo stars](https://img.shields.io/github/stars/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=Stars)](https://github.com/PetyXbron/minecraft-bot/stargazers) [![Repo forks](https://img.shields.io/github/forks/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=Forks)](https://github.com/PetyXbron/minecraft-bot/network) [![Latest Version](https://img.shields.io/github/package-json/v/PetyXbron/minecraft-bot?color=blue&label=Version&labelColor=232121&logo=github&sort=semver&style=flat)](https://github.com/PetyXbron/minecraft-bot/tree/main/) [![Repo license](https://img.shields.io/github/license/PetyXbron/minecraft-bot?style=flat&logo=github&labelColor=232121&color=blue&label=License)](https://github.com/PetyXbron/minecraft-bot/blob/main/LICENSE)
 
 This code uses **Minecraft server util package** for getting status of Minecraft servers
 * minecraft-server-util package
@@ -45,7 +46,7 @@ This code uses **Minecraft server util package** for getting status of Minecraft
 
 ### Go to our [documentation](https://petyxbron.gitbook.io/minecraft-bot/installation/install) and see.
 [![Run on Repl.it](https://repl.it/badge/github/MrMazzone/dotreplit-example)](https://repl.it/github/PetyXbron/minecraft-bot)
-*Repl will not be updated for node v16. (not needed with version [1.1.5](https://github.com/PetyXbron/minecraft-bot/commit/a14fe3024b561a2b5516fb2390431f6650afe8b9) and lower)*
+*Repl could not be updated for lastest Node.js version. Please check if you can install Node.js v17*
 
 ## TO DO
 

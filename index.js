@@ -234,29 +234,31 @@ for (const file of commandsFolder) {
 };
 
 //Slash command handler
-let slashCommands = [];
-const slashCommandsFolder = fs.readdirSync('./slashes').filter(file => file.endsWith('.js'));
-for (const file of slashCommandsFolder) {
-    const commandFile = require(`./slashes/${file}`);
-    const slashCommand = file.split(".")[0];
-    if (!!commands[slashCommand].enableSlash) {
-        bot.slashes.set(slashCommand, commandFile);
-        slashCommands.push(commandFile.data.toJSON());
-    }
-};
-
-bot.once('ready', async (bot) => {
-    const rest = new REST({ version: '9' }).setToken(bot.token);
-
-    try {
-        await rest.put(
-            Routes.applicationCommands(bot.user.id),
-            { body: slashCommands },
-        );
-    } catch (err) {
-        console.log(err);
+if (commands.enableSlashes) {
+    let slashCommands = [];
+    const slashCommandsFolder = fs.readdirSync('./slashes').filter(file => file.endsWith('.js'));
+    for (const file of slashCommandsFolder) {
+        const commandFile = require(`./slashes/${file}`);
+        const slashCommand = file.split(".")[0];
+        if (!!commands[slashCommand].enableSlash) {
+            bot.slashes.set(slashCommand, commandFile);
+            slashCommands.push(commandFile.data.toJSON());
+        }
     };
-});
+
+    bot.once('ready', async (bot) => {
+        const rest = new REST({ version: '9' }).setToken(bot.token);
+
+        try {
+            await rest.put(
+                Routes.applicationCommands(bot.user.id),
+                { body: slashCommands },
+            );
+        } catch (err) {
+            console.log(err);
+        };
+    });
+}
 
 //Bot login
 bot.login(bot.token);
