@@ -1,5 +1,5 @@
-const ms = require('ms');
-const version = require('../package.json').version;
+const ms = require('ms'),
+    version = require('../package.json').version;
 
 module.exports = async (bot, message) => {
     if (message.author.bot) return;

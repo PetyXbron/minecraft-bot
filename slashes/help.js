@@ -1,7 +1,7 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-const fs = require('fs');
-const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+const { SlashCommandBuilder } = require('@discordjs/builders'),
+    { EmbedBuilder } = require('discord.js'),
+    fs = require('fs'),
+    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -37,7 +37,7 @@ module.exports.run = async (bot, interaction) => {
         }
 
         if (!text.title || !text.description) {
-            const helpEmbed = new MessageEmbed()
+            const helpEmbed = new EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle(config.server.name ? config.server.name : interaction.guild.name + " bot commands:")
                 .setDescription(`> **Prefix:** \`${bot.prefix}\`\n\n> **Commands:**\n` + lines.join("\n"))
@@ -60,7 +60,7 @@ module.exports.run = async (bot, interaction) => {
             text.description = text.description.replaceAll('{prefix}', config.bot.prefix);
             text.description = text.description.replaceAll('{commands}', "\n" + lines.join("\n"));
 
-            const helpEmbed = new MessageEmbed()
+            const helpEmbed = new EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle(text.title)
                 .setDescription(text.description)
@@ -75,7 +75,7 @@ module.exports.run = async (bot, interaction) => {
 
         let command = bot.commands.get(commandName);
 
-        const helpEmbed = new MessageEmbed()
+        const helpEmbed = new EmbedBuilder()
             .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
             .setTitle(`${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Command:`)
             .setDescription(`
@@ -86,7 +86,7 @@ module.exports.run = async (bot, interaction) => {
         return interaction.reply({ embeds: [helpEmbed] });
     } else {
         if (!text.errorTitle || !text.errorDescription) {
-            const errorEmbed = new MessageEmbed()
+            const errorEmbed = new EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle(`Error! Command "${args[0]}" doesn't exist.`)
                 .setDescription(`Command \`${args[0]}\` was not found.\nYou are entering the wrong alias or the command is disabled.`)
@@ -111,7 +111,7 @@ module.exports.run = async (bot, interaction) => {
             text.errorDescription = text.errorDescription.replaceAll('{commands}', "\n" + lines.join("\n"));
             text.errorDescription = text.errorDescription.replaceAll('{arg0}', args[0]);
 
-            const errorEmbed = new MessageEmbed()
+            const errorEmbed = new EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle(text.errorTitle)
                 .setDescription(text.errorDescription)

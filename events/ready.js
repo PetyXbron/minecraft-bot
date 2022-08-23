@@ -1,6 +1,7 @@
 const chalk = require('chalk'),
     util = require('minecraft-server-util'),
     Discord = require('discord.js'),
+    at = Discord.ActivityType,
     db = require('quick.db'),
     ms = require('ms'),
     gr = chalk.green.bold,
@@ -17,7 +18,7 @@ module.exports = async (bot) => {
     if (bot.pres) {
         let presence = config.bot.presence,
             status = config.bot.status.toLowerCase(),
-            activity = config.bot.activity.toUpperCase();
+            activity = config.bot.activity.charAt(0).toUpperCase() + config.bot.activity.slice(1).toLowerCase();
         if (bot.pres.includes("{onlinePlayers}") | bot.pres.includes("{maxPlayers}")) {
             async function autoUpdatingPresence() { //autoUpdatingPresence loop for refreshing bot presence and status
                 let errored = false,
@@ -49,16 +50,16 @@ module.exports = async (bot) => {
                     };
 
                     try {
-                        await bot.user.setPresence({ activities: [{ name: presence, type: activity }], status: status, afk: false }); //Sets bot activity
-                        if (debug) console.log(`${bot.emotes.success} Successfully set presence to ` + gr(`${bot.activity.toLowerCase()} ${presence}`));
+                        await bot.user.setPresence({ activities: [{ name: presence, type: at[activity] }], status: status, afk: false }); //Sets bot activity
+                        if (debug) console.log(`${bot.emotes.success} Successfully set presence to ` + gr(`${activity} ${presence}`));
                     } catch (e) {
                         console.log();
                     }
                 } else {
                     const presence = "Offline";
                     try {
-                        await bot.user.setPresence({ activities: [{ name: presence, type: activity }], status: status, afk: false }); //Sets bot activity
-                        if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Presence set to ') + gr(`${bot.activity.toLowerCase()} ${presence}`));
+                        await bot.user.setPresence({ activities: [{ name: presence, type: at[activity] }], status: status, afk: false }); //Sets bot activity
+                        if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Presence set to ') + gr(`${activity} ${presence}`));
                     } catch (e) {
                         console.log();
                     }
@@ -92,13 +93,13 @@ module.exports = async (bot) => {
         if (!db.get('statusCHMsgID')) {
             let msg;
             try {
-                const serverEmbed = new Discord.MessageEmbed()
+                const serverEmbed = new Discord.EmbedBuilder()
                     .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setDescription(`🔄 **SETTING...**`)
-                    .addFields(
+                    .addFields([
                         { name: "PLAYERS", value: `�/�`, inline: false },
                         { name: "INFO", value: `${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} �\n\`${server.ip}\`:\`${server.port}\``, inline: true }
-                    )
+                    ])
                     .setColor(config.embeds.color);
                 msg = await channel.send({ embeds: [serverEmbed] });
             } catch (err) { console.log(err); }
@@ -154,7 +155,7 @@ module.exports = async (bot) => {
 
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`" : "";
 
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                         .addFields(
@@ -167,7 +168,7 @@ module.exports = async (bot) => {
                     msg.edit({ embeds: [serverEmbed] });
                 })
                 .catch((error) => {
-                    const errorEmbed = new Discord.MessageEmbed()
+                    const errorEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
@@ -217,7 +218,7 @@ module.exports = async (bot) => {
 
                     const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                         .addFields(
@@ -230,7 +231,7 @@ module.exports = async (bot) => {
                     msg.edit({ embeds: [serverEmbed] });
                 })
                 .catch((error) => {
-                    const errorEmbed = new Discord.MessageEmbed()
+                    const errorEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
@@ -287,7 +288,7 @@ module.exports = async (bot) => {
 
                         const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`" : "";
 
-                        const serverEmbed = new Discord.MessageEmbed()
+                        const serverEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                             .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                             .addFields(
@@ -300,7 +301,7 @@ module.exports = async (bot) => {
                         msg.edit({ embeds: [serverEmbed] });
                     })
                     .catch((error) => {
-                        const errorEmbed = new Discord.MessageEmbed()
+                        const errorEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                             .setDescription(':x: **OFFLINE**')
                             .setColor(config.embeds.error)
@@ -351,7 +352,7 @@ module.exports = async (bot) => {
 
                         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
-                        const serverEmbed = new Discord.MessageEmbed()
+                        const serverEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                             .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                             .addFields(
@@ -364,7 +365,7 @@ module.exports = async (bot) => {
                         msg.edit({ embeds: [serverEmbed] });
                     })
                     .catch((error) => {
-                        const errorEmbed = new Discord.MessageEmbed()
+                        const errorEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                             .setDescription(':x: **OFFLINE**')
                             .setColor(config.embeds.error)

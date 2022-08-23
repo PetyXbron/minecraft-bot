@@ -1,8 +1,8 @@
-const util = require('minecraft-server-util');
-const Discord = require('discord.js');
-const c = require('chalk');
-const fs = require('fs');
-const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+const util = require('minecraft-server-util'),
+    Discord = require('discord.js'),
+    c = require('chalk'),
+    fs = require('fs'),
+    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports.config = {
     name: "status", //Name of command - RENAME THE FILE TOO!!!
@@ -65,7 +65,7 @@ module.exports.run = async (bot, message) => {
                 const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
                 if (text.title === "" || text.description === "") {
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Server status:")
                         .setDescription(`${maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**"}
@@ -106,7 +106,7 @@ module.exports.run = async (bot, message) => {
                     text.description = text.description.replaceAll('{serverVersion}', version);
                     text.description = text.description.replaceAll('{status}', maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**");
 
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle(text.title)
                         .setDescription(text.description)
@@ -115,7 +115,7 @@ module.exports.run = async (bot, message) => {
                 }
             })
             .catch((error) => {
-                const errorEmbed = new Discord.MessageEmbed()
+                const errorEmbed = new Discord.EmbedBuilder()
                     .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setTitle("Server status:")
                     .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
@@ -165,7 +165,7 @@ module.exports.run = async (bot, message) => {
                 const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
                 if (text.title === "" || text.description === "") {
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Server status:")
                         .setDescription(`:white_check_mark: ${maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**"}
@@ -206,7 +206,7 @@ module.exports.run = async (bot, message) => {
                     text.description = text.description.replaceAll('{serverVersion}', version);
                     text.description = text.description.replaceAll('{status}', maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**");
 
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle(text.title)
                         .setDescription(text.description)
@@ -215,7 +215,7 @@ module.exports.run = async (bot, message) => {
                 }
             })
             .catch((error) => {
-                const errorEmbed = new Discord.MessageEmbed()
+                const errorEmbed = new Discord.EmbedBuilder()
                     .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                     .setTitle("Server status:")
                     .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)

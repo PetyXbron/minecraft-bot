@@ -3,19 +3,11 @@ const Discord = require('discord.js'),
     c = require('chalk'),
     ms = require('ms'),
     { REST } = require('@discordjs/rest'),
-    { Routes } = require('discord-api-types/v9'),
-    Intents = Discord.Intents;
+    { Routes } = require('discord-api-types/v9');
 
 //Discord client - I like "bot" more, then "client"
-const bot = new Discord.Client({
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_INTEGRATIONS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_MESSAGE_TYPING
-    ]
-});
+const bot = new Discord.Client({ intents: 34321 });
+//https://discord-intents-calculator.vercel.app/
 
 let dev;
 try { if (fs.existsSync('./dev-config.js')) { dev = true; } }

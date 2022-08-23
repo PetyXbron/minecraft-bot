@@ -1,8 +1,8 @@
-const util = require('minecraft-server-util');
-const Discord = require('discord.js');
-const c = require('chalk');
-const fs = require('fs');
-const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+const util = require('minecraft-server-util'),
+    Discord = require('discord.js'),
+    c = require('chalk'),
+    fs = require('fs'),
+    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports.config = {
     name: "list", //Name of command - RENAME THE FILE TOO!!!
@@ -29,7 +29,7 @@ module.exports.run = async (bot, message) => {
                 if (text.title === "" || text.description === "" || text.listFormat === "") {
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`" : "";
 
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Online player list:")
                         .setDescription(`**${result.players.online}**/**${result.players.max}**` + trueList)
@@ -56,7 +56,7 @@ module.exports.run = async (bot, message) => {
                         var trueList = text.listFormat.replaceAll('{playersList}', result.players.sample.map(p => ` ${p.name} `).join('\r\n'));
                     }
 
-                    const serverEmbed = new Discord.MessageEmbed()
+                    const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle(text.title)
                         .setDescription(text.description + (trueList ? `\n${trueList}` : ""))
@@ -66,7 +66,7 @@ module.exports.run = async (bot, message) => {
             })
             .catch((error) => {
                 if (text.title === "" || text.description === "" || text.listFormat === "") {
-                    const errorEmbed = new Discord.MessageEmbed()
+                    const errorEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Online player list:")
                         .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
@@ -79,7 +79,7 @@ module.exports.run = async (bot, message) => {
                     text.title = text.title.replaceAll('{voteLink}', config.server.vote);
                     text.title = text.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-                    const errorEmbed = new Discord.MessageEmbed()
+                    const errorEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
                         .setTitle("Online player list:")
                         .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
