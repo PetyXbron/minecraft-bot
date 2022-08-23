@@ -225,7 +225,7 @@ const commandsFolder = fs.readdirSync('./commands').filter(file => file.endsWith
 for (const file of commandsFolder) {
     const commandFile = require(`./commands/${file}`);
     const command = file.split(".")[0];
-    if (!!commands[command].enableNormal) {
+    if (!!commands[command] && !!commands[command].enableNormal || !!commandFile.config.enable) {
         bot.commands.set(command, commandFile);
         commandFile.config.aliases.forEach(alias => {
             bot.aliases.set(alias, command);
@@ -240,7 +240,7 @@ if (commands.enableSlashes) {
     for (const file of slashCommandsFolder) {
         const commandFile = require(`./slashes/${file}`);
         const slashCommand = file.split(".")[0];
-        if (!!commands[slashCommand].enableSlash) {
+        if (!!commands[slashCommand] && !!commands[slashCommand].enableSlash) {
             bot.slashes.set(slashCommand, commandFile);
             slashCommands.push(commandFile.data.toJSON());
         }
