@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const Discord = require('discord.js');
-const util = require('minecraft-server-util');
-const warn = require('chalk').keyword('yellow').bold;
-const fs = require('fs');
-const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+const { SlashCommandBuilder } = require('@discordjs/builders'),
+    Discord = require('discord.js'),
+    util = require('minecraft-server-util'),
+    warn = require('chalk').keyword('yellow').bold,
+    fs = require('fs'),
+    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -62,7 +62,7 @@ module.exports.run = async (bot, interaction) => {
         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
         if (text.title === "" || text.description === "") {
-            const versionEmbed = new Discord.MessageEmbed()
+            const versionEmbed = new Discord.EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle("Minecraft version:")
                 .setDescription(`**${version}**`)
@@ -83,7 +83,7 @@ module.exports.run = async (bot, interaction) => {
             text.description = text.description.replaceAll('{serverVersion}', version);
             text.description = text.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-            const versionEmbed = new Discord.MessageEmbed()
+            const versionEmbed = new Discord.EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle(text.title)
                 .setDescription(text.description)
@@ -132,7 +132,7 @@ module.exports.run = async (bot, interaction) => {
         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
         if (text.title === "" || text.description === "") {
-            const versionEmbed = new Discord.MessageEmbed()
+            const versionEmbed = new Discord.EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle("Minecraft version:")
                 .setDescription(`**${version}**`)
@@ -153,7 +153,7 @@ module.exports.run = async (bot, interaction) => {
             text.description = text.description.replaceAll('{serverVersion}', version);
             text.description = text.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
 
-            const versionEmbed = new Discord.MessageEmbed()
+            const versionEmbed = new Discord.EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : interaction.guild.name, iconURL: icon })
                 .setTitle(text.title)
                 .setDescription(text.description)

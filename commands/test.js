@@ -1,6 +1,6 @@
-const util = require('minecraft-server-util');
-const fs = require('fs');
-const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+const util = require('minecraft-server-util'),
+    fs = require('fs'),
+    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!

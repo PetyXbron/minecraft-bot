@@ -1,8 +1,8 @@
-const util = require('minecraft-server-util');
-const Discord = require('discord.js');
-const c = require('chalk');
-const fs = require('fs');
-const { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+const util = require('minecraft-server-util'),
+    Discord = require('discord.js'),
+    c = require('chalk'),
+    fs = require('fs'),
+    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!
