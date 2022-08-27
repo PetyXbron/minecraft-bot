@@ -1,5 +1,6 @@
 const ms = require('ms'),
-    version = require('../package.json').version;
+    version = require('../package.json').version,
+    db = require('quick.db');
 
 module.exports = async (bot, message) => {
     if (message.author.bot) return;
@@ -17,7 +18,7 @@ module.exports = async (bot, message) => {
     const cmd = messageArray[0].toLowerCase();
     const args = messageArray.slice(1);
 
-    if (config.settings.votingCH && message.channel.id === config.votingCH.channel.id) {
+    if (config.settings.votingCH && message.channel.id === config.votingCH.channelID) {
         if (message.content.startsWith(prefix)) return;
 
         message.react(config.votingCH.reactions.first);
@@ -31,10 +32,24 @@ module.exports = async (bot, message) => {
             if (message) message.reactions.removeAll();
         });
 
-        cancel.on('end', () => {
+        cancel.on('end', async () => {
             if (message) {
                 if (message.reactions.cache.get(config.votingCH.reactions.cancel)) {
                     message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
+                }
+                if (config.votingCH.threads.enable) {
+                    lastID = await db.fetch(`VotingCHLastID`) ? await db.fetch(`VotingCHLastID`) : 0;
+                    newID = lastID + 1;
+                    ID = ('000' + newID).slice(-3);
+
+                    const thread = await message.startThread({
+                        name: config.votingCH.threads.nameSyntax.replaceAll("{ID}", ID),
+                        autoArchiveDuration: config.votingCH.threads.archiveTime
+                    });
+                    //await thread.members.add(message.author);
+                    await thread.leave();
+
+                    db.set(`VotingCHLastID`, newID);
                 }
             }
         });

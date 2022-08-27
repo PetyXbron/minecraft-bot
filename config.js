@@ -14,36 +14,50 @@ module.exports = {
         name: '', //Your server name
         type: '', //"java" or "bedrock"
         ip: '', //IP of your server - do not include port - e.g. "mc.hypixel.net"
-        port: '', //PORT of your server - empty => default port (BE 19132, JA 25565)
+        port: '', //PORT of your server - empty => default port (JA 25565, BE 19132)
         icon: '', //Link to icon - like "https://website.com/icon.png"
         version: '', //Minecraft version of sever
         vote: '' //Vote link - like "https://minecraftpocket-servers.com/server/80103/vote/"
     },
 
     //Basic code settings
-    //All settings are boolean wanted - Use "true" for enabling, "false" for disablign setting.
+    //All settings are boolean wanted - Use "true" for enabling, "false" for disabling setting.
     settings: {
         warns: true, //Show warns?
-        debug: false, //Log most of changes and updates (pretty spam)?
+        debug: false, //Log most of the changes and updates (pretty spam)?
         inviteLink: true, //Show bot invite link on bot start?
         readyScan: true, //On bot's start, send to console server's basic info?
         split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc.
         randomColor: false, //Enable random hex color generator for embeds? Overwrites embeds settings!
-        statusCH: false, //Enable auto-changing status message
-        votingCH: false //Enable voting channel
+        statusCH: false, //Enable auto-changing status message?
+        votingCH: false, //Enable voting channel?
+        countingCH: false //Enable counting channel?
     },
 
-    //Period of auto changing status if you are using {onlinePlayers} or {maxPlayers} in bot's status
+    //Period of auto changing status if you are using {onlinePlayers} or {maxPlayers} in bot's presence
     autoStatus: {
-        time: '10min'
+        time: '10min', //Period of auto changing status - like "3min", "20s" or "1min" etc.
+        offline: 'Offline' //Changes bot's presence to this text if the server is offline / not found
+    },
+
+    //Auto changing status message
+    statusCH: {
+        channelID: "",
+        time: '30s', //Period of updating status message - like "3min", "20s" or "1min" etc.
     },
 
     //Voting channel - https://docs.petyxbron.cz/config/config-info#voting-ch
     votingCH: {
+        channelID: "",
         time: '30s', //Time for how long the cancel reaction should be deleted.
+        threads: {
+            enable: false, //Create discussion threads for each votingCH message
+            nameSyntax: "Voting {ID}", //Thread name ("{ID}" = ID of voting/suggestion)
+            archiveTime: 1440 //Minutes after which the thread should archive in case of no recent activity
+        },
         reactions: {
             first: '👍', //First added reaction (the positive one)
-            second: '👎', //Second added reacion (the negative one)
+            second: '👎', //Second added reaction (the negative one)
             cancel: '❌' //Third added reaction (cancel/remove button)
         },
         guild: {
@@ -54,22 +68,19 @@ module.exports = {
         }
     },
 
-    //Auto changing status message
-    statusCH: {
-        time: '30s', //How long should the status always be updated? - like "3min", "20s" or "1min" etc.
-        guild: {
-            id: '',
-        },
-        channel: {
-            id: '',
-        }
+    //Counting channel - auto updating channel name
+    countingCH: {
+        channelID: "",
+        time: '1min', //Period of updating channel name - like "3min", "20s" or "1min" etc.
+        name: "{onlinePlayers} players online!", //Name of the channel
+        offline: "Server is offline!" //Name of the channel if the server is offline / not found
     },
 
     //Embeds settings
     embeds: {
         colors: {
-            normal: '',  //Main/succesful color of embeds - choose HEX color here: https://htmlcolorcodes.com
-            error: '', //Error/unsuccesful color of embeds - choose HEX color here: https://htmlcolorcodes.com
+            normal: '',  //Main/successful color of embeds - choose HEX color here: https://htmlcolorcodes.com
+            error: '', //Error/unsuccessful color of embeds - choose HEX color here: https://htmlcolorcodes.com
         }
     },
 
@@ -149,7 +160,7 @@ module.exports = {
         },
         test: {
             enableNormal: true, //Enables normal command
-            //Test command doesn't have slash type. Is it really neccesary?
+            //Test command doesn't have slash type. Is it really necessary?
             aliases: [ //Only for normal commands
                 't', 'try', 'testing'
             ],

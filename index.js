@@ -116,7 +116,7 @@ if (server.type !== 'java' && server.type !== 'bedrock') {
 
 if (!server.port) {
     if (bot.server) {
-        if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server port, setting it to default.`));
+        if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server port, setting it to default one.`));
         if (server.type === 'bedrock') {
             server.port = 19132;
         } else {
@@ -140,10 +140,7 @@ if (!config.autoStatus.time) {
 
 if (config.settings.statusCH) {
     const dis = c.white('\nAuto changing status message disabled.');
-    if (!info.guild.id) {
-        console.log(`${bot.emotes.error} ` + error("You did not specify server ID in statusCH settings!") + dis);
-        config.settings.statusCH = false;
-    } else if (!info.channel.id) {
+    if (!info.channelID) {
         console.log(`${bot.emotes.error} ` + error("You did not specify channel ID in statusCH settings!") + dis);
         config.settings.statusCH = false;
     }
@@ -158,10 +155,7 @@ if (config.settings.statusCH) {
 
 if (config.settings.votingCH) {
     const dis = c.white('\nVoting channel disabled.');
-    if (!config.votingCH.guild.id) {
-        console.log(`${bot.emotes.error} ` + error("You did not specify server ID in votingCH settings!") + dis);
-        config.settings.votingCH = false;
-    } else if (!config.votingCH.channel.id) {
+    if (!config.votingCH.channelID) {
         console.log(`${bot.emotes.error} ` + error("You did not specify channel ID in votingCH settings!") + dis);
         config.settings.votingCH = false;
     }
@@ -181,6 +175,30 @@ if (config.settings.votingCH) {
         }
         if (!config.votingCH.reactions.cancel) {
             config.votingCH.reactions.cancel = "❌";
+        }
+    }
+}
+
+if (config.settings.countingCH) {
+    const dis = c.white('\nAuto changing channel name disabled.');
+    if (!config.countingCH.channelID) {
+        console.log(`${bot.emotes.error} ` + error("You did not specify channel ID in countingCH settings!") + dis);
+        config.countingCH.channelID = false;
+    } else if (!config.countingCH.time) {
+        if (warns) console.log(`${bot.emotes.warn} ` + warn("You did not specify time update period of countingCH. Setting it to 30 seconds."));
+        config.countingCH.time = "30s";
+    } else if (!config.countingCH.name) {
+        if (warns) console.log(`${bot.emotes.warn} ` + warn("You did not specify channel name of countingCH. Setting it to \"{onlinePlayers} players online!\"."));
+        config.countingCH.name = "{onlinePlayers} players online!";
+    } else if (!config.countingCH.offline) {
+        if (warns) console.log(`${bot.emotes.warn} ` + warn("You did not specify offline text of countingCH. Setting it to \"Server is offline!\"."));
+        config.countingCH.offline = "Server is offline!";
+    }
+
+    if (config.settings.statusCH) {
+        if (!info.time) {
+            if (warns) console.log(`${bot.emotes.warn} ` + warn("You did not specify time update period of statusCH. Setting it to 30 seconds."));
+            info.time = "30s";
         }
     }
 }
