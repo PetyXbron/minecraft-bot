@@ -12,6 +12,7 @@ const chalk = require('chalk'),
 
 module.exports = async (bot) => {
     const { server, config, info, settings } = bot;
+    const guild = config.bot.guildID ? await bot.guilds.cache.get(config.bot.guildID) : null;
     const debug = config.settings.debug;
     var warns = config.settings.warns;
 
@@ -106,7 +107,7 @@ module.exports = async (bot) => {
                     .replaceAll("{maxPlayers}", result.players.max);
 
                 try {
-                    channel = await bot.channels.cache.get(config.countingCH.channelID)
+                    channel = await bot.channels.cache.get(config.countingCH.channelID);
                     await channel.setName(name); //Sets channel name
                     if (debug) console.log(`${bot.emotes.success} Successfully set channel name to ` + gr(name));
                 } catch (e) {
@@ -115,7 +116,7 @@ module.exports = async (bot) => {
             } else {
                 name = config.countingCH.offline;
                 try {
-                    channel = await bot.channels.cache.get(config.countingCH.channelID)
+                    channel = await bot.channels.cache.get(config.countingCH.channelID);
                     await channel.setName(name); //Sets channel name
                     if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Channel name has been set to ') + gr(name));
                 } catch (e) {
@@ -140,7 +141,7 @@ module.exports = async (bot) => {
             let msg;
             try {
                 const serverEmbed = new Discord.EmbedBuilder()
-                    .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                    .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                     .setDescription(`🔄 **SETTING...**`)
                     .addFields([
                         { name: "PLAYERS", value: `�/�`, inline: false },
@@ -202,7 +203,7 @@ module.exports = async (bot) => {
                     const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`" : "";
 
                     const serverEmbed = new Discord.EmbedBuilder()
-                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                        .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                         .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList, inline: false },
@@ -215,7 +216,7 @@ module.exports = async (bot) => {
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.EmbedBuilder()
-                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                        .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
                         .setFooter({ text: 'Updated' })
@@ -265,7 +266,7 @@ module.exports = async (bot) => {
                     const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
                     const serverEmbed = new Discord.EmbedBuilder()
-                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                        .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                         .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}`, inline: false },
@@ -278,7 +279,7 @@ module.exports = async (bot) => {
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.EmbedBuilder()
-                        .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                        .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
                         .setFooter({ text: 'Updated' })
@@ -335,7 +336,7 @@ module.exports = async (bot) => {
                         const trueList = result.players.sample ? "\n\`\`\`" + result.players.sample.map(p => ` ${p.name} `).join('\r\n') + "\`\`\`" : "";
 
                         const serverEmbed = new Discord.EmbedBuilder()
-                            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                            .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                             .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                             .addFields(
                                 { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList, inline: false },
@@ -348,7 +349,7 @@ module.exports = async (bot) => {
                     })
                     .catch((error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
-                            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                            .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                             .setDescription(':x: **OFFLINE**')
                             .setColor(config.embeds.error)
                             .setFooter({ text: 'Updated' })
@@ -399,7 +400,7 @@ module.exports = async (bot) => {
                         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
                         const serverEmbed = new Discord.EmbedBuilder()
-                            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                            .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                             .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                             .addFields(
                                 { name: "PLAYERS", value: `${result.players.online}/${result.players.max}`, inline: false },
@@ -412,7 +413,7 @@ module.exports = async (bot) => {
                     })
                     .catch((error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
-                            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
+                            .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                             .setDescription(':x: **OFFLINE**')
                             .setColor(config.embeds.error)
                             .setFooter({ text: 'Updated' })
