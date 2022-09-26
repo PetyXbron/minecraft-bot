@@ -123,7 +123,7 @@ module.exports.run = async (bot, interaction) => {
                     .setColor(config.embeds.error);
                 interaction.reply({ embeds: [errorEmbed] });
 
-                if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error);
+                if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when using command ${module.exports.data.name}! Error:\n`) + error);
             });
     } else {
         util.statusBedrock(ip1, port1)
@@ -223,7 +223,7 @@ module.exports.run = async (bot, interaction) => {
                     .setColor(config.embeds.error);
                 interaction.reply({ embeds: [errorEmbed] });
 
-                if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error);
+                if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when using command ${module.exports.data.name}! Error:\n`) + error);
             });
     }
 
