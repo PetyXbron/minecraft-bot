@@ -148,7 +148,8 @@ module.exports = async (bot) => {
                         { name: "INFO", value: `${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} �\n\`${server.ip}\`:\`${server.port}\``, inline: true }
                     ])
                     .setColor(config.embeds.color);
-                msg = await channel.send({ embeds: [serverEmbed] });
+                try { msg = await channel.send({ embeds: [serverEmbed] }); }
+                catch (err) { console.error("Could not sent status CH message! Error:\n" + err); }
             } catch (err) { if (debug) console.log(err); }
 
             console.log(`${bot.emotes.success} Successfully sent status message to ${gr(channel.name)}!`);
@@ -212,7 +213,9 @@ module.exports = async (bot) => {
                         .setColor(config.embeds.color)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    msg.edit({ embeds: [serverEmbed] });
+                    try { msg.edit({ embeds: [serverEmbed] }); }
+                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.EmbedBuilder()
@@ -221,7 +224,8 @@ module.exports = async (bot) => {
                         .setColor(config.embeds.error)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    msg.edit({ embeds: [errorEmbed] });
+                    try { msg.edit({ embeds: [errorEmbed] }); }
+                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
 
                     if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                 });
@@ -275,7 +279,8 @@ module.exports = async (bot) => {
                         .setColor(config.embeds.color)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    msg.edit({ embeds: [serverEmbed] });
+                    try { msg.edit({ embeds: [serverEmbed] }); }
+                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.EmbedBuilder()
@@ -284,7 +289,8 @@ module.exports = async (bot) => {
                         .setColor(config.embeds.error)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    msg.edit({ embeds: [errorEmbed] });
+                    try { msg.edit({ embeds: [errorEmbed] }); }
+                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
 
                     if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                 });
@@ -345,7 +351,8 @@ module.exports = async (bot) => {
                             .setColor(config.embeds.color)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        msg.edit({ embeds: [serverEmbed] });
+                        try { msg.edit({ embeds: [serverEmbed] }); }
+                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
                     })
                     .catch((error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
@@ -354,7 +361,8 @@ module.exports = async (bot) => {
                             .setColor(config.embeds.error)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        msg.edit({ embeds: [errorEmbed] });
+                        try { msg.edit({ embeds: [errorEmbed] }); }
+                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
 
                         if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                     }), ms(info.time));
@@ -409,7 +417,8 @@ module.exports = async (bot) => {
                             .setColor(config.embeds.color)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        msg.edit({ embeds: [serverEmbed] });
+                        try { msg.edit({ embeds: [serverEmbed] }); }
+                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
                     })
                     .catch((error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
@@ -418,7 +427,8 @@ module.exports = async (bot) => {
                             .setColor(config.embeds.error)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        msg.edit({ embeds: [errorEmbed] });
+                        try { msg.edit({ embeds: [errorEmbed] }); }
+                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
 
                         if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
                     }), ms(info.time));

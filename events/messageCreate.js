@@ -4,19 +4,8 @@ const ms = require('ms'),
 
 module.exports = async (bot, message) => {
     if (message.author.bot) return;
-    if (message.content.includes(`minecraft-bot version`)) {
-        message.channel.sendTyping();
-        setTimeout(function () {
-            message.channel.send({ content: version });
-        }, ms('1s'));
-        return;
-    }
 
     const { prefix, server, config } = bot;
-
-    const messageArray = message.content.split(' ');
-    const cmd = messageArray[0].toLowerCase();
-    const args = messageArray.slice(1);
 
     if (config.settings.votingCH && message.channel.id === config.votingCH.channelID) {
         if (message.content.startsWith(prefix)) return;
@@ -35,25 +24,37 @@ module.exports = async (bot, message) => {
         cancel.on('end', async () => {
             if (message) {
                 if (message.reactions.cache.get(config.votingCH.reactions.cancel)) {
-                    message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
-                    if (config.votingCH.threads.enable) {
-                        lastID = await db.fetch(`VotingCHLastID`) ? await db.fetch(`VotingCHLastID`) : 0;
-                        newID = parseInt(lastID) + 1;
-                        ID = (config.votingCH.threads.idSyntax.replace("1", "") + newID).slice(-config.votingCH.threads.idSyntax.length);
+                    return message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
+                } else if (config.votingCH.threads.enable) {
+                    lastID = await db.fetch(`VotingCHLastID`) ? await db.fetch(`VotingCHLastID`) : 0;
+                    newID = parseInt(lastID) + 1;
+                    ID = (config.votingCH.threads.idSyntax.replace("1", "") + newID).slice(-config.votingCH.threads.idSyntax.length);
 
-                        const thread = await message.startThread({
-                            name: config.votingCH.threads.nameSyntax.replaceAll("{ID}", ID),
-                            autoArchiveDuration: config.votingCH.threads.archiveTime
-                        });
-                        await thread.leave();
+                    const thread = await message.startThread({
+                        name: config.votingCH.threads.nameSyntax.replaceAll("{ID}", ID),
+                        autoArchiveDuration: config.votingCH.threads.archiveTime
+                    });
+                    await thread.leave();
 
-                        db.set(`VotingCHLastID`, newID);
-                    }
-                    return;
+                    return db.set(`VotingCHLastID`, newID);
                 }
             }
         });
     }
+
+    if (!config.commands.enableNormals) return
+
+    if (message.content.includes(`minecraft-bot version`)) {
+        message.channel.sendTyping();
+        setTimeout(function () {
+            message.channel.send({ content: version });
+        }, ms('1s'));
+        return;
+    }
+
+    const messageArray = message.content.split(' ');
+    const cmd = messageArray[0].toLowerCase();
+    const args = messageArray.slice(1);
 
     if (!message.content.startsWith(prefix)) return;
     let commandfile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(cmd.slice(prefix.length)));

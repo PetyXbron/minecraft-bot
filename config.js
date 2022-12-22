@@ -1,4 +1,6 @@
 //CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info
+//ENABLE BOT "SERVER MEMBERS INTENT" & "MESSAGE CONTENT INTENT" ON DISCORD DEVELOPER PORTAL
+//YOU CAN DISABLE COMMANDS BY MESSAGE CONTENT ON LINE 97 (IF YOU WON'T USE "MESSAGE CONTENT INTENT")
 module.exports = {
     //Your bot data
     bot: {
@@ -22,7 +24,7 @@ module.exports = {
     },
 
     //Basic code settings
-    //All settings are boolean wanted - Use "true" for enabling, "false" for disabling setting.
+    //All settings are boolean wanted - Use "true" for enabling, and "false" for disabling setting.
     settings: {
         warns: true, //Show warns?
         debug: false, //Log most of the changes and updates (pretty spam)?
@@ -92,6 +94,7 @@ module.exports = {
 
     //All commands settings
     commands: {
+        enableNormals: true, //This requires having "message content" intent allowed on the Discord developer portal site
         enableSlashes: true, //If you want to disable only specific slashes, leave this true and go down
         //List of all commands:
         help: {
@@ -156,7 +159,7 @@ module.exports = {
         },
         test: {
             enableNormal: true, //Enables normal command
-            //Test command doesn't have slash type. Is it really necessary?
+            //Test command doesn't have a slash type. Is it really necessary?
             aliases: [ //Only for normal commands
                 "t", "try", "testing"
             ],

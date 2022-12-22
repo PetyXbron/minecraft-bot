@@ -5,10 +5,6 @@ const Discord = require('discord.js'),
     { REST } = require('@discordjs/rest'),
     { Routes } = require('discord-api-types/v9');
 
-//Discord client - I like "bot" more, then "client"
-const bot = new Discord.Client({ intents: 34321 });
-//https://discord-intents-calculator.vercel.app/
-
 let dev;
 try { if (fs.existsSync('./dev-config.js')) { dev = true; } }
 catch (err) { console.error(err); }
@@ -20,7 +16,12 @@ const config = require(dev ? './dev-config' : './config'),
     kill = '\nKilling process...',
     warn = c.keyword('yellow').bold,
     warns = config.settings.warns,
-    server = Array;
+    server = Array,
+    intents = config.commands.enableNormals ? 38401 : 5633;
+
+//Discord client - I like "bot" more, then "client"
+const bot = new Discord.Client({ intents: intents }); //OLD: 34321
+//https://discord-intents-calculator.vercel.app/
 
 let info = config.statusCH;
 
