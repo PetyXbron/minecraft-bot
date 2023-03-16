@@ -1,10 +1,10 @@
-//CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info
+//CONFIG DATA EXPLANATION - https://mb.petyxbron.cz/config/config-info
 //ENABLE BOT "SERVER MEMBERS INTENT" & "MESSAGE CONTENT INTENT" ON DISCORD DEVELOPER PORTAL
 //YOU CAN DISABLE COMMANDS BY MESSAGE CONTENT ON LINE 97 (IF YOU WON'T USE "MESSAGE CONTENT INTENT")
 module.exports = {
     //Your bot data
     bot: {
-        token: "", //Your bot token - https://tinyurl.com/discordbot-token
+        //PASTE YOUR DISCORD BOT TOKEN IN DATA.JSON FILE (more secure) - https://tinyurl.com/discordbot-token
         prefix: "", //Your custom prefix of the bot, like "!" or "."
         presence: "", //Custom activity/status text
         status: "",  //You can choose: ONLINE, IDLE, DND (do not disturb), INVISIBLE
@@ -49,7 +49,7 @@ module.exports = {
         time: "30s" //Period of updating status message - like "3min", "20s" or "1min" etc.
     },
 
-    //Voting channel - https://docs.petyxbron.cz/config/config-info#voting-ch
+    //Voting channel - https://mb.petyxbron.cz/config/config-info#voting-ch
     votingCH: {
         channelID: "",
         time: "30s", //Time for how long the cancel reaction should be deleted.
@@ -192,4 +192,4 @@ module.exports = {
     }
 };
 
-//CONFIG DATA EXPLANATION - https://docs.petyxbron.cz/config/config-info
+//CONFIG DATA EXPLANATION - https://mb.petyxbron.cz/config/config-info

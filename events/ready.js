@@ -2,7 +2,7 @@ const chalk = require('chalk'),
     util = require('minecraft-server-util'),
     Discord = require('discord.js'),
     at = Discord.ActivityType,
-    db = require('quick.db'),
+    fs = require('fs'),
     ms = require('ms'),
     gr = chalk.green.bold,
     bold = chalk.bold,
@@ -136,8 +136,9 @@ module.exports = async (bot) => {
     if (config.settings.statusCH && server.work) {
         const channel = bot.channels.cache.get(info.channelID);
         const icon = server.icon ? server.icon : guild.iconURL();
+        const dataJSON = bot.dataJSON;
 
-        if (!db.get('statusCHMsgID')) {
+        if (!dataJSON["StatusCHMsgID"]) {
             let msg;
             try {
                 const serverEmbed = new Discord.EmbedBuilder()
@@ -148,15 +149,23 @@ module.exports = async (bot) => {
                         { name: "INFO", value: `${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} �\n\`${server.ip}\`:\`${server.port}\``, inline: true }
                     ])
                     .setColor(config.embeds.color);
-                try { msg = await channel.send({ embeds: [serverEmbed] }); }
-                catch (err) { console.error("Could not sent status CH message! Error:\n" + err); }
-            } catch (err) { if (debug) console.log(err); }
+                try {
+                    msg = await channel.send({ embeds: [serverEmbed] });
+                } catch (err) {
+                    console.error("Could not sent status CH message! Error:\n" + err);
+                }
+            } catch (err) {
+                if (debug) console.log(err);
+            }
 
-            console.log(`${bot.emotes.success} Successfully sent status message to ${gr(channel.name)}!`);
-            db.set('statusCHMsgID', msg.id);
+            data = dataJSON;
+            data["StatusCHMsgID"] = msg.id;
+            fs.writeFile(bot.dev ? "./dev-data.json" : "./data.json", JSON.stringify(data, null, 2), err => {
+                if (err) console.log("Could not edit the data.json content! Error:\n" + err);
+            });
         }
 
-        msg = await channel.messages.fetch(db.get('statusCHMsgID'));
+        msg = await channel.messages.fetch(dataJSON["StatusCHMsgID"]);
         let
             ip1 = server.ip,
             port1 = server.port;

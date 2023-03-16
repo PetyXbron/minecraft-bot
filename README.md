@@ -12,6 +12,17 @@ This code uses **Minecraft server util package** for getting status of Minecraft
   * [npmjs Package](https://www.npmjs.com/package/minecraft-server-util)
   * [Author Github Profile](https://github.com/PassTheMayo)
 
+## REQUIREMENTS
+- **Need to install:**
+    - Node.js v16.9.0 or higher
+    - NPM
+- **Recommended to:**
+    - Install IDE for editing files ([Visual Studio Code](https://code.visualstudio.com/) recommended)
+- **How to use?**
+    1. Edit `config.js` and `data.json` files
+    2. Use command `npm install` before running to install all required dependencies
+    3. Use `npm start` or `node index.js` to run the project
+
 ## WHAT CAN THIS BOT DO?
 
 - **Fully customizable [config](config.js)**
@@ -28,7 +39,7 @@ This code uses **Minecraft server util package** for getting status of Minecraft
   ![Bot status config variables](https://i.imgur.com/7TXaWTC.png)
 - More Discord bot activites: `playing`, `listening`, `watching` and `competing`
 - More Discord bot statuses: `online`, `idle`, `dnd` and `invsible`
-- **Poll/Voting channel** with reactions
+- **Suggestions/voting channel** with reactions
 
   ![Voting channel](https://i.imgur.com/OfCxqhf.gif)
 - Custom responses for each command, editable in [config file](config.js)
@@ -42,14 +53,20 @@ This code uses **Minecraft server util package** for getting status of Minecraft
 
   ![minecraft-bot console](https://i.imgur.com/TyTCsQv.png)
 
-## HOW TO USE & INSTALL
+## MORE INFO
 
 ### Go to our [documentation](https://petyxbron.gitbook.io/minecraft-bot/installation/install) and see.
 [![Run on Repl.it](https://repl.it/badge/github/MrMazzone/dotreplit-example)](https://repl.it/github/PetyXbron/minecraft-bot)
-*Repl could not be updated for lastest Node.js version. Please check if you can install Node.js v17*
+
+*Repl could not be updated for lastest Node.js version. Please check if you can install Node.js v16.9.0 or higher to support Discord.js v14*
 
 ## TO DO
 
+- [ ] Send custom embed message command
+- [ ] Send custom message/announcement command
+- [ ] Better test command variables (more process info - like uptime)
+- [ ] Poll/Voting command (simple or with more options)
+- [ ] Server AdminTeam applications
 - [x] <s>Auto changing status message</s>
 - [x] <s>Status command</s>
 - [x] <s>IP address command</s>
@@ -64,8 +81,3 @@ This code uses **Minecraft server util package** for getting status of Minecraft
 - [x] <s>Bot status (activity) for players online number</s>
 - [x] <s>Get invite link on bot start (available option in config)</s>
 - [x] <s>Help command with all commands listing</s>
-- [ ] Poll/Voting command (simple or with more options)
-- [ ] Server AdminTeam applications
-- [ ] Send custom embed message command
-- [ ] Send custom message/announcement command
-- [ ] Better test command variables (more process info - like uptime)

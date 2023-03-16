@@ -9,6 +9,7 @@ let dev;
 try { if (fs.existsSync('./dev-config.js')) { dev = true; } }
 catch (err) { console.error(err); }
 const config = require(dev ? './dev-config' : './config'),
+    dataJSON = require(dev ? './dev-data' : './data'),
     { commands } = config,
     activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activites, discord.js supports more (but I don't care)
     statuses = ['online', 'idle', 'dnd', 'invisible'], //Supported statuses
@@ -28,7 +29,8 @@ let info = config.statusCH;
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 bot.slashes = new Discord.Collection();
-bot.token = config.bot.token;
+bot.dev = dev;
+bot.token = dataJSON["token"];
 bot.prefix = config.bot.prefix;
 bot.status = config.bot.status;
 bot.pres = config.bot.presence;
@@ -51,21 +53,21 @@ if (!emojis.error) emojis.error = '🛑';
 bot.emotes = emojis;
 
 if (bot.token === '') { //Checks if you have entered bot token to config
-    console.log(`${bot.emotes.error} ` + error('Bot token in config is empty!') + kill);
+    console.log(`${bot.emotes.error} ` + error('Bot token in data.json is empty!') + kill);
     return process.exit(1);
 } else if (bot.prefix === '') { //Checks if you have entered bot prefix to config
-    console.log(`${bot.emotes.error} ` + error('Bot prefix in config is empty!') + kill);
+    console.log(`${bot.emotes.error} ` + error('Bot prefix in config.js is empty!') + kill);
     return process.exit(1);
 };
 
 if (bot.pres === '') { //Checks if you have entered custom presence text message for bot to config
-    if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status in config was empty! Bot presence was disabled.'));
+    if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status in config.js was empty! Bot presence was disabled.'));
     bot.pres = false;
 }
 
 if (!bot.activity) { //Checks if you have entered status activity type to config
     if (bot.pres) {
-        if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot activity type in config was empty! Activity type is now "playing"'));
+        if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot activity type in config.js was empty! Activity type is now "playing"'));
         bot.activity = 'PLAYING';
     };
 };
@@ -79,7 +81,7 @@ if (!new Set(activites).has(bot.activity.toUpperCase())) { //Checks if you have 
 
 if (!bot.status) { //Checks if you have entered status activity type to config
     if (bot.pres) {
-        if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status type in config was empty! Bot presence is now set to "online"'));
+        if (warns) console.log(`${bot.emotes.warn} ` + warn('Bot status type in config.js was empty! Bot presence is now set to "online"'));
         bot.status = 'ONLINE';
     };
 };
@@ -221,6 +223,7 @@ bot.settings = config.settings;
 bot.settings.split = bot.settings.readyScan;
 bot.server = server;
 bot.config = config;
+bot.dataJSON = dataJSON;
 bot.info = info;
 
 //Event handler

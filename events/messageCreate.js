@@ -1,6 +1,6 @@
 const ms = require('ms'),
     version = require('../package.json').version,
-    db = require('quick.db');
+    fs = require('fs');
 
 module.exports = async (bot, message) => {
     if (message.author.bot) return;
@@ -24,9 +24,12 @@ module.exports = async (bot, message) => {
         cancel.on('end', async () => {
             if (message) {
                 if (message.reactions.cache.get(config.votingCH.reactions.cancel)) {
-                    return message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
-                } else if (config.votingCH.threads.enable) {
-                    lastID = await db.fetch(`VotingCHLastID`) ? await db.fetch(`VotingCHLastID`) : 0;
+                    message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
+                }
+
+                if (config.votingCH.threads.enable) {
+                    const dataJSON = bot.dataJSON;
+                    lastID = dataJSON["VotingCHLastID"] ? dataJSON["VotingCHLastID"] : 0;
                     newID = parseInt(lastID) + 1;
                     ID = (config.votingCH.threads.idSyntax.replace("1", "") + newID).slice(-config.votingCH.threads.idSyntax.length);
 
@@ -36,13 +39,18 @@ module.exports = async (bot, message) => {
                     });
                     await thread.leave();
 
-                    return db.set(`VotingCHLastID`, newID);
+                    data = dataJSON;
+                    data["VotingCHLastID"] = newID;
+
+                    fs.writeFile(bot.dev ? './dev-data.json' : './data.json', JSON.stringify(data, null, 2), err => {
+                        if (err) console.log("Could not edit the data.json content! Error:\n" + err);
+                    });
                 }
             }
         });
     }
 
-    if (!config.commands.enableNormals) return
+    if (!config.commands.enableNormals) return;
 
     if (message.content.includes(`minecraft-bot version`)) {
         message.channel.sendTyping();
