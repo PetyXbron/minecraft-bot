@@ -1,22 +1,11 @@
 const ms = require('ms'),
     version = require('../package.json').version,
-    db = require('quick.db');
+    fs = require('fs');
 
 module.exports = async (bot, message) => {
     if (message.author.bot) return;
-    if (message.content.includes(`minecraft-bot version`)) {
-        message.channel.sendTyping();
-        setTimeout(function () {
-            message.channel.send({ content: version });
-        }, ms('1s'));
-        return;
-    }
 
     const { prefix, server, config } = bot;
-
-    const messageArray = message.content.split(' ');
-    const cmd = messageArray[0].toLowerCase();
-    const args = messageArray.slice(1);
 
     if (config.settings.votingCH && message.channel.id === config.votingCH.channelID) {
         if (message.content.startsWith(prefix)) return;
@@ -36,24 +25,44 @@ module.exports = async (bot, message) => {
             if (message) {
                 if (message.reactions.cache.get(config.votingCH.reactions.cancel)) {
                     message.reactions.cache.get(config.votingCH.reactions.cancel).remove();
-                    if (config.votingCH.threads.enable) {
-                        lastID = await db.fetch(`VotingCHLastID`) ? await db.fetch(`VotingCHLastID`) : 0;
-                        newID = parseInt(lastID) + 1;
-                        ID = (config.votingCH.threads.idSyntax.replace("1", "") + newID).slice(-config.votingCH.threads.idSyntax.length);
+                }
 
-                        const thread = await message.startThread({
-                            name: config.votingCH.threads.nameSyntax.replaceAll("{ID}", ID),
-                            autoArchiveDuration: config.votingCH.threads.archiveTime
-                        });
-                        await thread.leave();
+                if (config.votingCH.threads.enable) {
+                    const dataJSON = bot.dataJSON;
+                    lastID = dataJSON["VotingCHLastID"] ? dataJSON["VotingCHLastID"] : 0;
+                    newID = parseInt(lastID) + 1;
+                    ID = (config.votingCH.threads.idSyntax.replace("1", "") + newID).slice(-config.votingCH.threads.idSyntax.length);
 
-                        db.set(`VotingCHLastID`, newID);
-                    }
-                    return;
+                    const thread = await message.startThread({
+                        name: config.votingCH.threads.nameSyntax.replaceAll("{ID}", ID),
+                        autoArchiveDuration: config.votingCH.threads.archiveTime
+                    });
+                    await thread.leave();
+
+                    data = dataJSON;
+                    data["VotingCHLastID"] = newID;
+
+                    fs.writeFile(bot.dev ? './dev-data.json' : './data.json', JSON.stringify(data, null, 4), err => {
+                        if (err) console.log("Could not edit the data.json content! Error:\n" + err);
+                    });
                 }
             }
         });
     }
+
+    if (!config.commands.enableNormals) return;
+
+    if (message.content.includes(`minecraft-bot version`)) {
+        message.channel.sendTyping();
+        setTimeout(function () {
+            message.channel.send({ content: `> **minecraft-bot:** \`${version}\`` });
+        }, ms('1s'));
+        return;
+    }
+
+    const messageArray = message.content.split(' ');
+    const cmd = messageArray[0].toLowerCase();
+    const args = messageArray.slice(1);
 
     if (!message.content.startsWith(prefix)) return;
     let commandfile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(cmd.slice(prefix.length)));

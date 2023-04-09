@@ -1,5 +1,5 @@
 const Discord = require('discord.js'),
-    util = require('minecraft-server-util'),
+    util = require('axios'),
     warn = require('chalk').keyword('yellow').bold,
     fs = require('fs'),
     { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
@@ -13,16 +13,17 @@ module.exports.config = {
 module.exports.run = async (bot, message, args) => {
     let { server, config } = bot,
         text = commands.version.text,
-        icon = server.icon ? server.icon : message.guild.iconURL();
-    const warns = config.settings.warns;
-    const settings = config.settings
-        ;
+        icon = server.icon ? server.icon : message.guild.iconURL(),
+        warns = config.settings.warns,
+        settings = config.settings,
+        { removeVersion } = require('../functions');
+
     if (!server.work) return;
 
     if (server.type === 'java') {
         try {
-            const result = await util.status(server.ip, server.port);
-            var versionOriginal = result.version.name;
+            const response = await util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`);
+            var versionOriginal = response.data.version.name_clean;
         } catch (e) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
             var versionOriginal = config.server.version;
@@ -30,33 +31,7 @@ module.exports.run = async (bot, message, args) => {
 
         let versionAdvanced = false;
 
-        if (settings.split) {
-            versionAdvanced = versionOriginal.toLocaleLowerCase()
-                .replace("bukkit ", "")
-                .replace("craftbukkit ", "")
-                .replace("spigot ", "")
-                .replace("forge ", "")
-                .replace("fabric ", "")
-                .replace("paper ", "")
-                .replace("purpur ", "")
-                .replace("tacospigot ", "")
-                .replace("glowstone ", "")
-                .replace("bungecord ", "")
-                .replace("waterfall ", "")
-                .replace("flexpipe ", "")
-                .replace("hexacord ", "")
-                .replace("velocity ", "")
-                .replace("airplane ", "")
-                .replace("sonarlint ", "")
-                .replace("geyser ", "")
-                .replace("cuberite ", "")
-                .replace("yatopia ", "")
-                .replace("mohist ", "")
-                .replace("leafish ", "")
-                .replace("cardboard ", "")
-                .replace("magma ", "")
-                .replace("empirecraft ", "");
-        }
+        if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
@@ -91,8 +66,8 @@ module.exports.run = async (bot, message, args) => {
         }
     } else {
         try {
-            const result = await util.statusBedrock(server.ip, server.port);
-            var versionOriginal = result.version.name;
+            const response = await util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`);
+            var versionOriginal = response.data.version.name_clean;
         } catch (e) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
             var versionOriginal = config.server.version;
@@ -100,33 +75,7 @@ module.exports.run = async (bot, message, args) => {
 
         let versionAdvanced = false;
 
-        if (settings.split) {
-            versionAdvanced = versionOriginal.toLocaleLowerCase()
-                .replace("bukkit ", "")
-                .replace("craftbukkit ", "")
-                .replace("spigot ", "")
-                .replace("forge ", "")
-                .replace("fabric ", "")
-                .replace("paper ", "")
-                .replace("purpur ", "")
-                .replace("tacospigot ", "")
-                .replace("glowstone ", "")
-                .replace("bungecord ", "")
-                .replace("waterfall ", "")
-                .replace("flexpipe ", "")
-                .replace("hexacord ", "")
-                .replace("velocity ", "")
-                .replace("airplane ", "")
-                .replace("sonarlint ", "")
-                .replace("geyser ", "")
-                .replace("cuberite ", "")
-                .replace("yatopia ", "")
-                .replace("mohist ", "")
-                .replace("leafish ", "")
-                .replace("cardboard ", "")
-                .replace("magma ", "")
-                .replace("empirecraft ", "");
-        }
+        if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
