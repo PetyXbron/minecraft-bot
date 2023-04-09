@@ -14,10 +14,11 @@ module.exports = {
 module.exports.run = async (bot, interaction) => {
     let { server, config } = bot,
         text = commands.version.text,
-        icon = server.icon ? server.icon : message.guild.iconURL();
-    const warns = config.settings.warns;
-    const settings = config.settings
-        ;
+        icon = server.icon ? server.icon : message.guild.iconURL(),
+        warns = config.settings.warns,
+        settings = config.settings,
+        { removeVersion } = require('../functions');
+
     if (!server.work) return;
 
     if (server.type === 'java') {
@@ -31,7 +32,7 @@ module.exports.run = async (bot, interaction) => {
 
         let versionAdvanced = false;
 
-        if (settings.split) {
+        if (settings.removeServerType) {
             versionAdvanced = versionOriginal.toLocaleLowerCase()
                 .replace("bukkit ", "")
                 .replace("craftbukkit ", "")
@@ -101,33 +102,7 @@ module.exports.run = async (bot, interaction) => {
 
         let versionAdvanced = false;
 
-        if (settings.split) {
-            versionAdvanced = versionOriginal.toLocaleLowerCase()
-                .replace("bukkit ", "")
-                .replace("craftbukkit ", "")
-                .replace("spigot ", "")
-                .replace("forge ", "")
-                .replace("fabric ", "")
-                .replace("paper ", "")
-                .replace("purpur ", "")
-                .replace("tacospigot ", "")
-                .replace("glowstone ", "")
-                .replace("bungecord ", "")
-                .replace("waterfall ", "")
-                .replace("flexpipe ", "")
-                .replace("hexacord ", "")
-                .replace("velocity ", "")
-                .replace("airplane ", "")
-                .replace("sonarlint ", "")
-                .replace("geyser ", "")
-                .replace("cuberite ", "")
-                .replace("yatopia ", "")
-                .replace("mohist ", "")
-                .replace("leafish ", "")
-                .replace("cardboard ", "")
-                .replace("magma ", "")
-                .replace("empirecraft ", "");
-        }
+        if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 

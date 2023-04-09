@@ -15,12 +15,12 @@ module.exports.run = async (bot, message) => {
         text = commands.status.text,
         settings = config.settings,
         warn = c.keyword('yellow').bold,
-        warns = config.settings.warns;
+        warns = config.settings.warns,
+        { removeVersion } = require('../functions');
 
     if (!server.work) return;
 
-    let
-        ip1 = server.ip,
+    let ip1 = server.ip,
         port1 = server.port,
         icon = server.icon ? server.icon : message.guild.iconURL();
 
@@ -34,33 +34,7 @@ module.exports.run = async (bot, message) => {
                     lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
                 if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
-                if (settings.split) {
-                    versionAdvanced = versionOriginal.toLocaleLowerCase()
-                        .replace("bukkit ", "")
-                        .replace("craftbukkit ", "")
-                        .replace("spigot ", "")
-                        .replace("forge ", "")
-                        .replace("fabric ", "")
-                        .replace("paper ", "")
-                        .replace("purpur ", "")
-                        .replace("tacospigot ", "")
-                        .replace("glowstone ", "")
-                        .replace("bungecord ", "")
-                        .replace("waterfall ", "")
-                        .replace("flexpipe ", "")
-                        .replace("hexacord ", "")
-                        .replace("velocity ", "")
-                        .replace("airplane ", "")
-                        .replace("sonarlint ", "")
-                        .replace("geyser ", "")
-                        .replace("cuberite ", "")
-                        .replace("yatopia ", "")
-                        .replace("mohist ", "")
-                        .replace("leafish ", "")
-                        .replace("cardboard ", "")
-                        .replace("magma ", "")
-                        .replace("empirecraft ", "");
-                }
+                if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                 const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
@@ -134,33 +108,7 @@ module.exports.run = async (bot, message) => {
                     lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
                 if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
-                if (settings.split) {
-                    versionAdvanced = versionOriginal.toLocaleLowerCase()
-                        .replace("bukkit ", "")
-                        .replace("craftbukkit ", "")
-                        .replace("spigot ", "")
-                        .replace("forge ", "")
-                        .replace("fabric ", "")
-                        .replace("paper ", "")
-                        .replace("purpur ", "")
-                        .replace("tacospigot ", "")
-                        .replace("glowstone ", "")
-                        .replace("bungecord ", "")
-                        .replace("waterfall ", "")
-                        .replace("flexpipe ", "")
-                        .replace("hexacord ", "")
-                        .replace("velocity ", "")
-                        .replace("airplane ", "")
-                        .replace("sonarlint ", "")
-                        .replace("geyser ", "")
-                        .replace("cuberite ", "")
-                        .replace("yatopia ", "")
-                        .replace("mohist ", "")
-                        .replace("leafish ", "")
-                        .replace("cardboard ", "")
-                        .replace("magma ", "")
-                        .replace("empirecraft ", "");
-                }
+                if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                 const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 

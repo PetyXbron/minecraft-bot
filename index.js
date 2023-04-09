@@ -1,13 +1,14 @@
 const Discord = require('discord.js'),
     fs = require('fs'),
     c = require('chalk'),
+    processInfo = c.cyan.bgBlack,
     ms = require('ms'),
     { REST } = require('@discordjs/rest'),
     { Routes } = require('discord-api-types/v9');
 
 let dev;
 try { if (fs.existsSync('./dev-config.js')) { dev = true; } }
-catch (err) { console.error(err); }
+catch (err) { console.log(err); }
 const config = require(dev ? './dev-config' : './config'),
     dataJSON = require(dev ? './dev-data' : './data'),
     { commands } = config,
@@ -51,6 +52,8 @@ if (!emojis.info) emojis.info = '💙';
 if (!emojis.warn) emojis.warn = '💛';
 if (!emojis.error) emojis.error = '🛑';
 bot.emotes = emojis;
+
+console.log(processInfo('>> minecraft-bot started <<'));
 
 if (bot.token === '') { //Checks if you have entered bot token to config
     console.log(`${bot.emotes.error} ` + error('Bot token in data.json is empty!') + kill);
@@ -106,7 +109,7 @@ if (!server.ip) {
 }
 
 if (server.type !== 'java' && server.type !== 'bedrock') {
-    if (bot.server) {
+    if (bot.server.work) {
         if (!server.type) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server's edition, setting it to java.`));
             server.type = 'java';
@@ -118,7 +121,7 @@ if (server.type !== 'java' && server.type !== 'bedrock') {
 }
 
 if (!server.port) {
-    if (bot.server) {
+    if (bot.server.work) {
         if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server port, setting it to default one.`));
         if (server.type === 'bedrock') {
             server.port = 19132;
@@ -220,7 +223,7 @@ if (!iconLINK) {
 }
 
 bot.settings = config.settings;
-bot.settings.split = bot.settings.readyScan;
+bot.settings.removeServerType = bot.settings.readyScan;
 bot.server = server;
 bot.config = config;
 bot.dataJSON = dataJSON;
@@ -239,7 +242,7 @@ const commandsFolder = fs.readdirSync('./commands').filter(file => file.endsWith
 for (const file of commandsFolder) {
     const commandFile = require(`./commands/${file}`);
     const command = file.split(".")[0];
-    if (!!commands[command] && !!commands[command].enableNormal || !!commandFile.config.enable) {
+    if (!commands[command] || !!commands[command] && !!commands[command].enableNormal || !!commandFile.config.enable) {
         bot.commands.set(command, commandFile);
         commandFile.config.aliases.forEach(alias => {
             bot.aliases.set(alias, command);
@@ -254,7 +257,7 @@ if (commands.enableSlashes) {
     for (const file of slashCommandsFolder) {
         const commandFile = require(`./slashes/${file}`);
         const slashCommand = file.split(".")[0];
-        if (!!commands[slashCommand] && !!commands[slashCommand].enableSlash) {
+        if (!commands[slashCommand] || !!commands[slashCommand] && !!commands[slashCommand].enableSlash) {
             bot.slashes.set(slashCommand, commandFile);
             slashCommands.push(commandFile.data.toJSON());
         }

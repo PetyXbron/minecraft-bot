@@ -12,7 +12,7 @@ module.exports = {
 module.exports.run = async (bot, interaction) => {
     let { server, config } = bot,
         text = commands.ip.text,
-        icon = server.icon ? server.icon : message.guild.iconURL();
+        icon = server.icon ? server.icon : interaction.guild.iconURL();
 
     if (text.title === "" || text.description === "") {
         const ipEmbed = new Discord.EmbedBuilder()

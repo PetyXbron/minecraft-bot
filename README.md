@@ -1,5 +1,5 @@
 ## [DOCUMENTATION HERE 🔗](https://petyxbron.gitbook.io/minecraft-bot/installation)
-## [DOWNLOAD LATEST .ZIP 🔗](https://github.com/PetyXbron/minecraft-bot/archive/refs/heads/main.zip)
+## [DOWNLOAD LATEST RELEASE .ZIP 🔗](https://github.com/PetyXbron/minecraft-bot/archive/refs/heads/main.zip)
 
 # <img src="https://imgur.com/2L1l0lk.png" width="40" height="40"/>Custom Discord Minecraft bot<img src="https://imgur.com/2L1l0lk.png" width="40" height="40"/>
 ### *Get info about your Minecraft server with this Discord bot!*

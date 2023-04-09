@@ -42,7 +42,7 @@ module.exports = async (bot, message) => {
                     data = dataJSON;
                     data["VotingCHLastID"] = newID;
 
-                    fs.writeFile(bot.dev ? './dev-data.json' : './data.json', JSON.stringify(data, null, 2), err => {
+                    fs.writeFile(bot.dev ? './dev-data.json' : './data.json', JSON.stringify(data, null, 4), err => {
                         if (err) console.log("Could not edit the data.json content! Error:\n" + err);
                     });
                 }
@@ -55,7 +55,7 @@ module.exports = async (bot, message) => {
     if (message.content.includes(`minecraft-bot version`)) {
         message.channel.sendTyping();
         setTimeout(function () {
-            message.channel.send({ content: version });
+            message.channel.send({ content: `> **minecraft-bot:** \`${version}\`` });
         }, ms('1s'));
         return;
     }

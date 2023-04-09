@@ -26,15 +26,19 @@ module.exports = {
     //Basic code settings
     //All settings are boolean wanted - Use "true" for enabling, and "false" for disabling setting.
     settings: {
+        //General:
         warns: true, //Show warns?
         debug: false, //Log most of the changes and updates (pretty spam)?
         inviteLink: true, //Show bot invite link on bot start?
-        readyScan: true, //On bot's start, send to console server's basic info?
-        split: false, //Advanced - Extract only the version like "1.17" or "1.12" etc.
+        readyScan: true, //On bot's start, send to console server's essential information?
+        //Features:
         randomColor: false, //Enable random hex color generator for embeds? Overwrites embeds settings!
         statusCH: false, //Enable auto-changing status message?
         votingCH: false, //Enable voting channel?
-        countingCH: false //Enable counting channel?
+        countingCH: false, //Enable counting channel?
+        //Advanced:
+        removeServerType: false, //Remove "Spigot", "Purpur" etc. from version and leave only "1.18", "1.19" etc.?
+        showDefaultPort: false //Show the server port behind IP if its default (25565, 19132) (primarily statusCH feature)?
     },
 
     //Period of auto changing status if you are using {onlinePlayers} or {maxPlayers} in bot's presence
@@ -62,7 +66,8 @@ module.exports = {
         reactions: {
             first: "👍", //First added reaction (the positive one)
             second: "👎", //Second added reaction (the negative one)
-            cancel: "❌" //Third added reaction (cancel/remove button)
+            cancel: "❌", //Third added reaction (cancel/remove button)
+            deleteOther: false //Delete all other reactions than those mentioned above (admin's reactions are ignored)
         }
     },
 
@@ -88,6 +93,7 @@ module.exports = {
             success: "💚",
             info: "💙",
             warn: "💛",
+            debug: "💜",
             error: "🛑"
         }
     },

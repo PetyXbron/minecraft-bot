@@ -7,13 +7,17 @@ const chalk = require('chalk'),
     gr = chalk.green.bold,
     bold = chalk.bold,
     bl = chalk.blue.bold,
+    ma = chalk.magenta.bold,
     blu = chalk.blue.bold.underline,
-    warn = chalk.keyword('yellow').bold;
+    warn = chalk.keyword('yellow').bold,
+    processInfo = chalk.cyan.bgBlack,
+    { removeVersion } = require('../functions');
 
 module.exports = async (bot) => {
     const { server, config, info, settings } = bot;
     const guild = config.bot.guildID ? await bot.guilds.cache.get(config.bot.guildID) : null;
     const debug = config.settings.debug;
+    const defPort = config.settings.showDefaultPort;
     var warns = config.settings.warns;
 
     if (bot.pres) {
@@ -29,14 +33,14 @@ module.exports = async (bot) => {
                     try {
                         result = await util.status(server.ip, server.port);
                     } catch (err) {
-                        if (debug) console.log(err);
+                        if (debug) console.log(`${bot.emotes.debug} Could not receive server status data! Error:\n` + err);
                         errored = true;
                     }
                 } else {
                     try {
                         result = await util.statusBedrock(server.ip, server.port);
                     } catch (err) {
-                        if (debug) console.log(err);
+                        if (debug) console.log(`${bot.emotes.debug} Could not receive server status data! Error:\n` + err);
                         errored = true;
                     }
                 };
@@ -52,17 +56,17 @@ module.exports = async (bot) => {
 
                     try {
                         await bot.user.setPresence({ activities: [{ name: presence, type: at[activity] }], status: status, afk: false }); //Sets bot activity
-                        if (debug) console.log(`${bot.emotes.success} Successfully set presence to ` + gr(`${activity} ${presence}`));
+                        if (debug) console.log(`${bot.emotes.debug} Successfully set the bot presence to ` + ma(`${activity} ${presence}`));
                     } catch (e) {
-                        if (debug) console.log(e);
+                        if (debug) console.log(`${bot.emotes.debug} Could not set the Discord bot presence! Error:\n` + e);
                     }
                 } else {
                     const presence = config.autoStatus.offline;
                     try {
                         await bot.user.setPresence({ activities: [{ name: presence, type: at[activity] }], status: status, afk: false }); //Sets bot activity
-                        if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Presence set to ') + gr(`${activity} ${presence}`));
+                        if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Presence set to ') + ma(`${activity} ${presence}`));
                     } catch (e) {
-                        if (debug) console.log(e);
+                        if (debug) console.log(`${bot.emotes.debug} Could not set the Discord bot presence! Error:\n` + e);
                     }
                 }
                 presence = config.bot.presence;
@@ -72,9 +76,9 @@ module.exports = async (bot) => {
         } else {
             try {
                 bot.user.setPresence({ activities: [{ name: presence, type: activity }], status: status, afk: false }); //Sets bot activity
-                if (debug) console.log(`${bot.emotes.success} Successfully set presence to ` + gr(`${bot.activity.toLowerCase()} ${bot.pres}`));
+                if (debug) console.log(`${bot.emotes.debug} Successfully set the bot presence to ` + ma(`${bot.activity.toLowerCase()} ${bot.pres}`));
             } catch (e) {
-                console.log();
+                if (debug) console.log(`${bot.emotes.debug} Could not set the Discord bot presence! Error:\n` + e);
             }
         }
     }
@@ -89,14 +93,14 @@ module.exports = async (bot) => {
                 try {
                     result = await util.status(server.ip, server.port);
                 } catch (err) {
-                    if (debug) console.log(err);
+                    if (debug) console.log(`${bot.emotes.debug} Could not receive server status data! Error:\n` + err);
                     errored = true;
                 }
             } else {
                 try {
                     result = await util.statusBedrock(server.ip, server.port);
                 } catch (err) {
-                    if (debug) console.log(err);
+                    if (debug) console.log(`${bot.emotes.debug} Could not receive server status data! Error:\n` + err);
                     errored = true;
                 }
             };
@@ -109,18 +113,18 @@ module.exports = async (bot) => {
                 try {
                     channel = await bot.channels.cache.get(config.countingCH.channelID);
                     await channel.setName(name); //Sets channel name
-                    if (debug) console.log(`${bot.emotes.success} Successfully set channel name to ` + gr(name));
+                    if (debug) console.log(`${bot.emotes.debug} Successfully set the countingCH channel name to ` + ma(name));
                 } catch (e) {
-                    if (debug) console.log(e);
+                    if (warns) console.log(bot.emotes.warn + warn('Could not set the countingCH channel name! Error:\n') + e);
                 }
             } else {
                 name = config.countingCH.offline;
                 try {
                     channel = await bot.channels.cache.get(config.countingCH.channelID);
                     await channel.setName(name); //Sets channel name
-                    if (debug) console.log(`${bot.emotes.warn} ` + warn('Server was not found! Channel name has been set to ') + gr(name));
+                    if (debug) console.log(`${bot.emotes.debug} ` + warn('Could not get the server data information! Channel name has been set to ') + ma(name));
                 } catch (e) {
-                    if (debug) console.log(e);
+                    if (warns) console.log(bot.emotes.warn + warn('Could not set the countingCH channel name! Error:\n') + e);
                 }
             }
             setTimeout(countingCH, ms(config.countingCH.time));
@@ -130,7 +134,7 @@ module.exports = async (bot) => {
 
     if (config.settings.votingCH) {
         const channel = bot.channels.cache.get(config.votingCH.channelID);
-        console.log(`${bot.emotes.success} Channel ${gr(channel.name)} is now set as voting channel!`);
+        if (debug) console.log(`${bot.emotes.debug} Channel ${ma(channel.name)} is now set as voting channel!`);
     }
 
     if (config.settings.statusCH && server.work) {
@@ -146,22 +150,22 @@ module.exports = async (bot) => {
                     .setDescription(`🔄 **SETTING...**`)
                     .addFields([
                         { name: "PLAYERS", value: `�/�`, inline: false },
-                        { name: "INFO", value: `${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} �\n\`${server.ip}\`:\`${server.port}\``, inline: true }
+                        { name: "INFO", value: `${config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1)} �\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
                     ])
                     .setColor(config.embeds.color);
                 try {
                     msg = await channel.send({ embeds: [serverEmbed] });
                 } catch (err) {
-                    console.error("Could not sent status CH message! Error:\n" + err);
+                    console.log("Could not send the statusCH message! Error:\n" + err);
                 }
             } catch (err) {
-                if (debug) console.log(err);
+                if (warns) console.log(bot.emotes.warn + warn('Could not send the statusCH message! Error:\n') + err);
             }
 
             data = dataJSON;
             data["StatusCHMsgID"] = msg.id;
-            fs.writeFile(bot.dev ? "./dev-data.json" : "./data.json", JSON.stringify(data, null, 2), err => {
-                if (err) console.log("Could not edit the data.json content! Error:\n" + err);
+            fs.writeFile(bot.dev ? "./dev-data.json" : "./data.json", JSON.stringify(data, null, 4), err => {
+                if (warns) console.log(bot.emotes.warn + warn('Could not edit the data.json content! Error:\n') + err);
             });
         }
 
@@ -180,33 +184,7 @@ module.exports = async (bot) => {
                         lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
                     if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
-                    if (settings.split) {
-                        versionAdvanced = versionOriginal.toLocaleLowerCase()
-                            .replace("bukkit ", "")
-                            .replace("craftbukkit ", "")
-                            .replace("spigot ", "")
-                            .replace("forge ", "")
-                            .replace("fabric ", "")
-                            .replace("paper ", "")
-                            .replace("purpur ", "")
-                            .replace("tacospigot ", "")
-                            .replace("glowstone ", "")
-                            .replace("bungecord ", "")
-                            .replace("waterfall ", "")
-                            .replace("flexpipe ", "")
-                            .replace("hexacord ", "")
-                            .replace("velocity ", "")
-                            .replace("airplane ", "")
-                            .replace("sonarlint ", "")
-                            .replace("geyser ", "")
-                            .replace("cuberite ", "")
-                            .replace("yatopia ", "")
-                            .replace("mohist ", "")
-                            .replace("leafish ", "")
-                            .replace("cardboard ", "")
-                            .replace("magma ", "")
-                            .replace("empirecraft ", "");
-                    }
+                    if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                     const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
@@ -217,13 +195,13 @@ module.exports = async (bot) => {
                         .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList, inline: false },
-                            { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
+                            { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
                         )
                         .setColor(config.embeds.color)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
                     try { msg.edit({ embeds: [serverEmbed] }); }
-                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                    catch (err) { if (warns) console.log(bot.emotes.warn + warn('Could not edit the statusCH message! Error:\n') + err); }
 
                 })
                 .catch((error) => {
@@ -234,9 +212,9 @@ module.exports = async (bot) => {
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
                     try { msg.edit({ embeds: [errorEmbed] }); }
-                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                    catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
 
-                    if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
+                    if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending statusCH message! Error:\n`) + error);
                 });
         } else {
             util.statusBedrock(ip1, port1)
@@ -248,33 +226,7 @@ module.exports = async (bot) => {
                         lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
                     if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
-                    if (settings.split) {
-                        versionAdvanced = versionOriginal.toLocaleLowerCase()
-                            .replace("bukkit ", "")
-                            .replace("craftbukkit ", "")
-                            .replace("spigot ", "")
-                            .replace("forge ", "")
-                            .replace("fabric ", "")
-                            .replace("paper ", "")
-                            .replace("purpur ", "")
-                            .replace("tacospigot ", "")
-                            .replace("glowstone ", "")
-                            .replace("bungecord ", "")
-                            .replace("waterfall ", "")
-                            .replace("flexpipe ", "")
-                            .replace("hexacord ", "")
-                            .replace("velocity ", "")
-                            .replace("airplane ", "")
-                            .replace("sonarlint ", "")
-                            .replace("geyser ", "")
-                            .replace("cuberite ", "")
-                            .replace("yatopia ", "")
-                            .replace("mohist ", "")
-                            .replace("leafish ", "")
-                            .replace("cardboard ", "")
-                            .replace("magma ", "")
-                            .replace("empirecraft ", "");
-                    }
+                    if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                     const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
@@ -283,13 +235,13 @@ module.exports = async (bot) => {
                         .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                         .addFields(
                             { name: "PLAYERS", value: `${result.players.online}/${result.players.max}`, inline: false },
-                            { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
+                            { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
                         )
                         .setColor(config.embeds.color)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
                     try { msg.edit({ embeds: [serverEmbed] }); }
-                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                    catch (err) { if (warns) console.log(bot.emotes.warn + warn('Could not edit the statusCH message! Error:\n') + err); }
                 })
                 .catch((error) => {
                     const errorEmbed = new Discord.EmbedBuilder()
@@ -299,13 +251,13 @@ module.exports = async (bot) => {
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
                     try { msg.edit({ embeds: [errorEmbed] }); }
-                    catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                    catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
 
-                    if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
+                    if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending statusCH message! Error:\n`) + error);
                 });
         }
 
-        if (debug) console.log(`${bot.emotes.success} Successfully updated status message in ${gr(channel.name)}!`);
+        if (debug) console.log(`${bot.emotes.debug} Successfully updated status message in ${ma(channel.name)}!`);
 
         if (server.type === 'java') {
             setInterval(() =>
@@ -318,33 +270,7 @@ module.exports = async (bot) => {
                             lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
                         if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
-                        if (settings.split) {
-                            versionAdvanced = versionOriginal.toLocaleLowerCase()
-                                .replace("bukkit ", "")
-                                .replace("craftbukkit ", "")
-                                .replace("spigot ", "")
-                                .replace("forge ", "")
-                                .replace("fabric ", "")
-                                .replace("paper ", "")
-                                .replace("purpur ", "")
-                                .replace("tacospigot ", "")
-                                .replace("glowstone ", "")
-                                .replace("bungecord ", "")
-                                .replace("waterfall ", "")
-                                .replace("flexpipe ", "")
-                                .replace("hexacord ", "")
-                                .replace("velocity ", "")
-                                .replace("airplane ", "")
-                                .replace("sonarlint ", "")
-                                .replace("geyser ", "")
-                                .replace("cuberite ", "")
-                                .replace("yatopia ", "")
-                                .replace("mohist ", "")
-                                .replace("leafish ", "")
-                                .replace("cardboard ", "")
-                                .replace("magma ", "")
-                                .replace("empirecraft ", "");
-                        }
+                        if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
@@ -355,13 +281,13 @@ module.exports = async (bot) => {
                             .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                             .addFields(
                                 { name: "PLAYERS", value: `${result.players.online}/${result.players.max}` + trueList, inline: false },
-                                { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
+                                { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
                             )
                             .setColor(config.embeds.color)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
                         try { msg.edit({ embeds: [serverEmbed] }); }
-                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                        catch (err) { if (warns) console.log(bot.emotes.warn + warn('Could not edit the statusCH message! Error:\n') + err); }
                     })
                     .catch((error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
@@ -371,9 +297,9 @@ module.exports = async (bot) => {
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
                         try { msg.edit({ embeds: [errorEmbed] }); }
-                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                        catch (err) { if (warns) console.log(bot.emotes.warn + warn('Could not edit the statusCH message! Error:\n') + err); }
 
-                        if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
+                        if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending statusCH message! Error:\n`) + error);
                     }), ms(info.time));
         } else {
             setInterval(() =>
@@ -386,33 +312,7 @@ module.exports = async (bot) => {
                             lowCaseMotdClean = result.motd.clean.toLocaleLowerCase();
                         if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
-                        if (settings.split) {
-                            versionAdvanced = versionOriginal.toLocaleLowerCase()
-                                .replace("bukkit ", "")
-                                .replace("craftbukkit ", "")
-                                .replace("spigot ", "")
-                                .replace("forge ", "")
-                                .replace("fabric ", "")
-                                .replace("paper ", "")
-                                .replace("purpur ", "")
-                                .replace("tacospigot ", "")
-                                .replace("glowstone ", "")
-                                .replace("bungecord ", "")
-                                .replace("waterfall ", "")
-                                .replace("flexpipe ", "")
-                                .replace("hexacord ", "")
-                                .replace("velocity ", "")
-                                .replace("airplane ", "")
-                                .replace("sonarlint ", "")
-                                .replace("geyser ", "")
-                                .replace("cuberite ", "")
-                                .replace("yatopia ", "")
-                                .replace("mohist ", "")
-                                .replace("leafish ", "")
-                                .replace("cardboard ", "")
-                                .replace("magma ", "")
-                                .replace("empirecraft ", "");
-                        }
+                        if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
@@ -421,13 +321,13 @@ module.exports = async (bot) => {
                             .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
                             .addFields(
                                 { name: "PLAYERS", value: `${result.players.online}/${result.players.max}`, inline: false },
-                                { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`:\`${server.port}\``, inline: true }
+                                { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
                             )
                             .setColor(config.embeds.color)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
                         try { msg.edit({ embeds: [serverEmbed] }); }
-                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                        catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
                     })
                     .catch((error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
@@ -437,13 +337,16 @@ module.exports = async (bot) => {
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
                         try { msg.edit({ embeds: [errorEmbed] }); }
-                        catch (err) { console.error("Could not edit the status CH message! Error:\n" + err); }
+                        catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
 
-                        if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when posting status message! Error:\n`) + error);
+                        if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending status message! Error:\n`) + error);
                     }), ms(info.time));
         }
 
     }
+
+    console.log(`${bot.emotes.success} ` + gr(bot.user.username) + " is now working with prefix " + gr(bot.prefix));
+    if (settings.inviteLink) console.log(`${bot.emotes.info} ` + "Invite " + bl(bot.user.username) + " to your Discord server with link:\n   " + blu(`https://discord.com/oauth2/authorize?client_id=${bot.user.id}&permissions=274877918272&scope=bot%20applications.commands`));
 
     if (bot.readyScan && server.work) {
         if (server.type === 'java') {
@@ -454,25 +357,28 @@ module.exports = async (bot) => {
                         + "   " + bold('VERSION: ') + bl(`${result.version.name ? result.version.name : 'unknown'}\n`)
                         + "   " + bold('PLAYERS: ') + bl(`${result.players.online ? result.players.online : '0'}` + '/' + `${result.players.max ? result.players.max : '0'}`)
                     );
+                    console.log(processInfo('>> minecraft-bot working <<'));
                 })
                 .catch((error) => {
-                    console.log(`${bot.emotes.warn} ` + warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
+                    if (warns) console.log(`${bot.emotes.warn} ` + warn(`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
+                    console.log(processInfo('>> minecraft-bot working <<'));
                 });
         } else if (server.type === 'bedrock') {
             util.statusBedrock(server.ip, server.port)
                 .then((result) => {
-                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type.toUpperCase())} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
-                        + "   " + bold('IP:	    ') + bl(`${server.ip}:${result.port ? result.port : server.port}\n`)
-                        + "   " + bold('VERSION: ') + bl(`${result.version.name ? result.version.name : 'unknown'}\n`)
-                        + "   " + bold('PLAYERS: ') + bl(`${result.players.online ? result.players.online : '0'}` + '/' + `${result.players.max ? result.players.max : '0'}`)
+                    console.log(`${bot.emotes.success} Successfully located ${gr(server.type.toUpperCase())} server ${gr(server.ip)}!\n` + "   " + gr('| Server info:\n')
+                        + "   " + gr('| ') + bold('IP:	    ') + bl(`${server.ip}:${result.port ? result.port : server.port}\n`)
+                        + "   " + gr('| ') + bold('VERSION: ') + bl(`${result.version.name ? result.version.name : 'unknown'}\n`)
+                        + "   " + gr('| ') + bold('PLAYERS: ') + bl(`${result.players.online ? result.players.online : '0'}` + '/' + `${result.players.max ? result.players.max : '0'}`)
                     );
+                    console.log(processInfo('>> minecraft-bot working <<'));
                 })
                 .catch((error) => {
-                    console.log(`${bot.emotes.warn} ` + (`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
+                    if (warns) console.log(`${bot.emotes.warn} ` + (`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
+                    console.log(processInfo('>> minecraft-bot working <<'));
                 });
         }
+    } else {
+        console.log(processInfo('>> minecraft-bot working <<'));
     }
-
-    console.log(`${bot.emotes.success} ` + gr(bot.user.username) + " is now working with prefix " + gr(bot.prefix));
-    if (settings.inviteLink) console.log(`${bot.emotes.info} ` + "Invite " + bl(bot.user.username) + " with " + blu(`https://discord.com/oauth2/authorize?client_id=${bot.user.id}&permissions=274877918272&scope=bot%20applications.commands`));
 };
