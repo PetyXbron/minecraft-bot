@@ -1,4 +1,4 @@
-const util = require('minecraft-server-util'),
+const util = require('axios'),
     fs = require('fs'),
     { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
 

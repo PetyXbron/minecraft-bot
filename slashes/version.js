@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders'),
     Discord = require('discord.js'),
-    util = require('minecraft-server-util'),
+    util = require('axios'),
     warn = require('chalk').keyword('yellow').bold,
     fs = require('fs'),
     { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
@@ -23,8 +23,8 @@ module.exports.run = async (bot, interaction) => {
 
     if (server.type === 'java') {
         try {
-            const result = await util.status(server.ip, server.port);
-            var versionOriginal = result.version.name;
+            const response = await util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`);
+            var versionOriginal = response.data.version.name_clean;
         } catch (e) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
             var versionOriginal = config.server.version;
@@ -93,8 +93,8 @@ module.exports.run = async (bot, interaction) => {
         }
     } else {
         try {
-            const result = await util.statusBedrock(server.ip, server.port);
-            var versionOriginal = result.version.name;
+            const response = await util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`);
+            var versionOriginal = response.data.version.name_clean;
         } catch (e) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
             var versionOriginal = config.server.version;

@@ -1,4 +1,4 @@
-const util = require('minecraft-server-util'),
+const util = require('axios'),
     Discord = require('discord.js'),
     c = require('chalk'),
     fs = require('fs'),

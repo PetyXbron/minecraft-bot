@@ -3,6 +3,7 @@ const Discord = require('discord.js'),
     c = require('chalk'),
     processInfo = c.cyan.bgBlack,
     ms = require('ms'),
+    util = require('axios'),
     { REST } = require('@discordjs/rest'),
     { Routes } = require('discord-api-types/v9');
 
@@ -123,10 +124,10 @@ if (server.type !== 'java' && server.type !== 'bedrock') {
 if (!server.port) {
     if (bot.server.work) {
         if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server port, setting it to default one.`));
-        if (server.type === 'bedrock') {
-            server.port = 19132;
-        } else {
+        if (server.type === 'java') {
             server.port = 25565;
+        } else {
+            server.port = 19132;
         }
     }
 }
@@ -214,12 +215,20 @@ if (!iconLINK) {
     server.icon = false;
 } else if (!iconLINK.includes("png" || "jpg" || "webp" || "gif")) {
     if (warns) console.log(`${bot.emotes.warn} ` + warn("Unknown server icon file format. Setting it to undefined."));
-    server.icon = "https://media.minecraftforum.net/attachments/300/619/636977108000120237.png";
+    server.icon = false;
 } else if (!iconLINK.includes("https://" || "http://")) {
     if (warns) console.log(`${bot.emotes.warn} ` + warn("Server icon link did contain https or http. Setting it to undefined."));
-    server.icon = "https://media.minecraftforum.net/attachments/300/619/636977108000120237.png";
+    server.icon = false;
 } else {
     server.icon = iconLINK;
+}
+
+if (!server.icon) {
+    if (server.type === "java" && bot.server.work) {
+        server.icon = `https://api.mcstatus.io/v2/icon/${server.ip}:${server.port}`;
+    } else {
+        server.icon = "https://media.minecraftforum.net/attachments/300/619/636977108000120237.png";
+    }
 }
 
 bot.settings = config.settings;
