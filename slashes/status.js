@@ -26,6 +26,7 @@ module.exports.run = async (bot, interaction) => {
     if (server.type === 'java') {
         util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
             .then((response) => {
+                if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                 const versionOriginal = response.data.version.name_clean;
                 let versionAdvanced = false;
 
@@ -100,6 +101,7 @@ module.exports.run = async (bot, interaction) => {
     } else {
         util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`)
             .then((response) => {
+                if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                 const versionOriginal = response.data.version.name_clean;
                 let versionAdvanced = false;
 

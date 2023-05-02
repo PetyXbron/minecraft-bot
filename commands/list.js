@@ -23,6 +23,7 @@ module.exports.run = async (bot, message) => {
     if (server.type === 'java') {
         util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
             .then((response) => {
+                if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                 if (text.title === "" || text.description === "" || text.listFormat === "") {
                     const trueList = response.data.players.list ? "\n\`\`\`" + response.data.players.list.map(p => ` ${p.name_clean} `).join('\r\n') + "\`\`\`" : "";
 

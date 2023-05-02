@@ -26,7 +26,7 @@
 - Working **commands** with **custom prefix** + their **[slash commands]((https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ))**
     - `help` command for getting the help menu (list of all user-available commands)
     - `ip` command for getting the IP address of the server
-    - `list` command for getting an actual list of online players now
+    - `list` command for getting list of players online right now (available only for JAVA servers)
     - `status` command for getting a simple and clear overview of the server
     - `version` command for getting the Minecraft version of the server
     - `vote` command for getting vote link for voting for server on Minecraft server list
@@ -49,15 +49,6 @@
 - **Clear colorful console** logging
 
   ![minecraft-bot console](https://imgur.com/IqtzdM1.png)
-
-## MORE INFO
-
-### Go to our [documentation](https://petyxbron.gitbook.io/minecraft-bot/installation/install) and see.
-Run on Repl.it:
-
-[![Run on Repl.it](https://repl.it/badge/github/MrMazzone/dotreplit-example)](https://repl.it/github/PetyXbron/minecraft-bot)
-
-*Repl probably won't be updated for the latest Node.js version. Please check if you can install Node.js v16.9.0 or higher to support Discord.js v14*
 
 ## TO DO
 

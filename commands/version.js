@@ -23,6 +23,7 @@ module.exports.run = async (bot, message, args) => {
     if (server.type === 'java') {
         try {
             const response = await util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`);
+            if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
             var versionOriginal = response.data.version.name_clean;
         } catch (e) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
@@ -67,6 +68,7 @@ module.exports.run = async (bot, message, args) => {
     } else {
         try {
             const response = await util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`);
+            if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
             var versionOriginal = response.data.version.name_clean;
         } catch (e) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
