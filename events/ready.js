@@ -233,7 +233,7 @@ module.exports = async (bot) => {
                     util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`)
                         .then((response) => {
                             if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
-                            const versionOriginal = response.data.version.name_clean;
+                            const versionOriginal = response.data.version.name;
                             let versionAdvanced = false;
 
                             let maintenceStatus = false,
@@ -321,7 +321,7 @@ module.exports = async (bot) => {
                         util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`)
                             .then((response) => {
                                 if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
-                                const versionOriginal = response.data.version.name_clean;
+                                const versionOriginal = response.data.version.name;
                                 let versionAdvanced = false;
 
                                 let maintenceStatus = false,
@@ -374,9 +374,9 @@ module.exports = async (bot) => {
                 .then((response) => {
                     if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                     console.log(`${bot.emotes.success} Successfully located ${gr(server.type.toUpperCase())} server ${gr(server.ip)}!\n` + "   " + gr('Server info:\n')
-                        + "   " + bold('IP:	    ') + bl(`${server.ip}:${response.data.port ? response.data.port : server.port}\n`)
-                        + "   " + bold('VERSION: ') + bl(`${response.data.version.name_clean ? response.data.version.name_clean : 'unknown'}\n`)
-                        + "   " + bold('PLAYERS: ') + bl(`${response.data.players.online ? response.data.players.online : '0'}` + '/' + `${response.data.players.max ? response.data.players.max : '0'}`)
+                        + "   " + gr('| ') + bold('IP:      ') + bl(`${server.ip}:${response.data.port ? response.data.port : server.port}\n`)
+                        + "   " + gr('| ') + bold('VERSION: ') + bl(`${response.data.version.name_clean ? response.data.version.name_clean : 'unknown'}\n`)
+                        + "   " + gr('| ') + bold('PLAYERS: ') + bl(`${response.data.players.online ? response.data.players.online : '0'}` + '/' + `${response.data.players.max ? response.data.players.max : '0'}`)
                     );
                     console.log(processInfo('>> minecraft-bot working <<'));
                 })
@@ -389,7 +389,7 @@ module.exports = async (bot) => {
                 .then((response) => {
                     if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                     console.log(`${bot.emotes.success} Successfully located ${gr(server.type.toUpperCase())} server ${gr(server.ip)}!\n` + "   " + gr('| Server info:\n')
-                        + "   " + gr('| ') + bold('IP:	    ') + bl(`${server.ip}:${response.data.port ? response.data.port : server.port}\n`)
+                        + "   " + gr('| ') + bold('IP:      ') + bl(`${server.ip}:${response.data.port ? response.data.port : server.port}\n`)
                         + "   " + gr('| ') + bold('VERSION: ') + bl(`${response.data.version.name_clean ? response.data.version.name_clean : 'unknown'}\n`)
                         + "   " + gr('| ') + bold('PLAYERS: ') + bl(`${response.data.players.online ? response.data.players.online : '0'}` + '/' + `${response.data.players.max ? response.data.players.max : '0'}`)
                     );
