@@ -17,7 +17,7 @@ module.exports = {
         name: "", //Your server name
         type: "", //"java" or "bedrock"
         ip: "", //IP of your server - do not include port - e.g. "mc.hypixel.net"
-        port: "", //PORT of your server - empty => default port (JA 25565, BE 19132)
+        port: "", //PORT of your server - if not entered, default port is selected (25565 / 19132)
         icon: "", //Link to icon - like "https://website.com/icon.png"
         version: "", //Minecraft version of sever
         vote: "" //Vote link - like "https://minecraftpocket-servers.com/server/80103/vote/"
