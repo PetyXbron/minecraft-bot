@@ -7,8 +7,16 @@ module.exports = async (bot, message) => {
 
     const { prefix, server, config } = bot;
 
+    // VOTING CH
     if (config.settings.votingCH && message.channel.id === config.votingCH.channelID) {
-        if (message.content.startsWith(prefix)) return;
+        if (!config.votingCH.commands) {
+            if (message.content.startsWith(prefix)) {
+                message.delete();
+                return;
+            }
+        } else {
+            if (message.content.startsWith(prefix)) return;
+        }
 
         message.react(config.votingCH.reactions.first);
         if (config.votingCH.reactions.second) message.react(config.votingCH.reactions.second);
@@ -48,6 +56,56 @@ module.exports = async (bot, message) => {
                 }
             }
         });
+    }
+
+    // IMAGES CH
+    if (config.settings.imagesCH && message.channel.id === config.imagesCH.channelID) {
+        if (!config.imagesCH.commands) {
+            if (message.content.startsWith(prefix)) {
+                message.delete();
+                return;
+            }
+        } else {
+            if (message.content.startsWith(prefix)) return;
+        }
+
+        if (!config.imagesCH.allowWithTextOnly) {
+            if (message.attachments.size === 0) {
+                message.delete();
+                return;
+            }
+        }
+
+        if (!config.imagesCH.allowWithTextAndImage) {
+            if (message.attachments.size !== 0 && !!message.content) {
+                message.delete();
+                return;
+            }
+        }
+
+        config.imagesCH.reactions.list.forEach(function (r) {
+            message.react(r);
+        });
+
+        if (config.imagesCH.threads.enable && message.attachments.size > 0) {
+            const dataJSON = bot.dataJSON;
+            lastID = dataJSON["ImagesCHLastID"] ? dataJSON["ImagesCHLastID"] : 0;
+            newID = parseInt(lastID) + 1;
+            ID = (config.imagesCH.threads.idSyntax.replace("1", "") + newID).slice(-config.imagesCH.threads.idSyntax.length);
+
+            const thread = await message.startThread({
+                name: config.imagesCH.threads.nameSyntax.replaceAll("{ID}", ID),
+                autoArchiveDuration: config.imagesCH.threads.archiveTime
+            });
+            await thread.leave();
+
+            data = dataJSON;
+            data["ImagesCHLastID"] = newID;
+
+            fs.writeFile(bot.dev ? './dev-data.json' : './data.json', JSON.stringify(data, null, 4), err => {
+                if (err) console.log("Could not edit the data.json content! Error:\n" + err);
+            });
+        }
     }
 
     if (!config.commands.enableNormals) return;
