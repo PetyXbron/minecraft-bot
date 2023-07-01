@@ -77,7 +77,7 @@ module.exports = async (bot) => {
             autoUpdatingPresence();
         } else {
             try {
-                bot.user.setPresence({ activities: [{ name: presence, type: activity }], status: status, afk: false }); //Sets bot activity
+                bot.user.setPresence({ activities: [{ name: presence, type: at[activity] }], status: status, afk: false }); //Sets bot activity
                 if (debug) console.log(`${bot.emotes.debug} Successfully set the bot presence to ` + ma(`${bot.activity.toLowerCase()} ${bot.pres}`));
             } catch (e) {
                 if (debug) console.log(`${bot.emotes.debug} Could not set the Discord bot presence! Error:\n` + e);

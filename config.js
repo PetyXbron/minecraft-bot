@@ -73,7 +73,7 @@ module.exports = {
         }
     },
 
-    //Images channel - https://mb.petyxbron.cz/config/config-info#voting-ch
+    //Images channel - https://mb.petyxbron.cz/config/config-info#images-ch
     imagesCH: {
         channelID: "",
         commands: false, //Enable commands (commands of this bot) usage?
