@@ -1,7 +1,9 @@
-## [🔗 DOCUMENTATION HERE](https://petyxbron.gitbook.io/minecraft-bot/installation)
-## [🔗 DOWNLOAD LATEST MAIN .ZIP](https://github.com/PetyXbron/minecraft-bot/archive/refs/heads/main.zip)
-## [🔗 JOIN DISCORD SUPPORT SERVER](https://discord.com/invite/PYTqqhWad2)
+### [🔗 PROJECT DOCUMENTATION](https://mb.petyxbron.cz)
+### [🔗 DOWNLOAD LATEST MASTER VERSION .ZIP](https://github.com/PetyXbron/minecraft-bot/archive/refs/heads/master.zip)
+### [🔗 JOIN DISCORD SUPPORT SERVER](https://dsc.gg/azator)
+### [🔗 TROUBLESHOOTING GUIDE](https://mb.petyxbron.cz/fix)
 
+**Consider using the [`dev`](https://github.com/PetyXbron/minecraft-bot/tree/dev) version with the newest features and bug fixes!**
 # <img src="https://imgur.com/2L1l0lk.png" width="40" height="40"/>Custom Discord Minecraft bot<img src="https://imgur.com/2L1l0lk.png" width="40" height="40"/>
 ### *Get info about your Minecraft server with this Discord bot!*
 
@@ -36,10 +38,6 @@
   ![Bot status config variables](https://i.imgur.com/7TXaWTC.png)
 - More Discord bot activities: `playing`, `listening`, `watching`, and `competing`
 - More Discord bot statuses: `online`, `idle`, `dnd`, and `invisible`
-- **Suggestions/voting channel** with reactions and threads
-
-  ![Voting channel](https://i.imgur.com/OfCxqhf.gif)
-- Custom responses for each command, editable in [the config file](config.js)
 - **Auto updating status message** with player list
 
   ![Auto status messsage](https://imgur.com/gSAUIh5.png)
@@ -49,9 +47,16 @@
 - **Clear colorful console** logging
 
   ![minecraft-bot console](https://imgur.com/IqtzdM1.png)
+- **Suggestions/voting channel** with reactions and threads
+
+  ![Voting channel](https://i.imgur.com/OfCxqhf.gif)
+- **Images/screenshots channel** with reactions and threads
+
+  ![Images channel](https://i.imgur.com/AGmRGiH.gif)
 
 ## TO DO
 
+- [ ] Language system
 - [ ] Send custom embed message command
 - [ ] Send a custom message/announcement command
 - [ ] Better test command variables (more process info - like uptime)
