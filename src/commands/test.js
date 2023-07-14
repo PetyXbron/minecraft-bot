@@ -1,11 +1,11 @@
 const util = require('axios'),
     fs = require('fs'),
-    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+    { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');
 
 module.exports.config = {
     name: "test", //Name of command - RENAME THE FILE TOO!!!
     description: "Test command", //Description of command - you can change it :)
-    aliases: commands.test.aliases //Command's aliases - set them in config.js
+    aliases: commands.test.aliases //Command's aliases - set them in the config
 };
 
 module.exports.run = async (bot, message) => {

@@ -1,5 +1,5 @@
 const ms = require('ms'),
-    version = require('../package.json').version,
+    version = require('../../package.json').version,
     fs = require('fs');
 
 module.exports = async (bot, message) => {
@@ -50,8 +50,8 @@ module.exports = async (bot, message) => {
                     data = dataJSON;
                     data["VotingCHLastID"] = newID;
 
-                    fs.writeFile(bot.dev ? './dev-data.json' : './data.json', JSON.stringify(data, null, 4), err => {
-                        if (err) console.log("Could not edit the data.json content! Error:\n" + err);
+                    fs.writeFile(bot.dev ? __dirname + "../../../config/dev-data.json" : __dirname + "../../../config/data.json", JSON.stringify(data, null, 4), err => {
+                        if (err) console.log("Could not edit the config/data.json content! Error:\n" + err);
                     });
                 }
             }
@@ -102,8 +102,8 @@ module.exports = async (bot, message) => {
             data = dataJSON;
             data["ImagesCHLastID"] = newID;
 
-            fs.writeFile(bot.dev ? './dev-data.json' : './data.json', JSON.stringify(data, null, 4), err => {
-                if (err) console.log("Could not edit the data.json content! Error:\n" + err);
+            fs.writeFile(bot.dev ? __dirname + "../../../config/dev-data.json" : __dirname + "../../../config/data.json", JSON.stringify(data, null, 4), err => {
+                if (err) console.log("Could not edit the config/data.json content! Error:\n" + err);
             });
         }
     }

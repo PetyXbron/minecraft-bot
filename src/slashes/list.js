@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders'),
     Discord = require('discord.js'),
     c = require('chalk'),
     fs = require('fs'),
-    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+    { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');
 
 module.exports = {
     data: new SlashCommandBuilder()

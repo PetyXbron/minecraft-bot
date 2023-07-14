@@ -1,7 +1,7 @@
 node_modules/
 package-lock.json
-.vscode/settings.json
+.vscode
 
-test/
-dev-config.js
-dev-data.json
+config/dev-main.js
+config/dev-token.json
+config/dev-data.json

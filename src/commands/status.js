@@ -2,12 +2,12 @@ const util = require('axios'),
     Discord = require('discord.js'),
     c = require('chalk'),
     fs = require('fs'),
-    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+    { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');
 
 module.exports.config = {
     name: "status", //Name of command - RENAME THE FILE TOO!!!
     description: "Sends the simple status info message about server right now", //Description of command - you can change it :)
-    aliases: commands.status.aliases //Command's aliases - set them in config.js
+    aliases: commands.status.aliases //Command's aliases - set them in the config
 };
 
 module.exports.run = async (bot, message) => {
@@ -16,7 +16,7 @@ module.exports.run = async (bot, message) => {
         settings = config.settings,
         warn = c.keyword('yellow').bold,
         warns = config.settings.warns,
-        { removeVersion } = require('../functions');
+        { removeVersion } = require('../functions/base');
 
     if (!server.work) return;
 

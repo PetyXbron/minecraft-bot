@@ -1,11 +1,11 @@
 const { EmbedBuilder } = require('discord.js'),
     fs = require('fs'),
-    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+    { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');
 
 module.exports.config = {
     name: "help", //Name of command - RENAME THE FILE TOO!!!
     description: "Sends the command list menu", //Description of command - you can change it :)
-    aliases: commands.help.aliases //Command's aliases - set them in config.js
+    aliases: commands.help.aliases //Command's aliases - set them in the config
 };
 
 module.exports.run = async (bot, message, args) => {

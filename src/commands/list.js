@@ -2,12 +2,12 @@ const util = require('axios'),
     Discord = require('discord.js'),
     c = require('chalk'),
     fs = require('fs'),
-    { commands } = require(fs.existsSync(__dirname + '/../dev-config.js') ? '../dev-config' : '../config');
+    { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');
 
 module.exports.config = {
     name: "list", //Name of command - RENAME THE FILE TOO!!!
     description: "Sends the actual list of players online", //Description of command - you can change it :)
-    aliases: commands.list.aliases //Command's aliases - set them in config.js
+    aliases: commands.list.aliases //Command's aliases - set them in the config
 };
 
 module.exports.run = async (bot, message) => {
