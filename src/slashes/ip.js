@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders'),
+const { SlashCommandBuilder } = require('discord.js'),
     Discord = require('discord.js'),
     fs = require('fs'),
     { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');

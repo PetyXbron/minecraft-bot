@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders'),
+const { SlashCommandBuilder } = require('discord.js'),
     Discord = require('discord.js'),
     util = require('axios'),
     warn = require('chalk').keyword('yellow').bold,

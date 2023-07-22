@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = {
     removeVersion(string) {
         const serverVersions = [
@@ -22,7 +24,7 @@ module.exports = {
             bl = chalk.blue.bold,
             warn = chalk.keyword('yellow').bold,
             processInfo = chalk.cyan.bgBlack,
-            { warns } = bot
+            { warns } = bot;
 
         if (server.type === 'java') {
             util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
@@ -54,6 +56,31 @@ module.exports = {
                     if (warns) console.log(`${bot.emotes.warn} ` + (`Could not find ${server.type} server ${server.ip} with port ${server.port}! Error:\n`) + error);
                     console.log(processInfo('>> minecraft-bot working <<'));
                 });
+        }
+    },
+
+    createDataJson(dev) {
+        const emptyArray = "{}";
+        if (!fs.existsSync(__dirname + '../../../config/data.json')) {
+            fs.writeFileSync(__dirname + "../../../config/data.json", emptyArray, err => {
+                if (err) console.log("Could not create the config/data.json file! Error:\n" + err);
+            });
+        }
+
+        if (dev && !fs.existsSync(__dirname + '../../../config/dev-data.json')) {
+            fs.writeFileSync(__dirname + "../../../config/dev-data.json", emptyArray, err => {
+                if (err) console.log("Could not create the config/dev-data.json file! Error:\n" + err);
+            });
+        }
+    },
+
+    async getSlashID(bot, name) {
+        const map = await bot.application.commands.fetch();
+        const cmd = await [...map.values()].find(e => e.name === name);
+        if (cmd) {
+            return cmd.id;
+        } else {
+            return undefined;
         }
     }
 };

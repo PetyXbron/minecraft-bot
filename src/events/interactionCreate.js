@@ -14,6 +14,10 @@ module.exports = async (bot, interaction) => {
             } else {
                 config.embeds.color = randomColor;
             }
+
+            if (config.embeds.color.length === 5) {
+                config.embeds.color = config.embeds.color + "0"
+            }
         }
         command.run(bot, interaction);
     }

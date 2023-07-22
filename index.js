@@ -9,6 +9,7 @@ console.log(processInfo('>> minecraft-bot started <<'));
 let dev;
 try { if (fs.existsSync('./config/dev-main.js')) { dev = true; } }
 catch (err) { console.log(err); }
+require("./src/functions/base").createDataJson(dev);
 const config = require(dev ? './config/dev-main' : './config/main'),
     token = require(dev ? './config/dev-token' : './config/token')["token"],
     dataJSON = require(dev ? './config/dev-data' : './config/data'),

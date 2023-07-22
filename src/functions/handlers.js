@@ -1,6 +1,5 @@
 const fs = require('fs'),
-    { REST } = require('@discordjs/rest'),
-    { Routes } = require('discord-api-types/v9');
+    { REST, Routes } = require('discord.js');
 
 module.exports = {
     events(bot) {
@@ -58,7 +57,7 @@ module.exports = {
             };
 
             bot.once('ready', async (bot) => {
-                const rest = new REST({ version: '9' }).setToken(bot.token);
+                const rest = new REST().setToken(bot.token);
 
                 try {
                     await rest.put(

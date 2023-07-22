@@ -65,7 +65,7 @@ module.exports = {
 
         data = dataJSON;
         data["StatusCHMsgID"] = msg.id;
-        fs.writeFile(bot.dev ? __dirname + "../../../config/dev-data.json" : __dirname + "../../../config/data.json", JSON.stringify(data, null, 4), err => {
+        fs.writeFileSync(bot.dev ? __dirname + "../../../config/dev-data.json" : __dirname + "../../../config/data.json", JSON.stringify(data, null, 4), err => {
             if (warns) console.log(`${bot.emotes.warn} ` + warn('Could not edit the config/data.json content! Error:\n') + err);
         });
     },
@@ -79,7 +79,7 @@ module.exports = {
         const icon = server.icon ? server.icon : guild.iconURL();
         if (server.type === 'java') {
             util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
-                .then((response) => {
+                .then(async (response) => {
                     if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                     const versionOriginal = response.data.version.name_clean;
                     let versionAdvanced = false;
@@ -92,7 +92,7 @@ module.exports = {
 
                     const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
-                    const trueList = response.data.players.list ? "\n\`\`\`" + response.data.players.list.map(p => ` ${p.name_clean} `).join('\r\n') + "\`\`\`" : "";
+                    const trueList = response.data.players.list && response.data.players.list.length > 0 ? "\n\`\`\`" + response.data.players.list.map(p => ` ${p.name_clean} `).join('\r\n') + "\`\`\`" : "";
 
                     const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
@@ -104,25 +104,25 @@ module.exports = {
                         .setColor(config.embeds.color)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    try { msg.edit({ embeds: [serverEmbed] }); }
+                    try { await msg.edit({ embeds: [serverEmbed] }); }
                     catch (err) { if (warns) console.log(`${bot.emotes.warn} ` + warn('Could not edit the statusCH message! Error:\n') + err); }
 
                 })
-                .catch((error) => {
+                .catch(async (error) => {
                     const errorEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    try { msg.edit({ embeds: [errorEmbed] }); }
+                    try { await msg.edit({ embeds: [errorEmbed] }); }
                     catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
 
                     if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending statusCH message! Error:\n`) + error);
                 });
         } else {
             util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`)
-                .then((response) => {
+                .then(async (response) => {
                     if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                     const versionOriginal = response.data.version.name;
                     let versionAdvanced = false;
@@ -145,24 +145,24 @@ module.exports = {
                         .setColor(config.embeds.color)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    try { msg.edit({ embeds: [serverEmbed] }); }
+                    try { await msg.edit({ embeds: [serverEmbed] }); }
                     catch (err) { if (warns) console.log(`${bot.emotes.warn} ` + warn('Could not edit the statusCH message! Error:\n') + err); }
                 })
-                .catch((error) => {
+                .catch(async (error) => {
                     const errorEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
                         .setColor(config.embeds.error)
                         .setFooter({ text: 'Updated' })
                         .setTimestamp();
-                    try { msg.edit({ embeds: [errorEmbed] }); }
+                    try { await msg.edit({ embeds: [errorEmbed] }); }
                     catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
 
                     if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending statusCH message! Error:\n`) + error);
                 });
         }
 
-        if (debug) console.log(`${bot.emotes.debug} Successfully updated status message in ${ma(channel.name)}!`);
+        if (debug) console.log(`${bot.emotes.debug} Successfully updated the statusCH message in ${ma(channel.name)}!`);
     },
 
     async autoUpdatingStatusCH(bot, config, channel) {
@@ -174,7 +174,7 @@ module.exports = {
         if (server.type === 'java') {
             setInterval(() =>
                 util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
-                    .then((response) => {
+                    .then(async (response) => {
                         if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                         const versionOriginal = response.data.version.name_clean;
                         let versionAdvanced = false;
@@ -187,7 +187,7 @@ module.exports = {
 
                         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
 
-                        const trueList = response.data.players.list ? "\n\`\`\`" + response.data.players.list.map(p => ` ${p.name_clean} `).join('\r\n') + "\`\`\`" : "";
+                        const trueList = response.data.players.list && response.data.players.list.length > 0 ? "\n\`\`\`" + response.data.players.list.map(p => ` ${p.name_clean} `).join('\r\n') + "\`\`\`" : "";
 
                         const serverEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
@@ -199,17 +199,17 @@ module.exports = {
                             .setColor(config.embeds.color)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        try { msg.edit({ embeds: [serverEmbed] }); }
+                        try { await msg.edit({ embeds: [serverEmbed] }); }
                         catch (err) { if (warns) console.log(`${bot.emotes.warn} ` + warn('Could not edit the statusCH message! Error:\n') + err); }
                     })
-                    .catch((error) => {
+                    .catch(async (error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                             .setDescription(':x: **OFFLINE**')
                             .setColor(config.embeds.error)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        try { msg.edit({ embeds: [errorEmbed] }); }
+                        try { await msg.edit({ embeds: [errorEmbed] }); }
                         catch (err) { if (warns) console.log(`${bot.emotes.warn} ` + warn('Could not edit the statusCH message! Error:\n') + err); }
 
                         if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending statusCH message! Error:\n`) + error);
@@ -217,7 +217,7 @@ module.exports = {
         } else {
             setInterval(() =>
                 util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`)
-                    .then((response) => {
+                    .then(async (response) => {
                         if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                         const versionOriginal = response.data.version.name;
                         let versionAdvanced = false;
@@ -240,17 +240,17 @@ module.exports = {
                             .setColor(config.embeds.color)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        try { msg.edit({ embeds: [serverEmbed] }); }
+                        try { await msg.edit({ embeds: [serverEmbed] }); }
                         catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
                     })
-                    .catch((error) => {
+                    .catch(async (error) => {
                         const errorEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                             .setDescription(':x: **OFFLINE**')
                             .setColor(config.embeds.error)
                             .setFooter({ text: 'Updated' })
                             .setTimestamp();
-                        try { msg.edit({ embeds: [errorEmbed] }); }
+                        try { await msg.edit({ embeds: [errorEmbed] }); }
                         catch (err) { console.log("Could not edit the statusCH message! Error:\n" + err); }
 
                         if (warns) console.log(`${bot.emotes.warn} ` + warn(`Something went wrong with sending status message! Error:\n`) + error);

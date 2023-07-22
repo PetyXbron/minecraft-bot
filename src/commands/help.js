@@ -13,11 +13,11 @@ module.exports.run = async (bot, message, args) => {
         text = commands.help.text,
         icon = server.icon ? server.icon : message.guild.iconURL();
 
+    const { getSlashID } = require("../functions/base");
+    let commandz = [],
+        lines = [];
+    commandz = fs.readdirSync(__dirname + '/../commands').filter(file => file.endsWith('.js'));
     if (!args[0]) {
-        let commandz = [],
-            lines = [];
-
-        commandz = fs.readdirSync(`./commands`).filter(file => file.endsWith('.js'));
 
         if (commandz.length > 0) {
             for (const commandFile of commandz) {
@@ -73,6 +73,7 @@ module.exports.run = async (bot, message, args) => {
             .setTitle(`${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Command:`)
             .setDescription(`
                 > **Description:** ${!!command.config.description ? command.config.description : "Without description"}
+                > **Slash command:** ${await getSlashID(bot, commandName) ? `</${commandName}:${await getSlashID(bot, commandName)}>` : "Not found"}
                 > **Aliases:** ${!!command.config.aliases ? "`" + bot.prefix + command.config.aliases.join(`\`, \`${bot.prefix}`) + "`" : "No aliases"}
             `)
             .setColor(config.embeds.color);
