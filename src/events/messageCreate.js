@@ -108,7 +108,7 @@ module.exports = async (bot, message) => {
         }
     }
 
-    if (!config.commands.enableNormals) return;
+    if (!config.settings.commands.enableChat) return;
 
     if (message.content.includes(`minecraft-bot version`)) {
         message.channel.sendTyping();
@@ -120,7 +120,6 @@ module.exports = async (bot, message) => {
 
     const messageArray = message.content.split(' ');
     const cmd = messageArray[0].toLowerCase();
-    const args = messageArray.slice(1);
 
     if (!message.content.startsWith(prefix)) return;
     let commandfile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(cmd.slice(prefix.length)));
@@ -134,6 +133,6 @@ module.exports = async (bot, message) => {
             }
         }
 
-        commandfile.run(bot, message, args, server);
+        commandfile.run(bot, "chat", message);
     }
 };

@@ -19,6 +19,7 @@ module.exports = async (bot, interaction) => {
                 config.embeds.color = config.embeds.color + "0"
             }
         }
-        command.run(bot, interaction);
+
+        command.run(bot, "slash", interaction, undefined);
     }
 };

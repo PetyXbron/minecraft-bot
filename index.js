@@ -14,7 +14,7 @@ const config = require(dev ? './config/dev-main' : './config/main'),
     token = require(dev ? './config/dev-token' : './config/token')["token"],
     dataJSON = require(dev ? './config/dev-data' : './config/data'),
     warns = config.settings.warns,
-    intents = config.commands.enableNormals ? 38401 : 5633;
+    intents = config.settings.commands.enableChat ? 38401 : 5633;
 
 //Defining Discord bot
 bot = new Discord.Client({ intents: intents }); //OLD: 34321
@@ -57,8 +57,7 @@ bot.dataJSON = dataJSON;
 //Handlers (events and commands)
 handlers = require("./src/functions/handlers");
 handlers.events(bot);
-handlers.normals(bot);
-handlers.slashes(bot);
+handlers.commands(bot);
 
 //Bot login
 bot.login(bot.token);

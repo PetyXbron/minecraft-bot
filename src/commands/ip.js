@@ -1,42 +1,28 @@
-const Discord = require('discord.js'),
-    fs = require('fs'),
-    { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');
+const { SlashCommandBuilder } = require('discord.js');
 
-module.exports.config = {
-    name: "ip", //Name of command - RENAME THE FILE TOO!!!
-    description: "Sends the IP address of server", //Description of command - you can change it :)
-    aliases: commands.ip.aliases //Command's aliases - set them in the config
+module.exports = {
+    config: {
+        name: "ip", //RENAME THE FILE TOO!!!
+        enableChat: true,
+        enableSlash: true,
+        description: "Sends the IP address of server",
+        aliases: ["i", "ip-address", "address", "connect", "join"]
+    },
+    slash: new SlashCommandBuilder()
+        .setName('ip') //RENAME THE FILE TOO!!!
+        .setDescription(`Sends the IP address of server`)
 };
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, diType, di) => {
+    const Discord = require('discord.js');
+
     let { server, config } = bot,
-        text = commands.ip.text,
-        icon = server.icon ? server.icon : message.guild.iconURL();
-    if (text.title === "" || text.description === "") {
-        const ipEmbed = new Discord.EmbedBuilder()
-            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-            .setTitle("IP address:")
-            .setDescription(`\`${server.ip}\`:\`${server.port}\``)
-            .setColor(config.embeds.color);
-        message.channel.send({ embeds: [ipEmbed] });
-    } else {
-        text.title = text.title.replaceAll('{serverIp}', server.ip);
-        text.title = text.title.replaceAll('{serverPort}', server.port);
-        text.title = text.title.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
-        text.title = text.title.replaceAll('{voteLink}', config.server.vote);
-        text.title = text.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
+        icon = server.icon ? server.icon : di.guild.iconURL();
 
-        text.description = text.description.replaceAll('{serverIp}', server.ip);
-        text.description = text.description.replaceAll('{serverPort}', server.port);
-        text.description = text.description.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
-        text.description = text.description.replaceAll('{voteLink}', config.server.vote);
-        text.description = text.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
-
-        const ipEmbed = new Discord.EmbedBuilder()
-            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-            .setTitle(text.title)
-            .setDescription(text.description)
-            .setColor(config.embeds.color);
-        message.channel.send({ embeds: [ipEmbed] });
-    }
+    const ipEmbed = new Discord.EmbedBuilder()
+        .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
+        .setTitle("IP address:")
+        .setDescription(`\`${server.ip}\`:\`${server.port}\``)
+        .setColor(config.embeds.color);
+    di.reply({ embeds: [ipEmbed], allowedMentions: { repliedUser: false } });
 };

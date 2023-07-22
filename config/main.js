@@ -31,6 +31,10 @@ module.exports = {
         debug: false, //Log most of the changes and updates (pretty spam)?
         inviteLink: true, //Show bot invite link on bot start?
         readyScan: true, //On bot's start, send to console server's essential information?
+        commands: {
+            enableChat: true, //This requires having "message content" intent allowed on the Discord developer portal site.
+            enableSlash: true //Enable Discord slash commands?
+        },
         //Features:
         randomColor: false, //Enable random hex color generator for embeds? Overwrites embeds settings!
         statusCH: false, //Enable auto-changing status message?
@@ -116,105 +120,6 @@ module.exports = {
             debug: "💜",
             error: "🛑"
         }
-    },
-
-    //All commands settings
-    commands: {
-        enableNormals: true, //This requires having "message content" intent allowed on the Discord developer portal site
-        enableSlashes: true, //If you want to disable only specific slashes, leave this true and go down
-        //List of all commands:
-        help: {
-            enableNormal: true, //Enables normal command
-            enableSlash: true, //Enables slash command
-            aliases: [ //Only for normal commands
-                "commands", "menu"
-            ],
-            text: { //Custom text settings (for translating or customization)
-                title: "{serverName} bot commands:",
-                description: "> **Prefix:** \`{prefix}\`\n> **Commands:**\n{commands}",
-                errorTitle: "Error! Command \"{arg0}\" doesn't exist.",
-                errorDescription: "Command `{arg0}` was not found.\nYou are entering the wrong alias or the command is disabled."
-            }
-        },
-        ip: {
-            enableNormal: true, //Enables normal command
-            enableSlash: true, //Enables slash command
-            aliases: [ //Only for normal commands
-                "i", "ip-address", "address", "connect", "join"
-            ],
-            text: { //Custom text settings (for translating or customization)
-                title: "IP address:",
-                description: "\`{serverIp}\`:\`{serverPort}\`"
-            }
-        },
-        list: {
-            enableNormal: true, //Enables normal command
-            enableSlash: true, //Enables slash command
-            aliases: [ //Only for normal commands
-                "l", "players", "plist"
-            ],
-            text: { //Custom text settings (for translating or customization)
-                title: "Online player list:",
-                description: "**{playersOnline}**/**{playersMax}**",
-                listFormat: "```{playersList}```"
-            }
-        },
-        status: {
-            enableNormal: true, //Enables normal command
-            enableSlash: true, //Enables slash command
-            aliases: [ //Only for normal commands
-                "s", "info", "server", "overview", "ov"
-            ],
-            text: { //Custom text settings (for translating or customization)
-                title: "Server status:",
-                description:
-                    `{status}
-                    
-                    **Description**
-                    {motd}
-                    
-                    **IP Address**
-                    \`{serverIp}\`:\`{serverPort}\`
-                    
-                    **Version**
-                    {serverType} {serverVersion}
-                    
-                    **Players**
-                    **{playersOnline}**/**{playersMax}**`,
-            }
-        },
-        test: {
-            enableNormal: true, //Enables normal command
-            //Test command doesn't have a slash type. Is it really necessary?
-            aliases: [ //Only for normal commands
-                "t", "try", "testing"
-            ],
-            text: { //Custom text settings (for translating or customization)
-                content: "Test message reply."
-            }
-        },
-        version: {
-            enableNormal: true, //Enables normal command
-            enableSlash: true, //Enables slash command
-            aliases: [ //Only for normal commands
-                "v", "ver"
-            ],
-            text: { //Custom text settings (for translating or customization)
-                title: "Minecraft version:",
-                description: "{serverType} {serverVersion}"
-            }
-        },
-        vote: {
-            enableNormal: true, //Enables normal command
-            enableSlash: true, //Enables slash command
-            aliases: [ //Only for normal commands
-                "votelink"
-            ],
-            text: { //Custom text settings (for translating or customization)
-                title: "Server list vote link:",
-                description: "[Here]({voteLink}) you can vote for {serverName}."
-            }
-        },
     }
 };
 

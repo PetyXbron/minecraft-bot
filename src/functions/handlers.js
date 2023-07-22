@@ -11,51 +11,35 @@ module.exports = {
         };
     },
 
-    normals(bot) {
-        const { commands, server } = bot.config;
+    commands(bot) {
+        const config = bot.config;
+        let slashCommands = [];
         const commandsFolder = fs.readdirSync(__dirname + '/../commands').filter(file => file.endsWith('.js'));
         for (const file of commandsFolder) {
             const commandFile = require(__dirname + `/../commands/${file}`);
             const command = file.split(".")[0];
             function registerCommand(cmd, cmdFile) {
-                bot.commands.set(cmd, cmdFile);
-                cmdFile.config.aliases.forEach(alias => {
-                    bot.aliases.set(alias, cmd);
-                });
+                if (cmdFile.config.enableChat) {
+                    bot.commands.set(cmd, cmdFile);
+                    cmdFile.config.aliases.forEach(alias => {
+                        bot.aliases.set(alias, cmd);
+                    });
+                }
+
+                if (cmdFile.config.enableSlash) {
+                    bot.slashes.set(cmd, cmdFile);
+                    slashCommands.push(cmdFile.slash.toJSON());
+                }
             }
 
-            if (!commands[command] || !!commands[command] && !!commands[command].enableNormal || !!commandFile.config.enable) {
-                if (command !== "list") {
-                    registerCommand(command, commandFile);
-                } else if (server.type === "java") {
-                    registerCommand(command, commandFile);
-                }
+            if (command !== "list") {
+                registerCommand(command, commandFile);
+            } else if (bot.config.server.type === "java") {
+                registerCommand(command, commandFile);
             }
         };;
-    },
 
-    slashes(bot) {
-        const { commands, server } = bot.config;
-        if (commands.enableSlashes) {
-            let slashCommands = [];
-            const slashCommandsFolder = fs.readdirSync(__dirname + '/../slashes').filter(file => file.endsWith('.js'));
-            for (const file of slashCommandsFolder) {
-                const commandFile = require(__dirname + `/../slashes/${file}`);
-                const slashCommand = file.split(".")[0];
-                function registerSlashCommand(cmd, cmdFile) {
-                    bot.slashes.set(cmd, cmdFile);
-                    slashCommands.push(cmdFile.data.toJSON());
-                }
-
-                if (!commands[slashCommand] || !!commands[slashCommand] && !!commands[slashCommand].enableSlash) {
-                    if (slashCommand !== "list") {
-                        registerSlashCommand(slashCommand, commandFile);
-                    } else if (server.type === "java") {
-                        registerSlashCommand(slashCommand, commandFile);
-                    }
-                }
-            };
-
+        if (config.settings.commands.enableSlash) {
             bot.once('ready', async (bot) => {
                 const rest = new REST().setToken(bot.token);
 

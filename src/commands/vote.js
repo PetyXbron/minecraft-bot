@@ -1,44 +1,29 @@
-const Discord = require('discord.js'),
-    fs = require('fs'),
-    { commands } = require(fs.existsSync('../../config/dev-main') ? '../../config/dev-main' : '../../config/main');
+const { SlashCommandBuilder } = require('discord.js');
 
-module.exports.config = {
-    name: "vote", //Name of command - RENAME THE FILE TOO!!!
-    description: "Sends the link for voting on Minecraft server list", //Description of command - you can change it :)
-    aliases: commands.vote.aliases //Command's aliases - set them in the config
+module.exports = {
+    config: {
+        name: "vote", //RENAME THE FILE TOO!!!
+        enableChat: true,
+        enableSlash: true,
+        description: "Sends the link for voting on Minecraft server list",
+        aliases: ["votes", "votelink"]
+    },
+    slash: new SlashCommandBuilder()
+        .setName('vote') //RENAME THE FILE TOO!!!
+        .setDescription('Sends the link for voting on Minecraft server list')
 };
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, diType, di) => {
+    const Discord = require('discord.js');
+
     let { server, config } = bot,
-        text = commands.vote.text,
-        icon = server.icon ? server.icon : message.guild.iconURL(),
-        serverName = config.server.name ? config.server.name : message.guild.name;
+        icon = server.icon ? server.icon : di.guild.iconURL(),
+        serverName = config.server.name ? config.server.name : di.guild.name;
 
-    if (text.title === "" || text.description === "") {
-        const voteEmbed = new Discord.EmbedBuilder()
-            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-            .setTitle("Server list vote link:")
-            .setDescription(server.vote ? `[Here](${server.vote}) you can vote for ${serverName}!` : "VOTE LINK IS NOT DEFINED IN CONFIG!")
-            .setColor(config.embeds.color);
-        message.channel.send({ embeds: [voteEmbed] });
-    } else {
-        text.title = text.title.replaceAll('{serverIp}', server.ip);
-        text.title = text.title.replaceAll('{serverPort}', server.port);
-        text.title = text.title.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
-        text.title = text.title.replaceAll('{voteLink}', config.server.vote);
-        text.title = text.title.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
-
-        text.description = text.description.replaceAll('{serverIp}', server.ip);
-        text.description = text.description.replaceAll('{serverPort}', server.port);
-        text.description = text.description.replaceAll('{serverName}', config.server.name ? config.server.name : message.guild.name);
-        text.description = text.description.replaceAll('{voteLink}', config.server.vote);
-        text.description = text.description.replaceAll('{serverType}', config.server.type.charAt(0).toUpperCase() + config.server.type.slice(1));
-
-        const voteEmbed = new Discord.EmbedBuilder()
-            .setAuthor({ name: config.server.name ? config.server.name : message.guild.name, iconURL: icon })
-            .setTitle(text.title)
-            .setDescription(text.description)
-            .setColor(config.embeds.color);
-        message.channel.send({ embeds: [voteEmbed] });
-    }
+    const voteEmbed = new Discord.EmbedBuilder()
+        .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
+        .setTitle("Server list vote link:")
+        .setDescription(server.vote ? `[Here](${server.vote}) you can vote for ${serverName}!` : "VOTE LINK IS NOT DEFINED IN CONFIG!")
+        .setColor(config.embeds.color);
+    di.reply({ embeds: [voteEmbed], allowedMentions: { repliedUser: false } });
 };

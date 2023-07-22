@@ -1,6 +1,6 @@
 {
   "name": "minecraft-bot",
-  "version": "1.7.0.8.1",
+  "version": "1.7.1",
   "description": "Informational Discord bot for your Minecraft server",
   "main": "index.js",
   "scripts": {
