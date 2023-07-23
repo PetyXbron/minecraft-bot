@@ -1,7 +1,10 @@
 //CONFIG DATA EXPLANATION - https://mb.petyxbron.cz/installation/config
 //ENABLE BOT "SERVER MEMBERS INTENT" & "MESSAGE CONTENT INTENT" ON DISCORD DEVELOPER PORTAL
-//YOU CAN DISABLE COMMANDS BY MESSAGE CONTENT ON LINE 97 (IF YOU WON'T USE "MESSAGE CONTENT INTENT")
+//YOU CAN DISABLE COMMANDS USING MESSAGE CONTENT ON LINE 37 (IF YOU WON'T USE "MESSAGE CONTENT INTENT")
+
 module.exports = {
+    language: "en", //Available: en (path: /translations)
+
     //Your bot data
     bot: {
         //PASTE YOUR DISCORD BOT TOKEN IN DATA.JSON FILE (more secure) - https://tinyurl.com/discordbot-token

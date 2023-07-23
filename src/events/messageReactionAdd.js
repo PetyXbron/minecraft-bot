@@ -1,12 +1,10 @@
 const chalk = require('chalk'),
-    ms = require('ms'),
-    fs = require('fs'),
     { PermissionsBitField } = require('discord.js'),
     ma = chalk.magenta.bold;
 
 module.exports = async (bot, messageReaction) => {
     const r = messageReaction;
-    const { prefix, server, config } = bot;
+    const { config } = bot;
     const debug = config.settings.debug;
 
     if (config.settings.votingCH && config.votingCH.reactions.deleteOther && r.message.channel.id === config.votingCH.channelID) {

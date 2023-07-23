@@ -82,5 +82,24 @@ module.exports = {
         } else {
             return undefined;
         }
+    },
+
+    msToTime(ms) {
+        let s = Math.floor((ms / 1000) % 60),
+            min = Math.floor((ms / (1000 * 60)) % 60),
+            h = Math.floor((ms / (1000 * 60 * 60)));
+
+        if (h === 0) h = "";
+        else h = h + "h";
+
+        if (min === 0) min = "";
+        else min = min + "min";
+
+        if (!h && !min) {
+            s = s + "s";
+            return s;
+        } else {
+            return !!h ? (h + " " + min) : (min);
+        }
     }
 };

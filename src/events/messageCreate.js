@@ -5,7 +5,7 @@ const ms = require('ms'),
 module.exports = async (bot, message) => {
     if (message.author.bot) return;
 
-    const { prefix, server, config } = bot;
+    const { prefix, config } = bot;
 
     // VOTING CH
     if (config.settings.votingCH && message.channel.id === config.votingCH.channelID) {

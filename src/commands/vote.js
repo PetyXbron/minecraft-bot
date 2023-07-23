@@ -14,16 +14,16 @@ module.exports = {
 };
 
 module.exports.run = async (bot, diType, di) => {
-    const Discord = require('discord.js');
+    const Discord = require('discord.js'),
+        { translate } = require('../functions/translations');
 
     let { server, config } = bot,
-        icon = server.icon ? server.icon : di.guild.iconURL(),
-        serverName = config.server.name ? config.server.name : di.guild.name;
+        icon = server.icon ? server.icon : di.guild.iconURL();
 
     const voteEmbed = new Discord.EmbedBuilder()
         .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
-        .setTitle("Server list vote link:")
-        .setDescription(server.vote ? `[Here](${server.vote}) you can vote for ${serverName}!` : "VOTE LINK IS NOT DEFINED IN CONFIG!")
+        .setTitle(await translate("commands.vote.title", di.guild))
+        .setDescription(await translate("commands.vote.description", di.guild))
         .setColor(config.embeds.color);
     di.reply({ embeds: [voteEmbed], allowedMentions: { repliedUser: false } });
 };

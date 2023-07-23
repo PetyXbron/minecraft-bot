@@ -16,7 +16,8 @@ module.exports = {
 module.exports.run = async (bot, diType, di) => {
     const util = require('axios'),
         Discord = require('discord.js'),
-        c = require('chalk');
+        c = require('chalk'),
+        { translate } = require('../functions/translations');
 
     let { server, config } = bot,
         warn = c.keyword('yellow').bold,
@@ -28,24 +29,35 @@ module.exports.run = async (bot, diType, di) => {
     let icon = server.icon ? server.icon : di.guild.iconURL();
 
     util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
-        .then((response) => {
+        .then(async (response) => {
             if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
-            const trueList = response.data.players.list ? "\n\`\`\`" + response.data.players.list.map(p => ` ${p.name_clean} `).join('\r\n') + "\`\`\`" : "";
 
+            if (response.data.players.online > 0) {
+                const serverEmbed = new Discord.EmbedBuilder()
+                    .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
+                    .setTitle(await translate("commands.list.onlineWithPlayers.title", di.guild))
+                    .setDescription(await translate("commands.list.onlineWithPlayers.description", di.guild))
+                    .addFields([
+                        { name: await translate("commands.list.onlineWithPlayers.fields.1.name", di.guild), value: await translate("commands.list.onlineWithPlayers.fields.1.value", di.guild)}
+                    ])
+                    .setColor(config.embeds.color);
+                di.reply({ embeds: [serverEmbed], allowedMentions: { repliedUser: false } });
+            } else {
+                const serverEmbed = new Discord.EmbedBuilder()
+                    .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
+                    .setTitle(await translate("commands.list.onlineWithoutPlayers.title", di.guild))
+                    .setDescription(await translate("commands.list.onlineWithoutPlayers.description", di.guild))
+                    .setColor(config.embeds.color);
+                di.reply({ embeds: [serverEmbed], allowedMentions: { repliedUser: false } });
+            }
+        })
+        .catch(async (error) => {
             const serverEmbed = new Discord.EmbedBuilder()
                 .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
-                .setTitle("Online player list:")
-                .setDescription(`**${response.data.players.online}**/**${response.data.players.max}**` + trueList)
-                .setColor(config.embeds.color);
-            di.reply({ embeds: [serverEmbed], allowedMentions: { repliedUser: false } });
-        })
-        .catch((error) => {
-            const errorEmbed = new Discord.EmbedBuilder()
-                .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
-                .setTitle("Online player list:")
-                .setDescription(`:x: **OFFLINE**\n\n:information_source: \`${server.ip}\`:\`${server.port}\``)
+                .setTitle(await translate("commands.list.offline.title", di.guild))
+                .setDescription(await translate("commands.list.offline.description", di.guild))
                 .setColor(config.embeds.error);
-            di.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+            di.reply({ embeds: [serverEmbed], allowedMentions: { repliedUser: false } });
 
             if (warns) console.log(`${bot.emotes.warn} ` + warn(`Error when using command ${module.exports.config.name}! Error:\n`) + error);
         });

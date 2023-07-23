@@ -14,15 +14,16 @@ module.exports = {
 };
 
 module.exports.run = async (bot, diType, di) => {
-    const Discord = require('discord.js');
+    const Discord = require('discord.js'),
+        { translate } = require('../functions/translations');
 
     let { server, config } = bot,
         icon = server.icon ? server.icon : di.guild.iconURL();
 
     const ipEmbed = new Discord.EmbedBuilder()
         .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
-        .setTitle("IP address:")
-        .setDescription(`\`${server.ip}\`:\`${server.port}\``)
+        .setTitle(await translate("commands.ip.title", di.guild))
+        .setDescription(await translate("commands.ip.description", di.guild))
         .setColor(config.embeds.color);
     di.reply({ embeds: [ipEmbed], allowedMentions: { repliedUser: false } });
 };

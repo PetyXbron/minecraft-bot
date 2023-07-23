@@ -84,10 +84,6 @@ module.exports = {
                     const versionOriginal = response.data.version.name_clean;
                     let versionAdvanced = false;
 
-                    let maintenceStatus = false,
-                        lowCaseMotdClean = response.data.motd.clean.toLocaleLowerCase();
-                    if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
-
                     if (config.settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                     const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
@@ -126,10 +122,6 @@ module.exports = {
                     if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                     const versionOriginal = response.data.version.name;
                     let versionAdvanced = false;
-
-                    let maintenceStatus = false,
-                        lowCaseMotdClean = response.data.motd.clean.toLocaleLowerCase();
-                    if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
                     if (config.settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
@@ -179,10 +171,6 @@ module.exports = {
                         const versionOriginal = response.data.version.name_clean;
                         let versionAdvanced = false;
 
-                        let maintenceStatus = false,
-                            lowCaseMotdClean = response.data.motd.clean.toLocaleLowerCase();
-                        if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
-
                         if (config.settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 
                         const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
@@ -221,10 +209,6 @@ module.exports = {
                         if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
                         const versionOriginal = response.data.version.name;
                         let versionAdvanced = false;
-
-                        let maintenceStatus = false,
-                            lowCaseMotdClean = response.data.motd.clean.toLocaleLowerCase();
-                        if (lowCaseMotdClean.includes("maintenance")) maintenceStatus = true;
 
                         if (config.settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
 

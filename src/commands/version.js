@@ -15,62 +15,17 @@ module.exports = {
 
 module.exports.run = async (bot, diType, di) => {
     const Discord = require('discord.js'),
-        util = require('axios'),
-        warn = require('chalk').keyword('yellow').bold;
+        util = require('axios');
 
     let { server, config } = bot,
         icon = server.icon ? server.icon : di.guild.iconURL(),
-        warns = config.settings.warns,
-        settings = config.settings,
-        { removeVersion } = require('../functions/base');
+        { translate } = require('../functions/translations');
 
-    let versionOriginal;
+    const versionEmbed = new Discord.EmbedBuilder()
+        .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
+        .setTitle(await translate("commands.version.title", di.guild))
+        .setDescription(await translate("commands.version.description", di.guild))
+        .setColor(config.embeds.color);
+    di.reply({ embeds: [versionEmbed], allowedMentions: { repliedUser: false } });
 
-    if (!server.work) return;
-
-    if (server.type === 'java') {
-        try {
-            const response = await util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`);
-            if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
-            versionOriginal = response.data.version.name_clean;
-        } catch (e) {
-            if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
-            versionOriginal = config.server.version;
-        };
-
-        let versionAdvanced = false;
-
-        if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
-
-        const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
-
-        const versionEmbed = new Discord.EmbedBuilder()
-            .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
-            .setTitle("Minecraft version:")
-            .setDescription(`**${version}**`)
-            .setColor(config.embeds.color);
-        di.reply({ embeds: [versionEmbed], allowedMentions: { repliedUser: false } });
-    } else {
-        try {
-            const response = await util.get(`https://api.mcstatus.io/v2/status/bedrock/${server.ip}:${server.port}`);
-            if (!response.data.online) throw new Error(`Server ${server.ip}:${server.port} was not found!`);
-            versionOriginal = response.data.version.name_clean;
-        } catch (e) {
-            if (warns) console.log(`${bot.emotes.warn} ` + warn(`Couldn't get version from server! Getting it from config..`));
-            versionOriginal = config.server.version;
-        }
-
-        let versionAdvanced = false;
-
-        if (settings.removeServerType) versionAdvanced = removeVersion(versionOriginal);
-
-        const version = versionAdvanced ? versionAdvanced.charAt(0).toUpperCase() + versionAdvanced.slice(1) : versionOriginal;
-
-        const versionEmbed = new Discord.EmbedBuilder()
-            .setAuthor({ name: config.server.name ? config.server.name : di.guild.name, iconURL: icon })
-            .setTitle("Minecraft version:")
-            .setDescription(`**${version}**`)
-            .setColor(config.embeds.color);
-        di.reply({ embeds: [versionEmbed], allowedMentions: { repliedUser: false } });
-    }
 };

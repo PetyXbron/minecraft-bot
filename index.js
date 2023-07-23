@@ -14,7 +14,7 @@ const config = require(dev ? './config/dev-main' : './config/main'),
     token = require(dev ? './config/dev-token' : './config/token')["token"],
     dataJSON = require(dev ? './config/dev-data' : './config/data'),
     warns = config.settings.warns,
-    intents = config.settings.commands.enableChat ? 38401 : 5633;
+    intents = config.settings.commands.enableChat ? 34307 : 1539;
 
 //Defining Discord bot
 bot = new Discord.Client({ intents: intents }); //OLD: 34321
@@ -58,6 +58,8 @@ bot.dataJSON = dataJSON;
 handlers = require("./src/functions/handlers");
 handlers.events(bot);
 handlers.commands(bot);
+
+module.exports.bot = bot;
 
 //Bot login
 bot.login(bot.token);
