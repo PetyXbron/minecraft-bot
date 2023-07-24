@@ -3,7 +3,7 @@
 //YOU CAN DISABLE COMMANDS USING MESSAGE CONTENT ON LINE 37 (IF YOU WON'T USE "MESSAGE CONTENT INTENT")
 
 module.exports = {
-    language: "en", //Available: en (path: /translations)
+    language: "en", //Available: en, cs (path: /translations)
 
     //Your bot data
     bot: {

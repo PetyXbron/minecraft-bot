@@ -1,0 +1,109 @@
+{
+    "commands": {
+        "help": {
+            "main": {
+                "title": "{bot.name} menu:",
+                "fields": {
+                    "1": {
+                        "name": "Bot info:",
+                        "value": "> **Prefix:** `{bot.prefix}`\n> **Ping:** `{bot.ping}`\n> **Uptime:** `{bot.uptime}`"
+                    },
+                    "2": {
+                        "name": "{server.name} Discord:",
+                        "value": "> **Members:** `{guild.membersAll}`\n> **Bots:** `{guild.botsCount}`\n> **Channels:** `{guild.channels}`"
+                    }
+                },
+                "buttons": {
+                    "1": {
+                        "emoji": "📱",
+                        "style": "Primary",
+                        "name": "Chat commands"
+                    },
+                    "2": {
+                        "emoji": "💻",
+                        "style": "Primary",
+                        "name": "Slash commands"
+                    }
+                }
+            },
+            "aliasFormat": "`{bot.prefix}{cmdName}`",
+            "aliasSplit": ", ",
+            "chatCmds": {
+                "title": "{bot.name} chat commands:",
+                "description": "{chatCmdList}",
+                "chatCmdList": "> `{bot.prefix}{cmdName}` - {cmdDescription}"
+            },
+            "slashCmds": {
+                "title": "{bot.name} slash commands:",
+                "description": "{slashCmdList}",
+                "slashCmdList": "> {cmdSlashMention} - {cmdDescription}"
+            },
+            "oneCmd": {
+                "title": "{cmdName} command:",
+                "description": "> **Chat command:** `{bot.prefix}{cmdName}`\n> **Slash command:** {cmdSlashMention}\n> **Description:** {cmdDescription}\n> **Chat aliases:** {cmdAliases}"
+            }
+        },
+        "ip": {
+            "title": "IP Address:",
+            "description": "`{server.ip}`:`{server.port}`"
+        },
+        "list": {
+            "listFormat": "{playerName}",
+            "listSplit": "\n",
+            "onlineWithPlayers": {
+                "title": "Online players:",
+                "description": "**{status.playersOnline}**/**{status.playersMax}**",
+                "fields": {
+                    "1": {
+                        "name": "List:",
+                        "value": "```{status.playerList}```"
+                    }
+                }
+            },
+            "onlineWithoutPlayers": {
+                "title": "Online players:",
+                "description": "**{status.playersOnline}**/**{status.playersMax}**"
+            },
+            "offline": {
+                "title": "Online players:",
+                "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+            }
+        },
+        "status": {
+            "online": {
+                "title": "Server status:",
+                "description": ":white_check_mark: **ONLINE**",
+                "fields": {
+                    "1": {
+                        "name": "Description:",
+                        "value": "```{status.motd}```"
+                    },
+                    "2": {
+                        "name": "IP Address:",
+                        "value": "`{server.ip}`:`{server.port}`"
+                    },
+                    "3": {
+                        "name": "Version:",
+                        "value": "{server.type} {status.version}"
+                    },
+                    "4": {
+                        "name": "Players:",
+                        "value": "**{status.playersOnline}**/**{status.playersMax}**"
+                    }
+                }
+            },
+            "offline": {
+                "title": "Server status:",
+                "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+            }
+        },
+        "version": {
+            "title": "Minecraft version:",
+            "description": "**{server.type} {status.version}**"
+        },
+        "vote": {
+            "title": "Server list vote link:",
+            "description": "[Here]({server.vote}) you can vote for {server.name}!"
+        }
+    }
+}

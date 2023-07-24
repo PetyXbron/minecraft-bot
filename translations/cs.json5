@@ -1,0 +1,125 @@
+//https://github.com/PetyXbron/minecraft-bot
+//Czech translations - made by @PetyXbron
+
+//Dostupné proměnné:
+//1. Z configu:
+//   {bot.prefix} {bot.status}
+//   {server.name}, {server.type}, {server.ip}, {server.port}, {server.icon}, {server.version}, {server.vote}
+//2. Z online stavu:
+//   {status.version}, {status.playersOnline}, {status.playersMax}, {status.playerList}, {status.motd}
+//3. Ostatní:
+//   {bot.name} {bot.ping} {bot.uptime} {bot.cmdCount}
+//   {guild.membersAll} {guild.botsCount} {guild.channels}
+
+{
+    "commands": {
+        "help": {
+            "main": {
+                "title": "{bot.name} menu:",
+                "fields": {
+                    "1": {
+                        "name": "Bot info:",
+                        "value": "> **Prefix:** `{bot.prefix}`\n> **Odezva:** `{bot.ping}`\n> **Čas provozu:** `{bot.uptime}`"
+                    },
+                    "2": {
+                        "name": "{server.name} Discord:",
+                        "value": "> **Členi:** `{guild.membersAll}`\n> **Boti:** `{guild.botsCount}`\n> **Kanály:** `{guild.channels}`"
+                    }
+                },
+                "buttons": {
+                    "1": {
+                        "emoji": "📱",
+                        "style": "Primary", //Primary | Secondary | Success | Danger
+                        "name": "Chat příkazy"
+                    },
+                    "2": {
+                        "emoji": "💻",
+                        "style": "Primary", //Primary | Secondary | Success | Danger
+                        "name": "Slash příkazy"
+                    }
+                }
+            },
+            "aliasFormat": "`{bot.prefix}{cmdName}`", //Proměnné: {cmdName}
+            "aliasSplit": ", ",
+            "chatCmds": {
+                //Proměnné: {cmdName}, {cmdDescription}, {cmdAliases}
+                "title": "{bot.name} chat příkazy:",
+                "description": "{chatCmdList}",
+                "chatCmdList": "> `{bot.prefix}{cmdName}` - {cmdDescription}"
+            },
+            "slashCmds": {
+                //Proměnné: {cmdName}, {cmdSlashMention}, {cmdDescription}
+                "title": "{bot.name} slash příkazy:",
+                "description": "{slashCmdList}",
+                "slashCmdList": "> {cmdSlashMention} - {cmdDescription}"
+            },
+            "oneCmd": {
+                //Proměnné: {cmdName}, {cmdSlashMention}, {cmdDescription}, {cmdAliases}
+                "title": "{cmdName} příkaz:",
+                "description": "> **Chat příkaz:** `{bot.prefix}{cmdName}`\n> **Slash příkaz:** {cmdSlashMention}\n> **Popis:** {cmdDescription}\n> **Chat aliasy:** {cmdAliases}"
+            }
+        },
+        "ip": {
+            "title": "IP Adresa:",
+            "description": "`{server.ip}`:`{server.port}`"
+        },
+        "list": {
+            "listFormat": "{playerName}", //Proměnné: {playerName}
+            "listSplit": "\n",
+            "onlineWithPlayers": {
+                "title": "Online hráči:",
+                "description": "**{status.playersOnline}**/**{status.playersMax}**",
+                "fields": {
+                    "1": {
+                        "name": "Seznam:",
+                        "value": "```{status.playerList}```"
+                    }
+                }
+            },
+            "onlineWithoutPlayers": {
+                "title": "Online hráči:",
+                "description": "**{status.playersOnline}**/**{status.playersMax}**"
+            },
+            "offline": {
+                "title": "Online hráči:",
+                "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+            }
+        },
+        "status": {
+            "online": {
+                "title": "Server stav:",
+                "description": ":white_check_mark: **ONLINE**",
+                "fields": {
+                    "1": {
+                        "name": "Popis:",
+                        "value": "```{status.motd}```"
+                    },
+                    "2": {
+                        "name": "IP Adresa:",
+                        "value": "`{server.ip}`:`{server.port}`"
+                    },
+                    "3": {
+                        "name": "Verze:",
+                        "value": "{server.type} {status.version}"
+                    },
+                    "4": {
+                        "name": "Hráči:",
+                        "value": "**{status.playersOnline}**/**{status.playersMax}**"
+                    }
+                }
+            },
+            "offline": {
+                "title": "Server stav:",
+                "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+            }
+        },
+        "version": {
+            "title": "Minecraft verze:",
+            "description": "**{server.type} {status.version}**"
+        },
+        "vote": {
+            "title": "Odkaz pro hlasování v seznamu serverů:",
+            "description": "[Tady]({server.vote}) můžeš hlasovat pro {server.name}!"
+        }
+    }
+}

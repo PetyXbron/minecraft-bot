@@ -1,0 +1,5 @@
+English translations - made by @PetyXbron
+Available variables:
+From config:
+From online status:
+Other:
