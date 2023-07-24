@@ -92,7 +92,7 @@ module.exports = {
 
                     const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
-                        .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
+                        .setDescription(":white_check_mark: **ONLINE**")
                         .addFields(
                             { name: "PLAYERS", value: `${response.data.players.online}/${response.data.players.max}` + trueList, inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
@@ -129,7 +129,7 @@ module.exports = {
 
                     const serverEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
-                        .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
+                        .setDescription(":white_check_mark: **ONLINE**")
                         .addFields(
                             { name: "PLAYERS", value: `${response.data.players.online}/${response.data.players.max}`, inline: false },
                             { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
@@ -179,7 +179,7 @@ module.exports = {
 
                         const serverEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
-                            .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
+                            .setDescription(":white_check_mark: **ONLINE**")
                             .addFields(
                                 { name: "PLAYERS", value: `${response.data.players.online}/${response.data.players.max}` + trueList, inline: false },
                                 { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }
@@ -216,7 +216,7 @@ module.exports = {
 
                         const serverEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
-                            .setDescription(maintenceStatus ? ":construction_worker: **MAINTENANCE**" : ":white_check_mark: **ONLINE**")
+                            .setDescription(":white_check_mark: **ONLINE**")
                             .addFields(
                                 { name: "PLAYERS", value: `${response.data.players.online}/${response.data.players.max}`, inline: false },
                                 { name: "INFO", value: `${server.type.toUpperCase()} ${version}\n\`${server.ip}\`${!defPort && server.port === 25565 || !defPort && server.port === 19132 ? "" : `:\`${server.port}\``}`, inline: true }

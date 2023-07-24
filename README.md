@@ -26,13 +26,15 @@
 
 - **Fully customizable [config](config/main.js)**
 - Working **commands** with **custom prefix** + their **[slash commands]((https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ))**
-    - `help` command for getting the help menu (list of all user-available commands)
-    - `ip` command for getting the IP address of the server
-    - `list` command for getting list of players online right now (available only for JAVA servers)
-    - `status` command for getting a simple and clear overview of the server
-    - `version` command for getting the Minecraft version of the server
-    - `vote` command for getting vote link for voting for server on Minecraft server list
-- **Auto updating bot's status** with online and max players (setup in the [config](config/main.js) with variables)
+    - `help` - useful information about the bot with all command list
+    - `ip` - IP address of the server
+    - `list` - list of players online on the server right now (only for JAVA)
+    - `status` - a basic overview of the server right now
+    - `version` - Minecraft version of the server
+    - `vote` - URl link for voting for server on Minecraft server list
+
+    Any of the commands can be disabled if wanted.
+- **Auto updating bot's status** with online and max players (set up in the [config](config/main.js) with variables)
 
   ![Auto updating bot status](https://imgur.com/4D8W8lT.png)
   ![Bot status config variables](https://i.imgur.com/7TXaWTC.png)
@@ -40,7 +42,7 @@
 - More Discord bot statuses: `online`, `idle`, `dnd`, and `invisible`
 - **Auto updating status message** with player list
 
-  ![Auto status messsage](https://imgur.com/gSAUIh5.png)
+  ![StatusCH](https://i.imgur.com/1QzmoZu.png)
 - **Random** RGB **color of command embeds** (each message another)
 
   ![Random embed color](https://i.imgur.com/pA7h5rC.png)
@@ -49,18 +51,17 @@
   ![minecraft-bot console](https://imgur.com/IqtzdM1.png)
 - **Suggestions/voting channel** with reactions and threads
 
-  ![Voting channel](https://i.imgur.com/OfCxqhf.gif)
+  ![VotingCH](https://i.imgur.com/OfCxqhf.gif)
 - **Images/screenshots channel** with reactions and threads
 
-  ![Images channel](https://i.imgur.com/AGmRGiH.gif)
+  ![ImagesCH](https://i.imgur.com/AGmRGiH.gif)
 
 ## TO DO
 
-- [ ] Language system
-- [ ] Send custom embed message command
 - [ ] Send a custom message/announcement command
-- [ ] Better test command variables (more process info - like uptime)
 - [ ] Poll/Voting command (simple or with more options)
+- [x] <s>Language system</s>
+- [x] <s>Better test command variables (more process info - like uptime)</s>
 - [x] <s>Auto changing statusCH message</s>
 - [x] <s>Status command</s>
 - [x] <s>IP address command</s>

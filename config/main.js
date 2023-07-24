@@ -40,10 +40,10 @@ module.exports = {
         },
         //Features:
         randomColor: false, //Enable random hex color generator for embeds? Overwrites embeds settings!
-        statusCH: false, //Enable auto-changing status message?
-        votingCH: false, //Enable voting channel?
-        imagesCH: false, //Enable images channel?
-        countingCH: false, //Enable counting channel?
+        statusCH: false, //L59 - Enable auto-changing status message?
+        votingCH: false, //L65 - Enable voting channel?
+        imagesCH: false, //L84 - Enable images channel?
+        countingCH: false, //L102 - Enable counting channel?
         //Advanced:
         removeServerType: false, //Remove "Spigot", "Purpur" etc. from version and leave only "1.18", "1.19" etc.?
         showDefaultPort: false //Show the server port behind IP if its default (25565, 19132) (primarily statusCH feature)?

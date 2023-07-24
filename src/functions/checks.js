@@ -1,5 +1,5 @@
-const
-    c = require('chalk');
+const c = require('chalk'),
+    fs = require('fs');
 
 module.exports = {
     config(bot, server) {
@@ -98,12 +98,24 @@ module.exports = {
         }
 
         if (config.server.name === '' || !config.server.name) {
-            if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server name, setting it to discord server name.`));
+            if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not specify server name, setting it to Discord server name.`));
             bot.server.name = false;
         }
 
         config.embeds.error = config.embeds.colors.error ? config.embeds.colors.error : '#f53636';
         config.embeds.color = config.embeds.colors.normal ? config.embeds.colors.normal : '#77fc03';
+
+        if (!config.language) {
+            if (warns) console.log(`${bot.emotes.warn} ` + warn(`You did not enter translations language.`));
+            config.language = "en";
+        } else if (!fs.existsSync(__dirname + '/../../translations/' + config.language + ".json5")) {
+            if (warns) console.log(`${bot.emotes.warn} ` + warn(`Language "` + config.language + `" was not found in /translations. Setting language to english.`));
+            config.language = "en";
+        } else if (!fs.existsSync(__dirname + '/../../translations/' + "en" + ".json5")) {
+            console.log(`${bot.emotes.error} ` + error('English translations file not found.') + kill);
+            bot.destroy();
+            return process.exit(1);
+        };
 
         if (!config.autoStatus.time) {
             if (warns) console.log(`${bot.emotes.warn} ` + warn("You did not specify time update period of bot's status. Setting it to 10 minutes."));
