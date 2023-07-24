@@ -60,17 +60,14 @@ module.exports = {
     },
 
     createDataJson(dev) {
-        const emptyArray = "{}";
-        if (!fs.existsSync(__dirname + '../../../config/data.json')) {
-            fs.writeFileSync(__dirname + "../../../config/data.json", emptyArray, err => {
-                if (err) console.log("Could not create the config/data.json file! Error:\n" + err);
-            });
+        if (!dev && !fs.existsSync(__dirname + '/../../config/data.json')) {
+            try { fs.writeFileSync(__dirname + "/../../config/data.json", "{}"); }
+            catch (err) { console.log("Could not create the config/data.json file! Error:\n" + err); }
         }
 
-        if (dev && !fs.existsSync(__dirname + '../../../config/dev-data.json')) {
-            fs.writeFileSync(__dirname + "../../../config/dev-data.json", emptyArray, err => {
-                if (err) console.log("Could not create the config/dev-data.json file! Error:\n" + err);
-            });
+        if (dev && !fs.existsSync(__dirname + '/../../config/dev-data.json')) {
+            try { fs.writeFileSync(__dirname + "/../../config/dev-data.json", "{}"); }
+            catch (err) { console.log("Could not create the config/dev-data.json file! Error:\n" + err); }
         }
     },
 

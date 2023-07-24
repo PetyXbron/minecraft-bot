@@ -28,7 +28,7 @@ module.exports.run = async (bot, diType, di) => {
         cmdArg = null;
 
     if (diType === "chat") {
-        cmdArg = diType.content.split(' ').slice(1);
+        cmdArg = di.content.split(' ').slice(1);
     }
 
     else if (diType === "slash") {

@@ -50,7 +50,7 @@ module.exports = async (bot, message) => {
                     data = dataJSON;
                     data["VotingCHLastID"] = newID;
 
-                     fs.writeFileSync(bot.dev ? __dirname + "../../../config/dev-data.json" : __dirname + "../../../config/data.json", JSON.stringify(data, null, 4), err => {
+                     fs.writeFileSync(bot.dev ? __dirname + "/../../../config/dev-data.json" : __dirname + "/../../../config/data.json", JSON.stringify(data, null, 4), err => {
                         if (err) console.log("Could not edit the config/data.json content! Error:\n" + err);
                     });
                 }
@@ -102,7 +102,7 @@ module.exports = async (bot, message) => {
             data = dataJSON;
             data["ImagesCHLastID"] = newID;
 
-            fs.writeFileSync(bot.dev ? __dirname + "../../../config/dev-data.json" : __dirname + "../../../config/data.json", JSON.stringify(data, null, 4), err => {
+            fs.writeFileSync(bot.dev ? __dirname + "/../../../config/dev-data.json" : __dirname + "/../../../config/data.json", JSON.stringify(data, null, 4), err => {
                 if (err) console.log("Could not edit the config/data.json content! Error:\n" + err);
             });
         }
