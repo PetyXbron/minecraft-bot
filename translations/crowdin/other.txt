@@ -1,4 +1,5 @@
-English translations - made by @PetyXbron
+English translations (en) - by @PetyXbron
+Crowdin: https://crowdin.com/project/minecraft-bot/en
 Available variables:
 From config:
 From online status:

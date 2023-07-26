@@ -19,7 +19,6 @@ module.exports = {
 
 module.exports.run = async (bot, diType, di) => {
     const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js'),
-        fs = require('fs'),
         { getSlashID } = require("../functions/base"),
         { translate } = require('../functions/translations');
 

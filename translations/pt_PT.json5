@@ -1,0 +1,126 @@
+//https://github.com/PetyXbron/minecraft-bot
+//Portuguese translations (pt_PT) - by @llsaintsll
+//Crowdin: https://crowdin.com/project/minecraft-bot/pt-PT
+
+//Variáveis disponíveis:
+//1. De configuração:
+//   {bot.prefix} {bot.status}
+//   {server.name}, {server.type}, {server.ip}, {server.port}, {server.icon}, {server.version}, {server.vote}
+//2. De status online:
+//   {status.version}, {status.playersOnline}, {status.playersMax}, {status.playerList}, {status.motd}
+//3. Outros:
+//   {bot.name} {bot.ping} {bot.uptime} {bot.cmdCount}
+//   {guild.membersAll} {guild.botsCount} {guild.channels}
+
+{
+  "commands": {
+    "help": {
+      "main": {
+        "title": "{bot.name} menu:",
+        "fields": {
+          "1": {
+            "name": "Bot info:",
+            "value": "> **Prefixo:** `{bot.prefix}`\n> **Ping:** `{bot.ping}`\n> **Tempo de Atividade:** `{bot.uptime}`"
+          },
+          "2": {
+            "name": "{server.name} Discord:",
+            "value": "> **Membros:** `{guild.membersAll}`\n> **Bots:** `{guild.botsCount}`\n> **Canais:** `{guild.channels}`"
+          }
+        },
+        "buttons": {
+          "1": {
+            "emoji": "📱",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Comandos no chat"
+          },
+          "2": {
+            "emoji": "💻",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Comandos com barra (/)"
+          }
+        }
+      },
+      "aliasFormat": "`{bot.prefix}{cmdName}`", //Variáveis: {cmdName}
+      "aliasSplit": ", ",
+      "chatCmds": {
+        //Variáveis: {cmdName}, {cmdDescription}, {cmdAliases}
+        "title": "{bot.name} comandos no chat:",
+        "description": "{chatCmdList}",
+        "chatCmdList": "> `{bot.prefix}{cmdName}` - {cmdDescription}"
+      },
+      "slashCmds": {
+        //Variáveis: {cmdName}, {cmdSlashMention}, {cmdDescription}
+        "title": "{bot.name} comandos com barra (/):",
+        "description": "{slashCmdList}",
+        "slashCmdList": "> {cmdSlashMention} - {cmdDescription}"
+      },
+      "oneCmd": {
+        //Variáveis: {cmdName}, {cmdSlashMention}, {cmdDescription}, {cmdAliases}
+        "title": "{cmdName} comando:",
+        "description": "> **Comandos no canal:** `{bot.prefix}{cmdName}`\n> **Comandos com barra (/):** {cmdSlashMention}\n> **Descrição:** {cmdDescription}\n> **Alias do canal:** {cmdAliases}"
+      }
+    },
+    "ip": {
+      "title": "Endereço IP:",
+      "description": "`{server.ip}`:`{server.port}`"
+    },
+    "list": {
+      "listFormat": "{playerName}", //Variáveis: {playerName}
+      "listSplit": "\n",
+      "onlineWithPlayers": {
+        "title": "Jogadores conectados:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**",
+        "fields": {
+          "1": {
+            "name": "Lista:",
+            "value": "```{status.playerList}```"
+          }
+        }
+      },
+      "onlineWithoutPlayers": {
+        "title": "Jogadores conectados:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**"
+      },
+      "offline": {
+        "title": "Jogadores conectados:",
+        "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "status": {
+      "online": {
+        "title": "Estado do servidor:",
+        "description": ":white_check_mark: **LIGADO**",
+        "fields": {
+          "1": {
+            "name": "Descrição:",
+            "value": "```{status.motd}```"
+          },
+          "2": {
+            "name": "Endereço IP:",
+            "value": "`{server.ip}`:`{server.port}`"
+          },
+          "3": {
+            "name": "Versão:",
+            "value": "{server.type} {status.version}"
+          },
+          "4": {
+            "name": "Jogadores:",
+            "value": "**{status.playersOnline}**/**{status.playersMax}**"
+          }
+        }
+      },
+      "offline": {
+        "title": "Estado do servidor:",
+        "description": ":x: **DESLIGADO**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "version": {
+      "title": "Versão do Minecraft:",
+      "description": "**{server.type} {status.version}**"
+    },
+    "vote": {
+      "title": "Link da lista de servidores para votação:",
+      "description": "Neste [Link]({server.vote}) você consegue votar no {server.name}!"
+    }
+  }
+}

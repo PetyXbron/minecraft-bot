@@ -1,0 +1,126 @@
+//https://github.com/PetyXbron/minecraft-bot
+//Indonesian translations (id_ID) - by @LawRotiii
+//Crowdin: https://crowdin.com/project/minecraft-bot/id
+
+//Variable yang tersedia:
+//1. Dari konfigurasi:
+//   {bot.prefix} {bot.status}
+//   {server.name}, {server.type}, {server.ip}, {server.port}, {server.icon}, {server.version}, {server.vote}
+//2. Dari status online:
+//   {status.version}, {status.playersOnline}, {status.playersMax}, {status.playerList}, {status.motd}
+//3. Lainnya:
+//   {bot.name} {bot.ping} {bot.uptime} {bot.cmdCount}
+//   {guild.membersAll} {guild.botsCount} {guild.channels}
+
+{
+  "commands": {
+    "help": {
+      "main": {
+        "title": "{bot.name} menu:",
+        "fields": {
+          "1": {
+            "name": "Bot info:",
+            "value": "> **Awalan:** `{bot.prefix}`\n> **Ping:** `{bot.ping}`\n> **Waktu aktif:** `{bot.uptime}`"
+          },
+          "2": {
+            "name": "{server.name} Discord:",
+            "value": "> **Anggota:** `{guild.membersAll}`\n> **Bot:** `{guild.botsCount}`\n> **Saluran:** `{guild.channels}`"
+          }
+        },
+        "buttons": {
+          "1": {
+            "emoji": "📱",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Perintah obrolan"
+          },
+          "2": {
+            "emoji": "💻",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Perintah slash"
+          }
+        }
+      },
+      "aliasFormat": "`{bot.prefix}{cmdName}`", //Variables: {cmdName}
+      "aliasSplit": ", ",
+      "chatCmds": {
+        //Variables: {cmdName}, {cmdDescription}, {cmdAliases}
+        "title": "{bot.name} Perintah obrolan:",
+        "description": "{chatCmdList}",
+        "chatCmdList": "> `{bot.prefix}{cmdName}` - {cmdDescription}"
+      },
+      "slashCmds": {
+        //Variables: {cmdName}, {cmdSlashMention}, {cmdDescription}
+        "title": "{bot.name} Perintah slash:",
+        "description": "{slashCmdList}",
+        "slashCmdList": "> {cmdSlashMention} - {cmdDescription}"
+      },
+      "oneCmd": {
+        //Variables: {cmdName}, {cmdSlashMention}, {cmdDescription}, {cmdAliases}
+        "title": "{cmdName} Perintah:",
+        "description": "> **Perintah obrolan:** `{bot.prefix}{cmdName}`\n> **Perintah slash:** {cmdSlashMention}\n> **Keterangan:** {cmdDescription}\n> **Alias obrolan:** {cmdAliases}"
+      }
+    },
+    "ip": {
+      "title": "Alamat IP:",
+      "description": "`{server.ip}`:`{server.port}`"
+    },
+    "list": {
+      "listFormat": "{playerName}",
+      "listSplit": "\n",
+      "onlineWithPlayers": {
+        "title": "Pemain online:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**",
+        "fields": {
+          "1": {
+            "name": "Daftar:",
+            "value": "```{status.playerList}```"
+          }
+        }
+      },
+      "onlineWithoutPlayers": {
+        "title": "Pemain online:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**"
+      },
+      "offline": {
+        "title": "Pemain online:",
+        "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "status": {
+      "online": {
+        "title": "Status server:",
+        "description": ":white_check_mark: **TERHUBUNG**",
+        "fields": {
+          "1": {
+            "name": "Keterangan:",
+            "value": "```{status.motd}```"
+          },
+          "2": {
+            "name": "Alamat IP:",
+            "value": "`{server.ip}`:`{server.port}`"
+          },
+          "3": {
+            "name": "Versi:",
+            "value": "{server.type} {status.version}"
+          },
+          "4": {
+            "name": "Pemain:",
+            "value": "**{status.playersOnline}**/**{status.playersMax}**"
+          }
+        }
+      },
+      "offline": {
+        "title": "Status server:",
+        "description": ":x: **TERPUTUS**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "version": {
+      "title": "Versi Minecraft:",
+      "description": "**{server.type} {status.version}**"
+    },
+    "vote": {
+      "title": "Tautan pemilihan daftar server:",
+      "description": "[Disini]({server.vote}) kamu dapat memilih {server.name}!"
+    }
+  }
+}
