@@ -24,17 +24,17 @@ module.exports.run = async (bot, diType, di) => {
 
     let { server, config } = bot,
         icon = server.icon ? server.icon : di.guild.iconURL(),
-        cmdArg = null;
+        cmdArg = false;
 
     if (diType === "chat") {
-        cmdArg = di.content.split(' ').slice(1);
+        cmdArg = di.content.split(' ').slice(1)[0];
     }
 
     else if (diType === "slash") {
         cmdArg = di.options.getString('command');
     }
 
-    if (cmdArg) {
+    if (!!cmdArg) {
         if (bot.commands.has(cmdArg.toLocaleLowerCase()) || bot.aliases.has(cmdArg.toLocaleLowerCase())) {
             commandName = bot.commands.has(cmdArg.toLocaleLowerCase()) ? cmdArg.toLocaleLowerCase() : bot.aliases.get(cmdArg.toLocaleLowerCase());
 

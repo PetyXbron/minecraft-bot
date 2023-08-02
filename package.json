@@ -1,6 +1,6 @@
 {
   "name": "minecraft-bot",
-  "version": "1.7.3",
+  "version": "1.7.3.1",
   "description": "Informational Discord bot for your Minecraft server",
   "main": "index.js",
   "scripts": {
@@ -28,15 +28,15 @@
   },
   "homepage": "https://github.com/PetyXbron/minecraft-bot",
   "engines": {
-    "node": ">=16.9.0"
+    "node": ">=16.11.0"
   },
   "dependencies": {
     "axios": "^1.4.0",
     "chalk": "4.1.2",
-    "discord.js": "^14.11.0",
+    "discord.js": "^14.12.1",
     "fs": "^0.0.1-security",
     "json5": "^2.2.3",
     "ms": "^2.1.3"
   },
-  "install-cmd": "npm i axios@1.4.0 chalk@4.1.2 discord.js@14.11.0 fs json5@2.2.3 ms@2.1.3"
+  "install-cmd": "npm i axios@1.4.0 chalk@4.1.2 discord.js@14.12.1 fs json5@2.2.3 ms@2.1.3"
 }

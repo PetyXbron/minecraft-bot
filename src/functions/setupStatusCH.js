@@ -65,7 +65,7 @@ module.exports = {
 
         data = dataJSON;
         data["StatusCHMsgID"] = msg.id;
-        fs.writeFileSync(bot.dev ? __dirname + "/../../../config/dev-data.json" : __dirname + "/../../../config/data.json", JSON.stringify(data, null, 4), err => {
+        fs.writeFileSync(bot.dev ? __dirname + "/../../config/dev-data.json" : __dirname + "/../../config/data.json", JSON.stringify(data, null, 4), err => {
             if (warns) console.log(`${bot.emotes.warn} ` + warn('Could not edit the config/data.json content! Error:\n') + err);
         });
     },

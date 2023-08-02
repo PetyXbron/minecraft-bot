@@ -1,3 +1,5 @@
+require("./src/functions/checks").nodeVersion();
+
 const Discord = require('discord.js'),
     fs = require('fs'),
     c = require('chalk'),

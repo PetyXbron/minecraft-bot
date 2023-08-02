@@ -1,15 +1,29 @@
 const c = require('chalk'),
-    fs = require('fs');
+    fs = require('fs'),
+    error = c.keyword('red').bold,
+    kill = '\nKilling process...',
+    warn = c.keyword('yellow').bold;
 
 module.exports = {
+    nodeVersion() {
+        let v = process.versions.node.split(".");
+        v.forEach((e, i) => { v[i] = parseInt(e); });
+
+        let f = false;
+        if (v[0] < 16) f = true;
+        else if (v[0] === 16 && v[1] < 11) f = true;
+
+        if (f) {
+            console.log(`🛑 ` + error('You are using unsupported Node.js version (' + process.version + ')! Please update to v16.11.0 or higher.') + kill);
+            return process.exit(1);
+        }
+    },
+
     config(bot, server) {
         const
             { config, warns, info } = bot,
             activites = ['PLAYING', 'WATCHING', 'COMPETING', 'LISTENING'], //Supported activites, discord.js supports more (but I don't care)
-            statuses = ['online', 'idle', 'dnd', 'invisible'], //Supported statuses
-            error = c.keyword('red').bold,
-            kill = '\nKilling process...',
-            warn = c.keyword('yellow').bold;
+            statuses = ['online', 'idle', 'dnd', 'invisible']; //Supported statuses
 
         let emojis = config.console.emojis;
         if (!emojis.success) emojis.success = '💚';
