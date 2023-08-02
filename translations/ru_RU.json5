@@ -1,0 +1,126 @@
+//https://github.com/PetyXbron/minecraft-bot
+//Russian translations (ru_RU) - by @Tekii-ne
+//Crowdin: https://crowdin.com/project/minecraft-bot/ru
+
+//Доступные переменные:
+//1. Из конфигурации:
+//   {bot.prefix} {bot.status}
+//   {server.name}, {server.type}, {server.ip}, {server.port}, {server.icon}, {server.version}, {server.vote}
+//2. Из онлайн статуса:
+//   {status.version}, {status.playersOnline}, {status.playersMax}, {status.playerList}, {status.motd}
+//3. Другое:
+//   {bot.name} {bot.ping} {bot.uptime} {bot.cmdCount}
+//   {guild.membersAll} {guild.botsCount} {guild.channels}
+
+{
+  "commands": {
+    "help": {
+      "main": {
+        "title": "{bot.name} меню:",
+        "fields": {
+          "1": {
+            "name": "Информация о боте:",
+            "value": "> **Префиксы:** `{bot.prefix}`\n> **Пинг:** `{bot.ping}`\n> **Время работы:** `{bot.uptime}`"
+          },
+          "2": {
+            "name": "{server.name} Дискорд:",
+            "value": "> **Участники:** `{guild.membersAll}`\n> **Боты:** `{guild.botsCount}`\n> **Каналы:** `{guild.channels}`"
+          }
+        },
+        "buttons": {
+          "1": {
+            "emoji": "📱",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Команды чата"
+          },
+          "2": {
+            "emoji": "💻",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Слэш команды"
+          }
+        }
+      },
+      "aliasFormat": "`{bot.prefix}{cmdName}`", //Переменные: {cmdName}
+      "aliasSplit": ", ",
+      "chatCmds": {
+        //Переменные: {cmdName}, {cmdDescription}, {cmdAliases}
+        "title": "{bot.name} чат команды:",
+        "description": "{chatCmdList}",
+        "chatCmdList": "> `{bot.prefix}{cmdName}` - {cmdDescription}"
+      },
+      "slashCmds": {
+        //Переменные: {cmdName}, {cmdSlashMention}, {cmdDescription}
+        "title": "{bot.name} слэш команды:",
+        "description": "{slashCmdList}",
+        "slashCmdList": "> {cmdSlashMention} - {cmdDescription}"
+      },
+      "oneCmd": {
+        //Переменные: {cmdName}, {cmdSlashMention}, {cmdDescription}, {cmdAliases}
+        "title": "{cmdName} команда:",
+        "description": "> **Чат команда:** `{bot.prefix}{cmdName}`\n> **Слэш команда:** {cmdSlashMention}\n> **Описание:** {cmdDescription}\n> **Псевдонимы чата:** {cmdAliases}"
+      }
+    },
+    "ip": {
+      "title": "Айпи Адрес:",
+      "description": "`{server.ip}`:`{server.port}`"
+    },
+    "list": {
+      "listFormat": "{playerName}", //Переменные: {playerName}
+      "listSplit": "\n",
+      "onlineWithPlayers": {
+        "title": "Игроки онлайн:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**",
+        "fields": {
+          "1": {
+            "name": "Список:",
+            "value": "```{status.playerList}```"
+          }
+        }
+      },
+      "onlineWithoutPlayers": {
+        "title": "Игроки онлайн:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**"
+      },
+      "offline": {
+        "title": "Игроки онлайн:",
+        "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "status": {
+      "online": {
+        "title": "Статус сервера:",
+        "description": ":white_check_mark: **ОНЛАЙН**",
+        "fields": {
+          "1": {
+            "name": "Описание:",
+            "value": "```{status.motd}```"
+          },
+          "2": {
+            "name": "Айпи Адрес:",
+            "value": "`{server.ip}`:`{server.port}`"
+          },
+          "3": {
+            "name": "Версия:",
+            "value": "{server.type} {status.version}"
+          },
+          "4": {
+            "name": "Игроки:",
+            "value": "**{status.playersOnline}**/**{status.playersMax}**"
+          }
+        }
+      },
+      "offline": {
+        "title": "Статус сервера:",
+        "description": ":x: **ОФФЛАЙН**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "version": {
+      "title": "Майнкрафт версия:",
+      "description": "**{server.type} {status.version}**"
+    },
+    "vote": {
+      "title": "Ссылка на голосование списка сервера:",
+      "description": "[Here]({server.vote}) вы можете проголосовать за {server.name}!"
+    }
+  }
+}
