@@ -1,0 +1,126 @@
+//https://github.com/PetyXbron/minecraft-bot
+//Vietnamese translations (vi) - by @Luongzz
+//Crowdin: https://crowdin.com/project/minecraft-bot/vi
+
+//Available variables:
+//1. Cấu hình:
+//   {bot.prefix} {bot.status}
+//   {server.name}, {server.type}, {server.ip}, {server.port}, {server.icon}, {server.version}, {server.vote}
+//2. Trạng thái trực tuyến:
+//   {status.version}, {status.playersOnline}, {status.playersMax}, {status.playerList}, {status.motd}
+//3. Khác:
+//   {bot.name} {bot.ping} {bot.uptime} {bot.cmdCount}
+//   {guild.membersAll} {guild.botsCount} {guild.channels}
+
+{
+  "commands": {
+    "help": {
+      "main": {
+        "title": "{bot.name} menu:",
+        "fields": {
+          "1": {
+            "name": "Bot info:",
+            "value": "> **Prefix:** `{bot.prefix}`\n> **Ping:** `{bot.ping}`\n> **Thời gian hoạt động:** `{bot.uptime}`"
+          },
+          "2": {
+            "name": "{server.name} Discord:",
+            "value": "> **Thành viên:** `{guild.membersAll}`\n> **Bots:** `{guild.botsCount}`\n> **Kênh:** `{guild.channels}`"
+          }
+        },
+        "buttons": {
+          "1": {
+            "emoji": "📱",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Lệnh trò chuyện"
+          },
+          "2": {
+            "emoji": "💻",
+            "style": "Primary", //Primary | Secondary | Success | Danger
+            "name": "Lệnh gạch chéo"
+          }
+        }
+      },
+      "aliasFormat": "`{bot.prefix}{cmdName}`", //Variables: {cmdName}
+      "aliasSplit": ", ",
+      "chatCmds": {
+                //Variables: {cmdName}, {cmdDescription}, {cmdAliases}
+        "title": "{bot.name} Lệnh trò chuyện:",
+        "description": "{chatCmdList}",
+        "chatCmdList": "> `{bot.prefix}{cmdName}` - {cmdDescription}"
+      },
+      "slashCmds": {
+                //Variables: {cmdName}, {cmdSlashMention}, {cmdDescription}
+        "title": "{bot.name} lệnh gạch chéo:",
+        "description": "{slashCmdList}",
+        "slashCmdList": "> {cmdSlashMention} - {cmdDescription}"
+      },
+      "oneCmd": {
+                //Variables: {cmdName}, {cmdSlashMention}, {cmdDescription}, {cmdAliases}
+        "title": "{cmdName} lệnh:",
+        "description": "> **Lệnh trò chuyện:** `{bot.prefix}{cmdName}`\n> **Lệnh gạch chéo:** {cmdSlashMention}\n> **Miêu tả:** {cmdDescription}\n> **Bí danh trò chuyện:** {cmdAliases}"
+      }
+    },
+    "ip": {
+      "title": "Địa chỉ IP:",
+      "description": "`{server.ip}`:`{server.port}`"
+    },
+    "list": {
+      "listFormat": "{playerName}", //Variables: {playerName}
+      "listSplit": "\n",
+      "onlineWithPlayers": {
+        "title": "Người chơi trực tuyến:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**",
+        "fields": {
+          "1": {
+            "name": "Danh sách:",
+            "value": "```{status.playerList}```"
+          }
+        }
+      },
+      "onlineWithoutPlayers": {
+        "title": "Người chơi trực tuyến:",
+        "description": "**{status.playersOnline}**/**{status.playersMax}**"
+      },
+      "offline": {
+        "title": "Người chơi trực tuyến:",
+        "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "status": {
+      "online": {
+        "title": "Trạng thái máy chủ:",
+        "description": ":white_check_mark: **ONLINE**",
+        "fields": {
+          "1": {
+            "name": "Miêu tả:",
+            "value": "```{status.motd}```"
+          },
+          "2": {
+            "name": "Địa chỉ IP:",
+            "value": "`{server.ip}`:`{server.port}`"
+          },
+          "3": {
+            "name": "Phiên bản:",
+            "value": "{server.type} {status.version}"
+          },
+          "4": {
+            "name": "Người chơi:",
+            "value": "**{status.playersOnline}**/**{status.playersMax}**"
+          }
+        }
+      },
+      "offline": {
+        "title": "Trạng thái máy chủ:",
+        "description": ":x: **OFFLINE**\n\n:information_source: `{server.ip}`:`{server.port}`"
+      }
+    },
+    "version": {
+      "title": "Phiên bản Minecraft:",
+      "description": "**{server.type} {status.version}**"
+    },
+    "vote": {
+      "title": "Liên kết bình chọn danh sách máy chủ:",
+      "description": "[Tại đây]({server.vote}) bạn có thể bỏ phiếu cho {server.name}!"
+    }
+  }
+}
