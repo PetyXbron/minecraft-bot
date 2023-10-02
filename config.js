@@ -5,7 +5,7 @@ module.exports = {
     //Your bot data
     bot: {
         //PASTE YOUR DISCORD BOT TOKEN IN DATA.JSON FILE (more secure) - https://tinyurl.com/discordbot-token
-        prefix: "", //Your custom prefix of the bot, like "!" or "."
+        prefix: "!", //Your custom prefix of the bot, like "!" or "."
         presence: "", //Custom activity/status text
         status: "",  //You can choose: ONLINE, IDLE, DND (do not disturb), INVISIBLE
         activity: "", //You can choose: PLAYING, LISTENING, WATCHING, COMPETING
@@ -14,12 +14,12 @@ module.exports = {
 
     //Your Minecraft server data
     server: {
-        name: "", //Your server name
-        type: "", //"java" or "bedrock"
-        ip: "", //IP of your server - do not include port - e.g. "mc.hypixel.net"
-        port: "", //PORT of your server - empty => default port (JA 25565, BE 19132)
+        name: "Ourcraft", //Your server name
+        type: "java", //"java" or "bedrock"
+        ip: "34.127.40.153", //IP of your server - do not include port - e.g. "mc.hypixel.net"
+        port: "25565", //PORT of your server - empty => default port (JA 25565, BE 19132)
         icon: "", //Link to icon - like "https://website.com/icon.png"
-        version: "", //Minecraft version of sever
+        version: "1.20.0", //Minecraft version of sever
         vote: "" //Vote link - like "https://minecraftpocket-servers.com/server/80103/vote/"
     },
 
@@ -49,8 +49,8 @@ module.exports = {
 
     //Auto changing status message
     statusCH: {
-        channelID: "",
-        time: "30s" //Period of updating status message - like "3min", "20s" or "1min" etc.
+        channelID: "701020649623388171",
+        time: "5min" //Period of updating status message - like "3min", "20s" or "1min" etc.
     },
 
     //Voting channel - https://mb.petyxbron.cz/config/config-info#voting-ch

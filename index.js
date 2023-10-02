@@ -44,6 +44,7 @@ server.type = config.server.type.toLowerCase();
 server.ip = config.server.ip.toLowerCase();
 server.port = parseInt(config.server.port);
 server.work = true;
+server.online = false;
 server.vote = config.server.vote;
 
 //Config check

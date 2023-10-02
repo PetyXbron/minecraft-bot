@@ -174,6 +174,7 @@ module.exports = async (bot) => {
         if (server.type === 'java') {
             util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
                 .then((response) => {
+                    server.online = true;
                     const versionOriginal = response.data.version.name_clean;
                     let versionAdvanced = false;
 
@@ -202,6 +203,19 @@ module.exports = async (bot) => {
 
                 })
                 .catch((error) => {
+                    if(server.online){
+                        const offlineEmbed = new Discord.EmbedBuilder()
+                            .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
+                            .setDescription('@SilentSerika :1919: **ｲｷｽｷﾞｨ!!!**')
+                            .setColor(config.embeds.error)
+                            .setTimestamp();
+                        try {
+                            await channel.send({ embeds: [offlineEmbed] });
+                        } catch (err) {
+                            console.log("Could not send the offline message! Error:\n" + err);
+                        }
+                    }
+                    server.online = false;
                     const errorEmbed = new Discord.EmbedBuilder()
                         .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                         .setDescription(':x: **OFFLINE**')
@@ -260,6 +274,7 @@ module.exports = async (bot) => {
             setInterval(() =>
                 util.get(`https://api.mcstatus.io/v2/status/java/${server.ip}:${server.port}`)
                     .then((response) => {
+                        server.online = true;
                         const versionOriginal = response.data.version.name_clean;
                         let versionAdvanced = false;
 
@@ -287,6 +302,19 @@ module.exports = async (bot) => {
                         catch (err) { if (warns) console.log(bot.emotes.warn + warn('Could not edit the statusCH message! Error:\n') + err); }
                     })
                     .catch((error) => {
+                        if(server.online){
+                            const offlineEmbed = new Discord.EmbedBuilder()
+                                .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
+                                .setDescription('@SilentSerika :1919: **ｲｷｽｷﾞｨ!!!**')
+                                .setColor(config.embeds.error)
+                                .setTimestamp();
+                            try {
+                                await channel.send({ embeds: [offlineEmbed] });
+                            } catch (err) {
+                                console.log("Could not send the offline message! Error:\n" + err);
+                            }
+                        }
+                        server.online = false;
                         const errorEmbed = new Discord.EmbedBuilder()
                             .setAuthor({ name: config.server.name ? config.server.name : guild.name, iconURL: icon })
                             .setDescription(':x: **OFFLINE**')
